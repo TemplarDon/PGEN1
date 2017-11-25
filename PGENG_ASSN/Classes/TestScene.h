@@ -4,8 +4,6 @@
 #include "cocos2d.h"
 using namespace cocos2d;
 
-#include "SceneManager.h"
-
 enum ANIMLIST
 {
 	FRONT = 0,
@@ -21,7 +19,7 @@ public:
     static cocos2d::Scene* createScene();
 
     virtual bool init();
- 
+    
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
     
@@ -42,6 +40,9 @@ public:
 	void OnMouseEvent(Event* _event);
 
 	virtual void update(float _dt);
+
+    void InputMouseTestFunction();
+    void InputKeyboardTestFunction();
 
 private:
     Animate* v_mainCharAnimation[NUM_ANIM];

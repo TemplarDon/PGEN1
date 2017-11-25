@@ -1,5 +1,6 @@
 #include "TestScene.h"
 #include "SimpleAudioEngine.h"
+#include "Input\InputHandler.h"
 
 #define COCOS2D_DEBUG 1
 
@@ -22,66 +23,70 @@ bool TestScene::init()
 {
     //////////////////////////////
     // 1. super init first
-    if ( !Scene::init() )
+    if (!Scene::init())
     {
         return false;
     }
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	Size playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
+    Size playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
 
-	// World
-	auto nodeItems = Node::create();
-	nodeItems->setName("nodeItems");
+    // World
+    auto nodeItems = Node::create();
+    nodeItems->setName("nodeItems");
 
-	auto sprite = Sprite::create("ZigzagGrass_Mud_Round.png");
+    auto sprite = Sprite::create("ZigzagGrass_Mud_Round.png");
 
-	float groundSpriteWidth = sprite->getContentSize().width;
-	float  groundSpriteHeight = sprite->getContentSize().height;
-	int numToRender = ceil(playingSize.width / groundSpriteWidth);
+    float groundSpriteWidth = sprite->getContentSize().width;
+    float  groundSpriteHeight = sprite->getContentSize().height;
+    int numToRender = ceil(playingSize.width / groundSpriteWidth);
 
-	float groundPosition = playingSize.height * 0.5f;
-	
-	for (int i = 0; i < numToRender; ++i)
-	{
-		auto tempSprite = Sprite::create("ZigzagGrass_Mud_Round.png");
-		tempSprite->setAnchorPoint(Vec2::ZERO);
-		tempSprite->setPosition(groundSpriteWidth * i, groundPosition);
+    float groundPosition = playingSize.height * 0.5f;
 
-		nodeItems->addChild(tempSprite, 0);
-	}
+    for (int i = 0; i < numToRender; ++i)
+    {
+        auto tempSprite = Sprite::create("ZigzagGrass_Mud_Round.png");
+        tempSprite->setAnchorPoint(Vec2::ZERO);
+        tempSprite->setPosition(groundSpriteWidth * i, groundPosition);
 
-	// Character	
-	auto spriteNode = Node::create();
-	spriteNode->setName("SpriteNode");
+        nodeItems->addChild(tempSprite, 0);
+    }
 
-	auto characterSprite = Sprite::create("Blue_Front1.png");
-	characterSprite->setName("MainCharacter");
-	characterSprite->setAnchorPoint(Vec2::ZERO);
-	characterSprite->setPosition(0, groundPosition + groundSpriteHeight);
+    // Character	
+    auto spriteNode = Node::create();
+    spriteNode->setName("SpriteNode");
 
-	spriteNode->addChild(characterSprite, 1);
+    auto characterSprite = Sprite::create("Blue_Front1.png");
+    characterSprite->setName("MainCharacter");
+    characterSprite->setAnchorPoint(Vec2::ZERO);
+    characterSprite->setPosition(0, groundPosition + groundSpriteHeight);
 
-	// Character Movement
-	//auto moveEvent = MoveBy::create(5.0f, Vec2(5.0f, 0));
-	//characterSprite->runAction(moveEvent->clone());
+    spriteNode->addChild(characterSprite, 1);
 
-	// Delayed Action
-	//DelayTime* delay = DelayTime::create(5.0f);
-	//Sequence* delaySequence = Sequence::create(delay, delay->clone(), nullptr);
-	//Sequence* sequence = Sequence::create(moveEvent, moveEvent->reverse(), delaySequence, nullptr);
+    // Character Movement
+    //auto moveEvent = MoveBy::create(5.0f, Vec2(5.0f, 0));
+    //characterSprite->runAction(moveEvent->clone());
 
-	//characterSprite->runAction(sequence);
+    // Delayed Action
+    //DelayTime* delay = DelayTime::create(5.0f);
+    //Sequence* delaySequence = Sequence::create(delay, delay->clone(), nullptr);
+    //Sequence* sequence = Sequence::create(moveEvent, moveEvent->reverse(), delaySequence, nullptr);
 
-	// Add to this node tree
-	this->addChild(nodeItems, 1);
-	this->addChild(spriteNode, 1);
+    //characterSprite->runAction(sequence);
 
-	SetListeners();
-	InitAnimationActions();
-	InitShader();
-	this->scheduleUpdate();
+    // Add to this node tree
+    this->addChild(nodeItems, 1);
+    this->addChild(spriteNode, 1);
+
+    // Use this function to assign functions to specific key press
+    InputHandler::GetInstance().AssignMouseAction(EventMouse::MouseButton::BUTTON_LEFT, bind(&TestScene::InputMouseTestFunction, this), true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&TestScene::InputKeyboardTestFunction, this), true);
+
+    SetListeners();
+    InitAnimationActions();
+    InitShader();
+    this->scheduleUpdate();
 
     return true;
 }
@@ -98,6 +103,8 @@ void TestScene::update(float _dt)
 	rendtex->end();
 	rendtexSprite->setTexture(rendtex->getSprite()->getTexture());
 	rendtexSprite->setGLProgram(proPostProcess);
+
+    static int doOnce = 1;
 }
 
 void TestScene::InitShader()
@@ -237,34 +244,34 @@ void TestScene::menuCloseCallback(Ref* pSender)
 
 void TestScene::OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event)
 {
-	switch (_keycode)
-	{
-		case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-		{
-			auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
-			auto moveEvent = MoveBy::create(0.0f, Vec2(10.0f, 0));
-			charSprite->stopActionByTag(1);
-			charSprite->runAction(moveEvent);
-		}
-		break;
+	//switch (_keycode)
+	//{
+	//	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+	//	{
+	//		auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+	//		auto moveEvent = MoveBy::create(0.0f, Vec2(10.0f, 0));
+	//		//charSprite->stopActionByTag(1);
+	//		charSprite->runAction(moveEvent);
+	//	}
+	//	break;
 
-		case EventKeyboard::KeyCode::KEY_LEFT_ARROW :
-		{
-			auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
-			auto moveEvent = MoveBy::create(0.0f, Vec2(-10.0f, 0));
-			charSprite->runAction(moveEvent);
-			charSprite->stopAllActions();
-		}
-		break;
+	//	case EventKeyboard::KeyCode::KEY_LEFT_ARROW :
+	//	{
+	//		auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+	//		auto moveEvent = MoveBy::create(0.0f, Vec2(-10.0f, 0));
+ //           //charSprite->stopAllActions();
+	//		charSprite->runAction(moveEvent);
+	//	}
+	//	break;
 
-		case EventKeyboard::KeyCode::KEY_K:
-		{
-			CCDirector::getInstance()->replaceScene(
-				TransitionFlipAngular::create(1.5, TestScene::createScene())
-			);
-		}
-		break;
-	}
+	//	case EventKeyboard::KeyCode::KEY_K:
+	//	{
+	//		CCDirector::getInstance()->replaceScene(
+	//			TransitionFlipAngular::create(1.5, TestScene::createScene())
+	//		);
+	//	}
+	//	break;
+	//}
 }
 
 void TestScene::OnMouseEvent(Event* _event)
@@ -299,5 +306,16 @@ void TestScene::OnMouseEvent(Event* _event)
 				charSprite->runAction(RepeatForever::create(v_mainCharAnimation[FRONT]));
 		}
 	}
+}
+
+void TestScene::InputMouseTestFunction()
+{
+    CCLOG("Mouse Function");
+}
+
+
+void TestScene::InputKeyboardTestFunction()
+{
+    CCLOG("Keyboard Function");
 }
 
