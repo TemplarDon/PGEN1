@@ -13,3 +13,19 @@ SceneManager* SceneManager::GetInstance()
 
 SceneManager::SceneManager()
 {}
+
+void SceneManager::Init()
+{
+    theDirector = Director::getInstance();
+    theDirector->init();
+}
+
+void SceneManager::AddSceneToStack(Scene* toAdd)
+{
+    theDirector->init();
+}
+
+void SceneManager::AddSceneToStack(Scene* toAdd)
+{
+    theDirector->init();
+}
