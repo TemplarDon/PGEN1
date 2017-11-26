@@ -16,6 +16,9 @@
     <Filter Include="src\Common">
       <UniqueIdentifier>{6f3a62bc-c52f-4c6d-839e-c945b2f87713}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\SceneManagement">
+      <UniqueIdentifier>{6d231863-5e2f-45b1-a02c-0ada95a1f23d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -32,6 +35,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Input\InputHandler.cpp">
       <Filter>src\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SceneManagement\SceneManager.cpp">
+      <Filter>src\SceneManagement</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +61,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Common\SingletonNode.h">
       <Filter>src\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SceneManagement\SceneManager.h">
+      <Filter>src\SceneManagement</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

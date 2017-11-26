@@ -97,6 +97,24 @@ bool HelloWorld::init()
     }
 	*/
 
+    // Character	
+    auto spriteNode = Node::create();
+    spriteNode->setName("SpriteNode");
+
+    auto characterSprite = Sprite::create("Blue_Front1.png");
+    characterSprite->setName("MainCharacter");
+    characterSprite->setAnchorPoint(Vec2::ZERO);
+    characterSprite->setPosition(0, 0);
+
+    spriteNode->addChild(characterSprite, 1);
+
+    // Character Movement
+    auto moveEvent = MoveBy::create(5.0f, Vec2(5.0f, 0));
+    characterSprite->runAction(moveEvent->clone());
+
+    // Add to this node tree
+    this->addChild(spriteNode, 1);
+
     return true;
 }
 

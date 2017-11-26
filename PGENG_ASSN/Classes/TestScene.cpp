@@ -1,6 +1,7 @@
 #include "TestScene.h"
 #include "SimpleAudioEngine.h"
 #include "Input\InputHandler.h"
+#include "SceneManagement\SceneManager.h"
 
 #define COCOS2D_DEBUG 1
 
@@ -82,6 +83,10 @@ bool TestScene::init()
     // Use this function to assign functions to specific key press
     InputHandler::GetInstance().AssignMouseAction(EventMouse::MouseButton::BUTTON_LEFT, bind(&TestScene::InputMouseTestFunction, this), true);
     InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&TestScene::InputKeyboardTestFunction, this), true);
+
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_Z, bind(&TestScene::SwitchSceneTestFunction, this), true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_X, bind(&TestScene::AddSceneTestFunction, this), true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_C, bind(&TestScene::PopSceneTestFunction, this), true);
 
     SetListeners();
     InitAnimationActions();
@@ -317,5 +322,20 @@ void TestScene::InputMouseTestFunction()
 void TestScene::InputKeyboardTestFunction()
 {
     CCLOG("Keyboard Function");
+}
+
+void TestScene::SwitchSceneTestFunction()
+{
+    SceneManager::GetInstance().TransitionLevel("ello level", SceneManager::TRANSITION_TYPES::FADE);
+}
+
+void TestScene::AddSceneTestFunction()
+{
+    SceneManager::GetInstance().AddSceneToStack("ello scene");
+}
+
+void TestScene::PopSceneTestFunction()
+{
+    SceneManager::GetInstance().PopSceneFromStack();
 }
 

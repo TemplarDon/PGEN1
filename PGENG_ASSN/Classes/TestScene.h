@@ -2,6 +2,7 @@
 #define __TEST_SCENE_H__
 
 #include "cocos2d.h"
+
 using namespace cocos2d;
 
 enum ANIMLIST
@@ -43,6 +44,9 @@ public:
 
     void InputMouseTestFunction();
     void InputKeyboardTestFunction();
+    void SwitchSceneTestFunction();
+    void AddSceneTestFunction();
+    void PopSceneTestFunction();
 
 private:
     Animate* v_mainCharAnimation[NUM_ANIM];

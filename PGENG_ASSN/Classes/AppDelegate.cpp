@@ -1,4 +1,6 @@
 #include "AppDelegate.h"
+#include "Classes\SceneManagement\SceneManager.h"
+
 #include "HelloWorldScene.h"
 
 // Test Scene
@@ -102,6 +104,15 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // run
     director->runWithScene(scene);
+
+    // init with first scene
+    SceneManager::GetInstance().Start(scene);
+
+    // create database of shared scenes
+    SceneManager::GetInstance().AddSharedScene("ello scene", HelloWorld::createScene());
+
+    // add other levels
+    SceneManager::GetInstance().AddLevel("ello level", HelloWorld::createScene());
 
     return true;
 }
