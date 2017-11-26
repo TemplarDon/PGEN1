@@ -331,7 +331,7 @@ void TestScene::SwitchSceneTestFunction()
 
 void TestScene::AddSceneTestFunction()
 {
-    SceneManager::GetInstance().AddSceneToStack("ello scene");
+    SceneManager::GetInstance().AddSceneToStack("ello scene", true);
 }
 
 void TestScene::PopSceneTestFunction()

@@ -45,10 +45,13 @@ void SceneManager::AddSceneToStack(string name, bool leaveOldScene)
 
     if (toAdd)
     {
+        Scene* oldScene = theDirector->getRunningScene();
         theDirector->pushScene(GetSharedScene(name));
-        //theDirector->getRunningScene()->addChild
 
-        //AddLayerToScene(name, )
+        Scene* addTo = GetSharedScene(name);
+
+        if (leaveOldScene)
+            addTo->addChild(CreateLayerFromScene(oldScene));
     }
 }
 
@@ -61,6 +64,28 @@ void SceneManager::PopSceneFromStack(int popToLevel)
     else
     {
         theDirector->popScene();
+    }
+}
+
+Layer* SceneManager::CreateLayerFromScene(Scene* sourceScene)
+{
+    if (sourceScene)
+    {
+        RenderTexture* rendtex = RenderTexture::create(Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height);
+        Sprite* rendtexSprite = Sprite::createWithTexture(rendtex->getSprite()->getTexture());
+
+        rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
+        sourceScene->visit();
+        rendtex->end();
+        rendtexSprite->setTexture(rendtex->getSprite()->getTexture());
+        rendtexSprite->setName("prevscene_bg");
+        rendtexSprite->setPosition(theDirector->getVisibleSize().width * 0.5, theDirector->getVisibleSize().height * 0.5);
+        rendtexSprite->setFlipY(true);
+
+        Layer* returnLayer = Layer::create();
+        returnLayer->addChild(rendtexSprite, -1);
+        returnLayer->retain();
+        return returnLayer;
     }
 }
 

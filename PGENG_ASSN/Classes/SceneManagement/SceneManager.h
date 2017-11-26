@@ -35,8 +35,6 @@ public:
     void AddSceneToStack(string name, bool leaveOldScene = false);
     void PopSceneFromStack(int popToLevel = -1);
 
-    void AddLayerToScene(string sceneToAddTo, string layer);
-
     Scene* GetSharedScene(string sceneName);
     Scene* GetLevel(string levelName);
 
@@ -55,6 +53,8 @@ private:
 
     void TransitionSceneWithAnimations(Scene* newScene, TRANSITION_TYPES transition);
 
+    Layer* CreateLayerFromScene(Scene* scene);
+    void AddLayerToScene(string sceneToAddTo, string layer);
 
 };
 
