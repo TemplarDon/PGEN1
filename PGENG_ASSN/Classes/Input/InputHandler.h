@@ -1,19 +1,22 @@
 #ifndef INPUT_HANDLER_H
 #define INPUT_HANDLER_H
 
+#include "cocos2d.h"
 #include "InputAction.h"
+#include "../Common/SingletonNode.h"
+
 #include <map>
+#include <bitset>
 #include <vector>
 #include <functional>
-#include "../Common/SingletonNode.h"
-#include "cocos2d.h"
 
-using namespace cocos2d;
 using std::map;
+using std::bind;
+using std::bitset;
 using std::vector;
 using std::function;
-using std::bind;
 
+using namespace cocos2d;
 /*
     *Use this function to assign functions to specific key press
 
@@ -30,17 +33,18 @@ public:
     InputHandler();
     ~InputHandler();
 
+    bool init();
+
+    void ClearActionMaps();
+
 #pragma region Keyboard Functions
 
+    bool GetKeyDown(EventKeyboard::KeyCode _keyPressed){ return keyboardInputButtons[(int)_keyPressed]; };
     void DoKeyboardOnPress(EventKeyboard::KeyCode _keyPressed, Event* _event);
     void DoKeyboardOnRelease(EventKeyboard::KeyCode _keyPressed, Event* _event);
 
     // Note - Use bind(&Class::Function, this) to assign the action function
     void AssignKeyboardAction(EventKeyboard::KeyCode _keyPressed, function<void()> _action, bool _doOnPress = false, bool _doOnHeld = false, bool _doOnRelease = false);
-
-    // Clear all actions from the map
-    bool init();
-    void ClearActionMaps();
 
 #pragma endregion
 
@@ -48,9 +52,18 @@ public:
 
     void DoMouseOnPress(Event* _event);
     void DoMouseOnRelease(Event* _event);
+    void DoMouseOnMove(Event* _event);
 
     // Note - Use bind(&Class::Function, this) to assign the action function
     void AssignMouseAction(EventMouse::MouseButton _keyPressed, function<void()> _action, bool _doOnPress = false, bool _doOnHeld = false, bool _doOnRelease = false);
+
+    inline bool HasMouseMoved(){ return (currentMousePosition == previousMousePosition); }
+
+    inline Vec2 GetMouseUpPosition(){ return this->mouseUpPosition; };
+    inline Vec2 GetMouseDownPosition(){ return this->mouseDownPosition; };
+           
+    inline Vec2 GetCurrentMousePosition(){ return this->currentMousePosition; };
+    inline Vec2 GetPreviousMousePosition(){ return this->previousMousePosition; };
 
 #pragma endregion
 
@@ -63,6 +76,22 @@ private:
     // Identifyer changes the string that is stored in the map
     string keyboardIdentifyer = "KB_";
     string mouseIdentifyer = "MB_";
+
+#pragma region Mouse Variables
+
+    Vec2 currentMousePosition;
+    Vec2 previousMousePosition;
+
+    Vec2 mouseUpPosition;
+    Vec2 mouseDownPosition;
+
+#pragma endregion
+
+#pragma region Keyboard Variables
+
+    bitset<(int)EventKeyboard::KeyCode::KEY_PLAY> keyboardInputButtons;
+    
+#pragma endregion
 
 };
 

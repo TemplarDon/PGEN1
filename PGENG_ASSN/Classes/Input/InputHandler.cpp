@@ -18,6 +18,8 @@ bool InputHandler::init()
         return false;
     }
 
+    keyboardInputButtons.reset();
+
     // Clear Action and event listeners
     this->ClearActionMaps();
     _eventDispatcher->removeAllEventListeners();
@@ -32,6 +34,7 @@ bool InputHandler::init()
     // Mouse Listener
     auto mouseListener = EventListenerMouse::create();
     mouseListener->onMouseDown = CC_CALLBACK_1(InputHandler::DoMouseOnPress, this);
+    mouseListener->onMouseMove = CC_CALLBACK_1(InputHandler::DoMouseOnMove, this);
     mouseListener->onMouseUp = CC_CALLBACK_1(InputHandler::DoMouseOnRelease, this);
     _eventDispatcher->addEventListenerWithFixedPriority(mouseListener, 1);
 
@@ -47,6 +50,8 @@ void InputHandler::DoKeyboardOnPress(EventKeyboard::KeyCode _keyPressed, Event* 
 {
     string key = keyboardIdentifyer;
     key += (int)_keyPressed;
+
+    keyboardInputButtons.set((int)_keyPressed, true);
     
     if (!actionMap.count(key))
         return;
@@ -65,6 +70,8 @@ void InputHandler::DoKeyboardOnRelease(EventKeyboard::KeyCode _keyPressed, Event
 {
     string key = keyboardIdentifyer;
     key += (int)_keyPressed;
+
+    keyboardInputButtons.set((int)_keyPressed, false);
 
     if (!actionMap.count(key))
         return;
@@ -101,6 +108,8 @@ void InputHandler::AssignKeyboardAction(EventKeyboard::KeyCode _keyPressed, func
 void InputHandler::DoMouseOnPress(Event* _event)
 {
     EventMouse* mouseEvent = (EventMouse*)_event;
+    
+    this->mouseDownPosition = mouseEvent->getStartLocation();
 
     string key = mouseIdentifyer;
     key += (int)mouseEvent->getMouseButton();
@@ -121,9 +130,11 @@ void InputHandler::DoMouseOnRelease(Event* _event)
 {
     EventMouse* mouseEvent = (EventMouse*)_event;
 
+    this->mouseUpPosition = mouseEvent->getLocation();
+
     string key = mouseIdentifyer;
     key += (int)mouseEvent->getMouseButton();
-
+    
     if (!actionMap.count(key))
         return;
 
@@ -134,6 +145,14 @@ void InputHandler::DoMouseOnRelease(Event* _event)
         if (it.doOnRelease)
             it.DoAction();
     }
+}
+
+void InputHandler::DoMouseOnMove(Event* _event)
+{
+    EventMouse* mouseEvent = (EventMouse*)_event;
+
+    currentMousePosition = mouseEvent->getLocation();
+    previousMousePosition = mouseEvent->getPreviousLocation();
 }
 
 void InputHandler::AssignMouseAction(EventMouse::MouseButton _keyPressed, function<void()> _action, bool _doOnPress, bool _doOnHeld, bool _doOnRelease)

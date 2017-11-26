@@ -29,6 +29,10 @@ bool TestScene::init()
         return false;
     }
 
+    // Reset all binded actions 
+    InputHandler::GetInstance().init();
+
+
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     Size playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
@@ -98,18 +102,16 @@ bool TestScene::init()
 
 void TestScene::update(float _dt)
 {
-	auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+    auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
 
-	Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
-	mainCam->setPosition(charSprite->getPosition());
+    Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
+    mainCam->setPosition(charSprite->getPosition());
 
-	rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
-	this->visit();
-	rendtex->end();
-	rendtexSprite->setTexture(rendtex->getSprite()->getTexture());
-	rendtexSprite->setGLProgram(proPostProcess);
-
-    static int doOnce = 1;
+    rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
+    this->visit();
+    rendtex->end();
+    rendtexSprite->setTexture(rendtex->getSprite()->getTexture());
+    rendtexSprite->setGLProgram(proPostProcess);
 }
 
 void TestScene::InitShader()
@@ -317,7 +319,6 @@ void TestScene::InputMouseTestFunction()
 {
     CCLOG("Mouse Function");
 }
-
 
 void TestScene::InputKeyboardTestFunction()
 {
