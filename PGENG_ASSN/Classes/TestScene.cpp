@@ -30,7 +30,7 @@ bool TestScene::init()
     }
 
     // Reset all binded actions 
-    InputHandler::GetInstance().init();
+    InputHandler::GetInstance().ClearActionMaps();
 
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -104,8 +104,8 @@ void TestScene::update(float _dt)
 {
     auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
 
-    Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
-    mainCam->setPosition(charSprite->getPosition());
+    //Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
+    //mainCam->setPosition(charSprite->getPosition());
 
     rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
     this->visit();

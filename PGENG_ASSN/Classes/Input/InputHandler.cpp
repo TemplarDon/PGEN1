@@ -21,7 +21,7 @@ bool InputHandler::init()
 
     // Clear Action and event listeners
     this->ClearActionMaps();
-    _eventDispatcher->removeAllEventListeners();
+    //_eventDispatcher->removeAllEventListeners();
 
     // Keyboard Listener Init
     auto keyboardListener = EventListenerKeyboard::create();
@@ -43,6 +43,7 @@ bool InputHandler::init()
 void InputHandler::ClearActionMaps()
 {
     actionMap.clear();
+    keyboardInputButtons.reset();
 }
 
 void InputHandler::DoKeyboardOnPress(EventKeyboard::KeyCode _keyPressed, Event* _event)

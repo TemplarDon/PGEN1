@@ -33,8 +33,6 @@ public:
     InputHandler();
     ~InputHandler();
 
-    bool init();
-
     void ClearActionMaps();
 
 #pragma region Keyboard Functions
@@ -60,6 +58,10 @@ public:
     inline Vec2 GetPreviousMousePosition(){ return this->previousMousePosition; };
 
 #pragma endregion
+
+
+protected:
+    bool init();
 
 private:
     static InputHandler* instance;

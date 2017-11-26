@@ -22,6 +22,9 @@
     <Filter Include="src\Audio">
       <UniqueIdentifier>{b20e6f7b-e01e-4dcb-a5d5-2de1583af2d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Grid">
+      <UniqueIdentifier>{b9aed6d5-c4f2-4090-8a5e-649bb08d402d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -47,6 +50,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Audio\AudioHandler.cpp">
       <Filter>src\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Grid\Grid.cpp">
+      <Filter>src\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Grid\SpatialPartition.cpp">
+      <Filter>src\Grid</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +88,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Audio\AudioHandler.h">
       <Filter>src\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Grid\Grid.h">
+      <Filter>src\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Grid\SpatialPartition.h">
+      <Filter>src\Grid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
