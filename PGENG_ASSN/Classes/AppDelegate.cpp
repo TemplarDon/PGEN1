@@ -102,8 +102,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // create a scene. it's an autorelease object
     //auto scene = HelloWorld::createScene();
-    auto scene = TestScene::createScene();
-	//auto scene = MainMenuScene::createScene();
+    //auto scene = TestScene::createScene();
+	auto scene = MainMenuScene::createScene();
 
     // run
     //director->runWithScene(scene);
@@ -117,6 +117,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // add other levels
     SceneManager::GetInstance().AddLevel("ello level", HelloWorld::createScene());
     SceneManager::GetInstance().AddLevel("test scene", TestScene::createScene());
+    SceneManager::GetInstance().AddLevel("menu", MainMenuScene::createScene());
 
     return true;
 }

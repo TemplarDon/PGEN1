@@ -32,111 +32,30 @@ bool MainMenuScene::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    //// Menu
-    //MenuItemFont* menu_play = MenuItemFont::create("Play", CC_CALLBACK_1(MainMenuScene::Play, this));
-    //MenuItemFont* menu_quit = MenuItemFont::create("Quit", CC_CALLBACK_1(MainMenuScene::Play, this));
-
-    //menu_play->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 3));
-    //menu_quit->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 2));
-
-    //auto *menu = Menu::create(menu_play, menu_quit, NULL);
-    //menu->setPosition(Point(0, 0));
-    //this->addChild(menu);
-
-    //// Button
-    //auto play_btn = Button::create("Button.png", "ButtonPressed.png");
-    //play_btn->setTitleText("Spawn Girl");
-    //play_btn->setTitleFontName("MarkerFelt.ttf");
-    //play_btn->setTitleFontSize(12.0f);
-    //play_btn->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
-
-    //play_btn->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
-    //{
-    //    switch (type)
-    //    {
-    //    case cocos2d::ui::Widget::TouchEventType::BEGAN:
-    //        break;
-    //    case cocos2d::ui::Widget::TouchEventType::MOVED:
-    //        break;
-    //    case cocos2d::ui::Widget::TouchEventType::ENDED:
-    //        Play(this);
-    //        break;
-    //    case cocos2d::ui::Widget::TouchEventType::CANCELED:
-    //        break;
-    //    default:
-    //        break;
-    //    }
-    //});
-    //this->addChild(play_btn);
-    
-    auto spriteNode = Node::create();
-    spriteNode->setName("ButtonsNode");
-
-    play_btn = Sprite::create("Button.png");
-    play_btn->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 3));
-    play_btn->setName("play_btn");
-    spriteNode->addChild(play_btn);
-
-    quit_btn = Sprite::create("Button.png");
-    quit_btn->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 2));
-    quit_btn->setName("quit_btn");
-    spriteNode->addChild(quit_btn);
-
-    this->addChild(spriteNode);
-
- //   // Listener
-	//auto touchListener = EventListenerTouchOneByOne::create();
- //   touchListener->setSwallowTouches(true);
-
- //   touchListener->onTouchBegan = [](Touch* touch, Event* event){
-
- //       auto target = static_cast<Sprite*>(event->getCurrentTarget());
-
- //       //Get the position of the current point relative to the button
- //       Point locationInNode = target->convertToNodeSpace(touch->getLocation());
- //       Size s = target->getContentSize();
- //       Rect rect = Rect(0, 0, s.width, s.height);
-
- //       //Check the click area
- //       if (rect.containsPoint(locationInNode))
- //       {
- //           target->setOpacity(180);
- //           return true;
- //       }
- //       return false;
- //   };
-
- //   touchListener->onTouchMoved = [](Touch* touch, Event* event){
- //   };
-
- //   touchListener->onTouchEnded = [](Touch* touch, Event* event){
-
- //       auto target = static_cast<Sprite*>(event->getCurrentTarget());
-
- //       if (target->getName() == "play_btn")
- //       {
- //           SceneManager::GetInstance().TransitionLevel("test scene", SceneManager::TRANSITION_TYPES::FADE);
- //       }
- //       else if (target->getName() == "quit_btn")
- //       {
- //           SceneManager::GetInstance().Shutdown();
- //       }
-
- //   };
-
- //   _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, sprite1);
- //   _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener->clone(), sprite2);
-
     // Mouse Listener
     auto mouseListener = EventListenerMouse::create();
     mouseListener->onMouseDown = CC_CALLBACK_1(MainMenuScene::OnMouseEvent, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
-    //_eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener->clone(), play_btn);
-    //_eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener->clone(), quit_btn);
 
-    //InputHandler::GetInstance().AssignMouseAction(EventMouse::MouseButton::BUTTON_LEFT, bind(&MainMenuScene::OnLeftMouse, this), true);
+    // Menu
+    MenuItemFont* menu_play = MenuItemFont::create("Play", CC_CALLBACK_1(MainMenuScene::Play, this));
+    MenuItemFont* menu_quit = MenuItemFont::create("Quit", CC_CALLBACK_1(MainMenuScene::Play, this));
+
+    auto *menu = Menu::create(menu_play, menu_quit, nullptr);
+    menu->setPosition(Point(0, 0));
+
+    menu_play->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 3));
+    menu_quit->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 2));
+
+    this->addChild(menu);
+    this->scheduleUpdate();
 
     return true;
+}
+
+void MainMenuScene::update(float _dt)
+{
+
 }
 
 void MainMenuScene::menuCloseCallback(Ref* pSender)
@@ -174,12 +93,6 @@ void MainMenuScene::OnMouseEvent(Event* _event)
             SceneManager::GetInstance().Shutdown();
         }
     }
-}
-
-void MainMenuScene::OnLeftMouse()
-{
-    // Get mouse pos
- 
 }
 
 void MainMenuScene::Play(Ref *pSender)

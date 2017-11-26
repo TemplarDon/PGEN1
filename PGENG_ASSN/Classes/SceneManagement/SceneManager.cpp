@@ -39,12 +39,17 @@ void SceneManager::AddSharedScene(string name, Scene* toAdd)
     m_SharedScenesMap[name]->retain();
 }
 
-void SceneManager::AddSceneToStack(string name)
+void SceneManager::AddSceneToStack(string name, bool leaveOldScene)
 {
     Scene* toAdd = GetSharedScene(name);
 
     if (toAdd)
+    {
         theDirector->pushScene(GetSharedScene(name));
+        //theDirector->getRunningScene()->addChild
+
+        //AddLayerToScene(name, )
+    }
 }
 
 void SceneManager::PopSceneFromStack(int popToLevel)
@@ -57,6 +62,19 @@ void SceneManager::PopSceneFromStack(int popToLevel)
     {
         theDirector->popScene();
     }
+}
+
+void SceneManager::AddLayerToScene(string sceneToAddTo, string layer)
+{
+    RenderTexture* rendtex;
+    Sprite* rendtexSprite;
+
+    rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
+    GetLevel(layer)->visit();
+    rendtex->end();
+    rendtexSprite->setTexture(rendtex->getSprite()->getTexture());
+
+    GetLevel(sceneToAddTo)->addChild(rendtexSprite);
 }
 
 void SceneManager::TransitionLevel(string newScene, TRANSITION_TYPES transition)

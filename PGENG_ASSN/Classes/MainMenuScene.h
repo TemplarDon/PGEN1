@@ -19,12 +19,9 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(MainMenuScene);
 
-    Sprite* play_btn; 
-    Sprite* quit_btn;
+    virtual void update(float _dt);
 
     void OnMouseEvent(Event* _event);
-    void OnLeftMouse();
-
     void Play(Ref *pSender);
 };
 

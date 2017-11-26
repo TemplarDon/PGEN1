@@ -32,8 +32,10 @@ public:
     void AddLevel(string name, Scene* toAdd);
     void AddSharedScene(string name, Scene* toAdd);
 
-    void AddSceneToStack(string name);
+    void AddSceneToStack(string name, bool leaveOldScene = false);
     void PopSceneFromStack(int popToLevel = -1);
+
+    void AddLayerToScene(string sceneToAddTo, string layer);
 
     Scene* GetSharedScene(string sceneName);
     Scene* GetLevel(string levelName);
