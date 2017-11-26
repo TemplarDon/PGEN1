@@ -35,6 +35,9 @@ public:
 
 	// Shader Init
 	void InitShader();
+    
+    // Tilemap Init
+    void InitTilemap();
 
 	//Key Press
 	void OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event);
@@ -49,6 +52,13 @@ public:
     void PopSceneTestFunction();
 
     void SwitchSceneTest(cocos2d::Ref* pSender);
+
+    void MovePlayerUp();
+    void MovePlayerDown();
+    void MovePlayerLeft();
+    void MovePlayerRight();
+
+    void UpdatePlayer();
 
 private:
     Animate* v_mainCharAnimation[NUM_ANIM];

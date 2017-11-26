@@ -1,9 +1,11 @@
 #include "TestScene.h"
-#include "SimpleAudioEngine.h"
 #include "Input\InputHandler.h"
 #include "SceneManagement\SceneManager.h"
+#include "SimpleAudioEngine.h"
 
 #define COCOS2D_DEBUG 1
+
+using namespace CocosDenshion;
 
 USING_NS_CC;
 
@@ -38,25 +40,25 @@ bool TestScene::init()
     Size playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
 
     // World
-    auto nodeItems = Node::create();
-    nodeItems->setName("nodeItems");
+    //auto nodeItems = Node::create();
+    //nodeItems->setName("nodeItems");
 
-    auto sprite = Sprite::create("ZigzagGrass_Mud_Round.png");
+    //auto sprite = Sprite::create("ZigzagGrass_Mud_Round.png");
 
-    float groundSpriteWidth = sprite->getContentSize().width;
-    float  groundSpriteHeight = sprite->getContentSize().height;
-    int numToRender = ceil(playingSize.width / groundSpriteWidth);
+    //float groundSpriteWidth = sprite->getContentSize().width;
+    //float  groundSpriteHeight = sprite->getContentSize().height;
+    //int numToRender = ceil(playingSize.width / groundSpriteWidth);
 
-    float groundPosition = playingSize.height * 0.5f;
+    //float groundPosition = playingSize.height * 0.5f;
 
-    for (int i = 0; i < numToRender; ++i)
-    {
-        auto tempSprite = Sprite::create("ZigzagGrass_Mud_Round.png");
-        tempSprite->setAnchorPoint(Vec2::ZERO);
-        tempSprite->setPosition(groundSpriteWidth * i, groundPosition);
+    //for (int i = 0; i < numToRender; ++i)
+    //{
+    //    auto tempSprite = Sprite::create("ZigzagGrass_Mud_Round.png");
+    //    tempSprite->setAnchorPoint(Vec2::ZERO);
+    //    tempSprite->setPosition(groundSpriteWidth * i, groundPosition);
 
-        nodeItems->addChild(tempSprite, 0);
-    }
+    //    nodeItems->addChild(tempSprite, 0);
+    //}
 
     // Character	
     auto spriteNode = Node::create();
@@ -65,8 +67,8 @@ bool TestScene::init()
     auto characterSprite = Sprite::create("Blue_Front1.png");
     characterSprite->setName("MainCharacter");
     characterSprite->setAnchorPoint(Vec2::ZERO);
-    characterSprite->setPosition(0, groundPosition + groundSpriteHeight);
-
+    characterSprite->setPosition(0, 20);
+    
     spriteNode->addChild(characterSprite, 1);
 
     // Character Movement
@@ -81,7 +83,7 @@ bool TestScene::init()
     //characterSprite->runAction(sequence);
 
     // Add to this node tree
-    this->addChild(nodeItems, 1);
+    //this->addChild(nodeItems, 1);
     this->addChild(spriteNode, 1);
 
     // Use this function to assign functions to specific key press
@@ -95,7 +97,10 @@ bool TestScene::init()
     SetListeners();
     InitAnimationActions();
     InitShader();
-    this->scheduleUpdate();
+    InitTilemap();
+    scheduleUpdate();
+
+    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Audio/BGM.wav");
 
     return true;
 }
@@ -103,62 +108,64 @@ bool TestScene::init()
 void TestScene::update(float _dt)
 {
     auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+    
+    UpdatePlayer();
 
     //Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
     //mainCam->setPosition(charSprite->getPosition());
 
-    rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
-    this->visit();
-    rendtex->end();
-    rendtexSprite->setTexture(rendtex->getSprite()->getTexture());
-    rendtexSprite->setGLProgram(proPostProcess);
+    //rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
+    //this->visit();
+    //rendtex->end();
+    //rendtexSprite->setTexture(rendtex->getSprite()->getTexture());
+    //rendtexSprite->setGLProgram(proPostProcess);
 }
 
 void TestScene::InitShader()
 {
-	Vec2 mLoc(0.5f, 0.5f);
-	
-	// Specific order according to shaders
-	auto shaderCharEffect = new GLProgram();
-	shaderCharEffect->initWithFilenames("Shaders/Basic.vsh", "Shaders/CharEffect.fsh");
-	shaderCharEffect->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-	shaderCharEffect->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
-	shaderCharEffect->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD);
+	//Vec2 mLoc(0.5f, 0.5f);
+	//
+	//// Specific order according to shaders
+	//auto shaderCharEffect = new GLProgram();
+	//shaderCharEffect->initWithFilenames("Shaders/Basic.vsh", "Shaders/CharEffect.fsh");
+	//shaderCharEffect->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+	//shaderCharEffect->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+	//shaderCharEffect->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD);
 
-	shaderCharEffect->link();
-	shaderCharEffect->updateUniforms();
+	//shaderCharEffect->link();
+	//shaderCharEffect->updateUniforms();
 
-	GLProgramState* state = GLProgramState::getOrCreateWithGLProgram(shaderCharEffect);
-	
-	auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
-	charSprite->setGLProgram(shaderCharEffect);
-	charSprite->setGLProgramState(state);
-	state->setUniformVec2("loc", mLoc);
+	//GLProgramState* state = GLProgramState::getOrCreateWithGLProgram(shaderCharEffect);
+	//
+	//auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+	//charSprite->setGLProgram(shaderCharEffect);
+	//charSprite->setGLProgramState(state);
+	//state->setUniformVec2("loc", mLoc);
 
-	proPostProcess = GLProgram::createWithFilenames("Shaders/Basic.vsh", "Shaders/GreyScale.fsh");
-	proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-	proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
-	proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD);
-	proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD1, GLProgram::VERTEX_ATTRIB_TEX_COORD1);
-	proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD2, GLProgram::VERTEX_ATTRIB_TEX_COORD2);
-	proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD3, GLProgram::VERTEX_ATTRIB_TEX_COORD3);
-	proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_NORMAL, GLProgram::VERTEX_ATTRIB_NORMAL);
-	proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT, GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
-	proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_BLEND_INDEX, GLProgram::VERTEX_ATTRIB_BLEND_INDEX);
+	//proPostProcess = GLProgram::createWithFilenames("Shaders/Basic.vsh", "Shaders/GreyScale.fsh");
+	//proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+	//proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+	//proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD);
+	//proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD1, GLProgram::VERTEX_ATTRIB_TEX_COORD1);
+	//proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD2, GLProgram::VERTEX_ATTRIB_TEX_COORD2);
+	//proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD3, GLProgram::VERTEX_ATTRIB_TEX_COORD3);
+	//proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_NORMAL, GLProgram::VERTEX_ATTRIB_NORMAL);
+	//proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT, GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
+	//proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_BLEND_INDEX, GLProgram::VERTEX_ATTRIB_BLEND_INDEX);
 
-	proPostProcess->link();
-	proPostProcess->updateUniforms();
+	//proPostProcess->link();
+	//proPostProcess->updateUniforms();
 
-	rendtex = RenderTexture::create(Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height);
-	rendtex->retain();
+	//rendtex = RenderTexture::create(Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height);
+	//rendtex->retain();
 
-	rendtexSprite = Sprite::createWithTexture(rendtex->getSprite()->getTexture());
-	rendtexSprite->setTextureRect(Rect(0, 0, rendtexSprite->getTexture()->getContentSize().width, rendtexSprite->getTexture()->getContentSize().height));
-	rendtexSprite->setAnchorPoint(Point::ZERO);
-	rendtexSprite->setPosition(Point::ZERO);
-	rendtexSprite->setFlippedY(true);
-	rendtexSprite->setGLProgram(proPostProcess);
-	this->addChild(rendtexSprite, 2);
+	//rendtexSprite = Sprite::createWithTexture(rendtex->getSprite()->getTexture());
+	//rendtexSprite->setTextureRect(Rect(0, 0, rendtexSprite->getTexture()->getContentSize().width, rendtexSprite->getTexture()->getContentSize().height));
+	//rendtexSprite->setAnchorPoint(Point::ZERO);
+	//rendtexSprite->setPosition(Point::ZERO);
+	//rendtexSprite->setFlippedY(true);
+	//rendtexSprite->setGLProgram(proPostProcess);
+	//this->addChild(rendtexSprite, 2);
 }
 
 void TestScene::InitAnimationActions()
@@ -219,6 +226,13 @@ void TestScene::InitAnimationActions()
 	{
 		v_mainCharAnimation[i]->retain();
 	}
+}
+
+void TestScene::InitTilemap()
+{
+    auto map = TMXTiledMap::create("Map/Tilemap.tmx");
+    addChild(map, 0, 99); 
+    //auto layer = map->getLayer("Layer0");
 }
 
 void TestScene::SetListeners()
@@ -285,34 +299,34 @@ void TestScene::OnMouseEvent(Event* _event)
 {
 	EventMouse* mouseEvent = (EventMouse*)_event;
 
-	if (mouseEvent->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT)
-	{
-		Vec2 mousePos = Vec2(mouseEvent->getCursorX(), mouseEvent->getCursorY());
+	//if (mouseEvent->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT)
+	//{
+	//	Vec2 mousePos = Vec2(mouseEvent->getCursorX(), mouseEvent->getCursorY());
 
-		auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
-		charSprite->stopAllActions();
+	//	auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+	//	charSprite->stopAllActions();
 
-		auto moveEvent = MoveTo::create(1.0f, mousePos);
-		charSprite->runAction(moveEvent);
+	//	auto moveEvent = MoveTo::create(1.0f, mousePos);
+	//	charSprite->runAction(moveEvent);
 
-		float mouseXChange = mousePos.x - charSprite->getPosition().x;
-		float mouseYChange = mousePos.y - charSprite->getPosition().y;
+	//	float mouseXChange = mousePos.x - charSprite->getPosition().x;
+	//	float mouseYChange = mousePos.y - charSprite->getPosition().y;
 
-		if (fabs(mouseXChange) > fabs(mouseYChange))
-		{
-			if (mouseXChange > 0)
-				charSprite->runAction(RepeatForever::create(v_mainCharAnimation[RIGHT]));
-			else
-				charSprite->runAction(RepeatForever::create(v_mainCharAnimation[LEFT]));
-		}
-		else
-		{
-			if (mouseYChange > 0)
-				charSprite->runAction(RepeatForever::create(v_mainCharAnimation[BACK]));
-			else
-				charSprite->runAction(RepeatForever::create(v_mainCharAnimation[FRONT]));
-		}
-	}
+	//	if (fabs(mouseXChange) > fabs(mouseYChange))
+	//	{
+	//		if (mouseXChange > 0)
+	//			charSprite->runAction(RepeatForever::create(v_mainCharAnimation[RIGHT]));
+	//		else
+	//			charSprite->runAction(RepeatForever::create(v_mainCharAnimation[LEFT]));
+	//	}
+	//	else
+	//	{
+	//		if (mouseYChange > 0)
+	//			charSprite->runAction(RepeatForever::create(v_mainCharAnimation[BACK]));
+	//		else
+	//			charSprite->runAction(RepeatForever::create(v_mainCharAnimation[FRONT]));
+	//	}
+	//}
 }
 
 void TestScene::InputMouseTestFunction()
@@ -343,4 +357,69 @@ void TestScene::PopSceneTestFunction()
 void TestScene::SwitchSceneTest(cocos2d::Ref* pSender)
 {
     SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
+}
+
+void TestScene::MovePlayerUp()
+{
+    auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+    //charSprite->stopAllActions();
+
+    auto moveEvent = MoveBy::create(Director::getInstance()->getDeltaTime(), Vec2(0, 10));
+    charSprite->runAction(moveEvent);
+
+   CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
+    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
+}
+
+void TestScene::MovePlayerDown()
+{
+    auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+    //charSprite->stopAllActions();
+    
+    auto moveEvent = MoveBy::create(Director::getInstance()->getDeltaTime(), Vec2(0, -10));
+    charSprite->runAction(moveEvent);
+
+    CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
+    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
+}
+
+void TestScene::MovePlayerLeft()
+{
+    auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+    //charSprite->stopAllActions();
+
+    auto moveEvent = MoveBy::create(Director::getInstance()->getDeltaTime(), Vec2(-10, 0));
+    charSprite->runAction(moveEvent);
+
+    CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
+    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
+}
+
+void TestScene::MovePlayerRight()
+{
+    auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+    //charSprite->stopAllActions();
+
+    auto moveEvent = MoveBy::create(0,  Vec2(10, 0));
+    charSprite->runAction(moveEvent);
+
+    CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
+    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
+   
+}
+
+void TestScene::UpdatePlayer()
+{
+    if (InputHandler::GetInstance().GetKeyDown(EventKeyboard::KeyCode::KEY_LEFT_ARROW))
+        MovePlayerLeft();
+
+    if (InputHandler::GetInstance().GetKeyDown(EventKeyboard::KeyCode::KEY_RIGHT_ARROW))
+        MovePlayerRight();
+
+    if (InputHandler::GetInstance().GetKeyDown(EventKeyboard::KeyCode::KEY_UP_ARROW))
+        MovePlayerUp();
+
+    if (InputHandler::GetInstance().GetKeyDown(EventKeyboard::KeyCode::KEY_DOWN_ARROW))
+        MovePlayerDown();
+
 }
