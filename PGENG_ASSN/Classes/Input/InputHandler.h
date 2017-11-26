@@ -1,5 +1,5 @@
-#ifndef INPUT_HANDLER_H
-#define INPUT_HANDLER_H
+#ifndef INPUT_HANDLER_H_
+#define INPUT_HANDLER_H_
 
 #include "cocos2d.h"
 #include "InputAction.h"
@@ -40,8 +40,6 @@ public:
 #pragma region Keyboard Functions
 
     bool GetKeyDown(EventKeyboard::KeyCode _keyPressed){ return keyboardInputButtons[(int)_keyPressed]; };
-    void DoKeyboardOnPress(EventKeyboard::KeyCode _keyPressed, Event* _event);
-    void DoKeyboardOnRelease(EventKeyboard::KeyCode _keyPressed, Event* _event);
 
     // Note - Use bind(&Class::Function, this) to assign the action function
     void AssignKeyboardAction(EventKeyboard::KeyCode _keyPressed, function<void()> _action, bool _doOnPress = false, bool _doOnHeld = false, bool _doOnRelease = false);
@@ -49,10 +47,6 @@ public:
 #pragma endregion
 
 #pragma region Mouse Functions
-
-    void DoMouseOnPress(Event* _event);
-    void DoMouseOnRelease(Event* _event);
-    void DoMouseOnMove(Event* _event);
 
     // Note - Use bind(&Class::Function, this) to assign the action function
     void AssignMouseAction(EventMouse::MouseButton _keyPressed, function<void()> _action, bool _doOnPress = false, bool _doOnHeld = false, bool _doOnRelease = false);
@@ -77,7 +71,11 @@ private:
     string keyboardIdentifyer = "KB_";
     string mouseIdentifyer = "MB_";
 
-#pragma region Mouse Variables
+#pragma region Mouse
+
+    void DoMouseOnPress(Event* _event);
+    void DoMouseOnRelease(Event* _event);
+    void DoMouseOnMove(Event* _event);
 
     Vec2 currentMousePosition;
     Vec2 previousMousePosition;
@@ -87,7 +85,10 @@ private:
 
 #pragma endregion
 
-#pragma region Keyboard Variables
+#pragma region Keyboard
+
+    void DoKeyboardOnPress(EventKeyboard::KeyCode _keyPressed, Event* _event);
+    void DoKeyboardOnRelease(EventKeyboard::KeyCode _keyPressed, Event* _event);
 
     bitset<(int)EventKeyboard::KeyCode::KEY_PLAY> keyboardInputButtons;
     
@@ -95,4 +96,4 @@ private:
 
 };
 
-#endif INPUT_HANDLER_H
+#endif INPUT_HANDLER_H_

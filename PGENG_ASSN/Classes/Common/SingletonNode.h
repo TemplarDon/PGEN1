@@ -17,7 +17,7 @@ public:
     virtual bool init() = 0;
 
 protected:
-    SingletonNode() { };
+    SingletonNode() { retain(); };
     virtual ~SingletonNode() { }
 
     

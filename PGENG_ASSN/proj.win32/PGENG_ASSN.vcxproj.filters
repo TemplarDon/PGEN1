@@ -19,6 +19,9 @@
     <Filter Include="src\SceneManagement">
       <UniqueIdentifier>{6d231863-5e2f-45b1-a02c-0ada95a1f23d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Audio">
+      <UniqueIdentifier>{b20e6f7b-e01e-4dcb-a5d5-2de1583af2d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -41,6 +44,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\MainMenuScene.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Audio\AudioHandler.cpp">
+      <Filter>src\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +76,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\MainMenuScene.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Audio\AudioHandler.h">
+      <Filter>src\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

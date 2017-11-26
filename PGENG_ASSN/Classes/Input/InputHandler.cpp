@@ -1,6 +1,5 @@
 #include "InputHandler.h"
 
-
 InputHandler::InputHandler() 
 {
     if (Node::init())
