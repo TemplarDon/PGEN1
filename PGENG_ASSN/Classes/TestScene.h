@@ -48,6 +48,8 @@ public:
     void AddSceneTestFunction();
     void PopSceneTestFunction();
 
+    void SwitchSceneTest(cocos2d::Ref* pSender);
+
 private:
     Animate* v_mainCharAnimation[NUM_ANIM];
 

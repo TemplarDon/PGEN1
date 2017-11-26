@@ -93,6 +93,17 @@ bool TestScene::init()
     InitShader();
     this->scheduleUpdate();
 
+    // Menu
+    MenuItemFont* menu_play = MenuItemFont::create("Play", CC_CALLBACK_1(TestScene::SwitchSceneTest, this));
+    MenuItemFont* menu_quit = MenuItemFont::create("Quit", CC_CALLBACK_1(TestScene::SwitchSceneTest, this));
+
+    auto *menu = Menu::create(menu_play, menu_quit, nullptr);
+    menu->setPosition(Point(0, 0));
+    menu->setName("menu");
+    menu_play->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 3));
+    menu_quit->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 2));
+    this->addChild(menu, 5);
+
     return true;
 }
 
@@ -337,4 +348,9 @@ void TestScene::AddSceneTestFunction()
 void TestScene::PopSceneTestFunction()
 {
     SceneManager::GetInstance().PopSceneFromStack();
+}
+
+void TestScene::SwitchSceneTest(cocos2d::Ref* pSender)
+{
+    SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
 }

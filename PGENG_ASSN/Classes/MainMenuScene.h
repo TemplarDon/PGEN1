@@ -19,10 +19,18 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(MainMenuScene);
 
+    // Callback functions
+    void SetListeners();
+
+    //Key Press
+    void OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event);
+    void OnMouseEvent(Event* _event);
+
     virtual void update(float _dt);
 
-    void OnMouseEvent(Event* _event);
-    void Play(Ref *pSender);
+    void Play(cocos2d::Ref* pSender);
+    void test();
+
 };
 
 #endif // __MAINEMENU_SCENE_H__

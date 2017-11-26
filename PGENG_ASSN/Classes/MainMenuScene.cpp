@@ -31,31 +31,70 @@ bool MainMenuScene::init()
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    Size playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
 
-    // Mouse Listener
-    auto mouseListener = EventListenerMouse::create();
-    mouseListener->onMouseDown = CC_CALLBACK_1(MainMenuScene::OnMouseEvent, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+    // World
+    auto nodeItems = Node::create();
+    nodeItems->setName("nodeItems");
+
+    auto sprite = Sprite::create("ZigzagGrass_Mud_Round.png");
+
+    float groundSpriteWidth = sprite->getContentSize().width;
+    float  groundSpriteHeight = sprite->getContentSize().height;
+    int numToRender = ceil(playingSize.width / groundSpriteWidth);
+
+    float groundPosition = playingSize.height * 0.15f;
+
+    for (int i = 0; i < numToRender; ++i)
+    {
+        auto tempSprite = Sprite::create("ZigzagGrass_Mud_Round.png");
+        tempSprite->setAnchorPoint(Vec2::ZERO);
+        tempSprite->setPosition(groundSpriteWidth * i, groundPosition);
+
+        nodeItems->addChild(tempSprite, 0);
+    }
+
+    this->addChild(nodeItems, 1);
+
+    InputHandler::GetInstance().AssignMouseAction(EventMouse::MouseButton::BUTTON_LEFT, bind(&MainMenuScene::test, this), true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&MainMenuScene::test, this), true);
+
+    SetListeners();
+    this->scheduleUpdate();
 
     // Menu
     MenuItemFont* menu_play = MenuItemFont::create("Play", CC_CALLBACK_1(MainMenuScene::Play, this));
-    MenuItemFont* menu_quit = MenuItemFont::create("Quit", CC_CALLBACK_1(MainMenuScene::Play, this));
+    MenuItemFont* menu_quit = MenuItemFont::create("Quit", CC_CALLBACK_1(MainMenuScene::menuCloseCallback, this));
 
     auto *menu = Menu::create(menu_play, menu_quit, nullptr);
     menu->setPosition(Point(0, 0));
-
+    menu->setName("menu");
     menu_play->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 3));
     menu_quit->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 2));
 
-    this->addChild(menu);
-    this->scheduleUpdate();
+    this->addChild(menu, 5);
 
     return true;
 }
 
 void MainMenuScene::update(float _dt)
 {
+    Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    mainCam->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 2)));
+}
 
+void MainMenuScene::SetListeners()
+{
+    // Keyboard Listener
+    auto keyboardListener = EventListenerKeyboard::create();
+    keyboardListener->onKeyPressed = CC_CALLBACK_2(MainMenuScene::OnKeyPressed, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
+
+    // Mouse Listener
+    auto mouseListener = EventListenerMouse::create();
+    mouseListener->onMouseDown = CC_CALLBACK_1(MainMenuScene::OnMouseEvent, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
 }
 
 void MainMenuScene::menuCloseCallback(Ref* pSender)
@@ -95,7 +134,17 @@ void MainMenuScene::OnMouseEvent(Event* _event)
     }
 }
 
+void MainMenuScene::OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event)
+{
+
+}
+
 void MainMenuScene::Play(Ref *pSender)
 {
     SceneManager::GetInstance().TransitionLevel("test scene", SceneManager::TRANSITION_TYPES::FADE);
+}
+
+void MainMenuScene::test()
+{
+    SceneManager::GetInstance().TransitionLevel("ello level", SceneManager::TRANSITION_TYPES::FADE);
 }
