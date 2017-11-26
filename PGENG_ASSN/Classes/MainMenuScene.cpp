@@ -56,8 +56,9 @@ bool MainMenuScene::init()
 
     this->addChild(nodeItems, 1);
 
-    InputHandler::GetInstance().AssignMouseAction(EventMouse::MouseButton::BUTTON_RIGHT, bind(&MainMenuScene::test, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&MainMenuScene::test, this), true);
+    InputHandler::GetInstance();
+    //InputHandler::GetInstance().AssignMouseAction(EventMouse::MouseButton::BUTTON_RIGHT, bind(&MainMenuScene::test, this), true);
+    //InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&MainMenuScene::test, this), true);
 
     SetListeners();
     this->scheduleUpdate();
