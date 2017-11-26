@@ -2,6 +2,7 @@
 #include "Input\InputHandler.h"
 #include "SceneManagement\SceneManager.h"
 #include "SimpleAudioEngine.h"
+#include "Animation\SpriteBuilder.h"
 
 #define COCOS2D_DEBUG 1
 
@@ -71,6 +72,10 @@ bool TestScene::init()
     
     spriteNode->addChild(characterSprite, 1);
 
+	//Animation Controller
+	animController = new AnimationController();
+	animController->Init(characterSprite);
+
     // Character Movement
     //auto moveEvent = MoveBy::create(5.0f, Vec2(5.0f, 0));
     //characterSprite->runAction(moveEvent->clone());
@@ -100,7 +105,20 @@ bool TestScene::init()
     InitTilemap();
     scheduleUpdate();
 
+	//Stops animation when movement buttons are released
+	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&TestScene::StopAnimation, this), false, false, true);
+	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&TestScene::StopAnimation, this), false, false, true);
+	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&TestScene::StopAnimation, this), false, false, true);
+	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&TestScene::StopAnimation, this), false, false, true);
+
+	//Play walking sound effect when movement buttons are pressed
+	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&TestScene::PlayWalkingSoundEffect, this), true);
+	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&TestScene::PlayWalkingSoundEffect, this), true);
+	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&TestScene::PlayWalkingSoundEffect, this), true);
+	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&TestScene::PlayWalkingSoundEffect, this), true);
+
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Audio/BGM.wav");
+	CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
 
     return true;
 }
@@ -170,7 +188,23 @@ void TestScene::InitShader()
 
 void TestScene::InitAnimationActions()
 {
-	Vector<SpriteFrame*> frontFrames;
+	AnimateBuilder::GetInstance().LoadSpriteSheet("sprite sheet", "spritesheet_test.png", 6, 3);
+	AnimateBuilder::GetInstance().LoadAnimateFromLoadedSpriteSheet("Special1", "sprite sheet", 6, 12);	//Only half of the sprite sheet
+
+	AnimateBuilder::GetInstance().LoadAnimateFromWholeSpriteSheet("Special2", "spritesheet_test.png", 6, 3);	//Whole sprite sheet
+
+	AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Front", { "Blue_Front2.png", "Blue_Front1.png", "Blue_Front3.png", "Blue_Front1.png" });
+	AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Back", { "Blue_Back2.png", "Blue_Back1.png", "Blue_Back3.png", "Blue_Back1.png" });
+	AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Left", { "Blue_Left2.png", "Blue_Left1.png", "Blue_Left3.png", "Blue_Left1.png" });
+	AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Right", { "Blue_Right2.png", "Blue_Right1.png", "Blue_Right3.png", "Blue_Right1.png" });
+
+	animController->AddAnimate("Special1", AnimateBuilder::GetInstance().GetAnimate("Special1"));
+	animController->AddAnimate("Special2", AnimateBuilder::GetInstance().GetAnimate("Special2"));
+	animController->AddAnimate("Front", AnimateBuilder::GetInstance().GetAnimate("Front"));
+	animController->AddAnimate("Back", AnimateBuilder::GetInstance().GetAnimate("Back"));
+	animController->AddAnimate("Left", AnimateBuilder::GetInstance().GetAnimate("Left"));
+	animController->AddAnimate("Right", AnimateBuilder::GetInstance().GetAnimate("Right"));
+	/*Vector<SpriteFrame*> frontFrames;
 	frontFrames.reserve(4);
 
 	frontFrames.pushBack(SpriteFrame::create("Blue_Front2.png", Rect(0, 0, 65, 81)));
@@ -225,7 +259,7 @@ void TestScene::InitAnimationActions()
 	for (int i = 0; i < NUM_ANIM; ++i)
 	{
 		v_mainCharAnimation[i]->retain();
-	}
+	}*/
 }
 
 void TestScene::InitTilemap()
@@ -364,11 +398,13 @@ void TestScene::MovePlayerUp()
     auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
     //charSprite->stopAllActions();
 
+	animController->PlayAnimation("Back");
+
     auto moveEvent = MoveBy::create(Director::getInstance()->getDeltaTime(), Vec2(0, 10));
     charSprite->runAction(moveEvent);
 
-   CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
-    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
+	//CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
+    //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
 }
 
 void TestScene::MovePlayerDown()
@@ -376,11 +412,13 @@ void TestScene::MovePlayerDown()
     auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
     //charSprite->stopAllActions();
     
+	animController->PlayAnimation("Front");
+
     auto moveEvent = MoveBy::create(Director::getInstance()->getDeltaTime(), Vec2(0, -10));
     charSprite->runAction(moveEvent);
 
-    CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
-    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
+   // CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
+    //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
 }
 
 void TestScene::MovePlayerLeft()
@@ -388,11 +426,13 @@ void TestScene::MovePlayerLeft()
     auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
     //charSprite->stopAllActions();
 
+	animController->PlayAnimation("Left");
+
     auto moveEvent = MoveBy::create(Director::getInstance()->getDeltaTime(), Vec2(-10, 0));
     charSprite->runAction(moveEvent);
 
-    CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
-    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
+    //CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
+    //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
 }
 
 void TestScene::MovePlayerRight()
@@ -400,11 +440,13 @@ void TestScene::MovePlayerRight()
     auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
     //charSprite->stopAllActions();
 
+	animController->PlayAnimation("Right");
+
     auto moveEvent = MoveBy::create(0,  Vec2(10, 0));
     charSprite->runAction(moveEvent);
 
-    CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
-    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
+    //CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
+    //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
    
 }
 
@@ -422,4 +464,22 @@ void TestScene::UpdatePlayer()
     if (InputHandler::GetInstance().GetKeyDown(EventKeyboard::KeyCode::KEY_DOWN_ARROW))
         MovePlayerDown();
 
+	if (InputHandler::GetInstance().GetKeyDown(EventKeyboard::KeyCode::KEY_1))
+		animController->PlayAnimation("Special1", false);
+
+	if (InputHandler::GetInstance().GetKeyDown(EventKeyboard::KeyCode::KEY_2))
+		animController->PlayAnimation("Special2", false);
+
+}
+
+void TestScene::StopAnimation()
+{
+	animController->StopAnimation();
+	CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
+
+}
+
+void TestScene::PlayWalkingSoundEffect()
+{
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
 }

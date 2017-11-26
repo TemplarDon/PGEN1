@@ -25,6 +25,9 @@
     <Filter Include="src\Grid">
       <UniqueIdentifier>{b9aed6d5-c4f2-4090-8a5e-649bb08d402d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Animation">
+      <UniqueIdentifier>{f877e873-7d9f-4d11-b70c-ec739cc4e264}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -56,6 +59,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Grid\SpatialPartition.cpp">
       <Filter>src\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Animation\AnimationController.cpp">
+      <Filter>src\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Animation\SpriteBuilder.cpp">
+      <Filter>src\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +103,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Grid\SpatialPartition.h">
       <Filter>src\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Animation\AnimationController.h">
+      <Filter>src\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Animation\SpriteBuilder.h">
+      <Filter>src\Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

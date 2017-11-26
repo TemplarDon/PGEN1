@@ -2,6 +2,7 @@
 #define __TEST_SCENE_H__
 
 #include "cocos2d.h"
+#include "Animation\AnimationController.h"
 
 using namespace cocos2d;
 
@@ -57,15 +58,20 @@ public:
     void MovePlayerDown();
     void MovePlayerLeft();
     void MovePlayerRight();
-
     void UpdatePlayer();
+
+	void StopAnimation();
+	void PlayWalkingSoundEffect();
 
 private:
     Animate* v_mainCharAnimation[NUM_ANIM];
 
+	AnimationController* animController;
+
 	GLProgram* proPostProcess;
 	RenderTexture* rendtex;
 	Sprite* rendtexSprite;
+
 };
 
 #endif // __TEST_SCENE_H__
