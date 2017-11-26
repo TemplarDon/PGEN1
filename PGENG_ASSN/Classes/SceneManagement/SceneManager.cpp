@@ -43,6 +43,9 @@ void SceneManager::AddSceneToStack(string name, bool leaveOldScene)
 {
     Scene* toAdd = GetSharedScene(name);
 
+    if (toAdd == theDirector->getRunningScene())
+        return;
+
     if (toAdd)
     {
         Scene* oldScene = theDirector->getRunningScene();
@@ -105,6 +108,10 @@ void SceneManager::AddLayerToScene(string sceneToAddTo, string layer)
 void SceneManager::TransitionLevel(string newScene, TRANSITION_TYPES transition)
 {
     Scene* toTransition = GetLevel(newScene);
+ 
+    if (toTransition == theDirector->getRunningScene())
+        return;
+
     if (toTransition != nullptr)
     {
         if (transition == TRANSITION_TYPES::NIL)
