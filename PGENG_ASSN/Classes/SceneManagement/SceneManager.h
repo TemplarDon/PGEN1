@@ -51,8 +51,9 @@ private:
     map<string, Scene*> m_LevelMap;
     map<string, Scene*> m_SharedScenesMap;
 
-    void TransitionSceneWithAnimations(Scene* newScene, TRANSITION_TYPES transition);
+    GLProgram* greyscaleShader;
 
+    void TransitionSceneWithAnimations(Scene* newScene, TRANSITION_TYPES transition);
     Layer* CreateLayerFromScene(Scene* scene);
     void AddLayerToScene(string sceneToAddTo, string layer);
 

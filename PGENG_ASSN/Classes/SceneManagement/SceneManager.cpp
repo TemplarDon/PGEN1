@@ -20,6 +20,22 @@ bool SceneManager::init()
 
     theDirector = Director::getInstance();
     //theDirector->init();
+
+    greyscaleShader = GLProgram::createWithFilenames("Shaders/Basic.vsh", "Shaders/GreyScale.fsh");
+    greyscaleShader->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+    greyscaleShader->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+    greyscaleShader->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD);
+    greyscaleShader->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD1, GLProgram::VERTEX_ATTRIB_TEX_COORD1);
+    greyscaleShader->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD2, GLProgram::VERTEX_ATTRIB_TEX_COORD2);
+    greyscaleShader->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD3, GLProgram::VERTEX_ATTRIB_TEX_COORD3);
+    greyscaleShader->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_NORMAL, GLProgram::VERTEX_ATTRIB_NORMAL);
+    greyscaleShader->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT, GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
+    greyscaleShader->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_BLEND_INDEX, GLProgram::VERTEX_ATTRIB_BLEND_INDEX);
+
+    greyscaleShader->link();
+    greyscaleShader->updateUniforms();
+
+    greyscaleShader->retain();
 }
 
 void SceneManager::Start(Scene* initialScene)
@@ -54,7 +70,12 @@ void SceneManager::AddSceneToStack(string name, bool leaveOldScene)
         Scene* addTo = GetSharedScene(name);
 
         if (leaveOldScene)
-            addTo->addChild(CreateLayerFromScene(oldScene));
+        {
+            toAdd->removeChildByName("pause_bg");
+            Layer* newLayer = CreateLayerFromScene(oldScene);
+            newLayer->setName("pause_bg");
+            addTo->addChild(newLayer);
+        }
     }
 }
 
@@ -84,6 +105,7 @@ Layer* SceneManager::CreateLayerFromScene(Scene* sourceScene)
         rendtexSprite->setName("prevscene_bg");
         rendtexSprite->setPosition(theDirector->getVisibleSize().width * 0.5, theDirector->getVisibleSize().height * 0.5);
         rendtexSprite->setFlipY(true);
+        rendtexSprite->setGLProgram(greyscaleShader);
 
         Layer* returnLayer = Layer::create();
         returnLayer->addChild(rendtexSprite, -1);
