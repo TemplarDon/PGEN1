@@ -111,6 +111,18 @@ bool TestScene::init()
 	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&TestScene::StopAnimation, this), false, false, true);
 	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&TestScene::StopAnimation, this), false, false, true);
 
+    //Add Moveplayer when button is press and held
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&TestScene::MovePlayerUp, this), true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&TestScene::MovePlayerDown, this), true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&TestScene::MovePlayerLeft, this), true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&TestScene::MovePlayerRight, this), true);
+
+    //Add Moveplayer when button is released
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&TestScene::StopPlayerUp, this), false, false, true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&TestScene::StopPlayerDown, this), false, false, true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&TestScene::StopPlayerLeft, this), false, false, true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&TestScene::StopPlayerRight, this), false, false, true);
+    
 	//Play walking sound effect when movement buttons are pressed
 	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&TestScene::PlayWalkingSoundEffect, this), true);
 	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&TestScene::PlayWalkingSoundEffect, this), true);
@@ -395,13 +407,15 @@ void TestScene::SwitchSceneTest(cocos2d::Ref* pSender)
 
 void TestScene::MovePlayerUp()
 {
-    auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+    //auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
     //charSprite->stopAllActions();
 
 	animController->PlayAnimation("Back");
 
-    auto moveEvent = MoveBy::create(Director::getInstance()->getDeltaTime(), Vec2(0, 10));
-    charSprite->runAction(moveEvent);
+    shouldMoveUp = true;
+
+    //auto moveEvent = MoveBy::create(0, Vec2(0, 10));
+    //charSprite->runAction(moveEvent);
 
 	//CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
     //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
@@ -409,27 +423,31 @@ void TestScene::MovePlayerUp()
 
 void TestScene::MovePlayerDown()
 {
-    auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+    //auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
     //charSprite->stopAllActions();
     
 	animController->PlayAnimation("Front");
 
-    auto moveEvent = MoveBy::create(Director::getInstance()->getDeltaTime(), Vec2(0, -10));
-    charSprite->runAction(moveEvent);
+    shouldMoveDown = true;
 
-   // CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
+    //auto moveEvent = MoveBy::create(0, Vec2(0, -10));
+    //charSprite->runAction(moveEvent);
+
+    // CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
     //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
 }
 
 void TestScene::MovePlayerLeft()
 {
-    auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+    //auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
     //charSprite->stopAllActions();
 
 	animController->PlayAnimation("Left");
 
-    auto moveEvent = MoveBy::create(Director::getInstance()->getDeltaTime(), Vec2(-10, 0));
-    charSprite->runAction(moveEvent);
+    shouldMoveLeft = true;
+
+    // auto moveEvent = MoveBy::create(0, Vec2(-10, 0));
+    //charSprite->runAction(moveEvent);
 
     //CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
     //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
@@ -437,32 +455,87 @@ void TestScene::MovePlayerLeft()
 
 void TestScene::MovePlayerRight()
 {
-    auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+    //auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
     //charSprite->stopAllActions();
 
 	animController->PlayAnimation("Right");
 
-    auto moveEvent = MoveBy::create(0,  Vec2(10, 0));
-    charSprite->runAction(moveEvent);
+    shouldMoveRight = true;
+
+    //auto moveEvent = MoveBy::create(0,  Vec2(10, 0));
+    //charSprite->runAction(moveEvent);
 
     //CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
     //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
    
 }
 
+void TestScene::StopPlayerUp()
+{
+    shouldMoveUp = false;
+}
+
+void TestScene::StopPlayerDown()
+{
+    shouldMoveDown = false;
+}
+
+void TestScene::StopPlayerLeft()
+{
+    shouldMoveLeft = false;
+}
+
+void TestScene::StopPlayerRight()
+{
+    shouldMoveRight = false;
+}
+
+void TestScene::MovePlayer()
+{
+    auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+
+    if (shouldMoveLeft)
+    {   
+        auto moveEvent = MoveBy::create(0, Vec2(-5, 0));
+        charSprite->runAction(moveEvent);
+    }
+
+    if (shouldMoveRight)
+    {
+        auto moveEvent = MoveBy::create(0, Vec2(5, 0));
+        charSprite->runAction(moveEvent);
+    }
+
+    if (shouldMoveUp)
+    {
+        auto moveEvent = MoveBy::create(0, Vec2(0, 5));
+        charSprite->runAction(moveEvent);
+    }
+
+    if (shouldMoveDown)
+    {
+        auto moveEvent = MoveBy::create(0, Vec2(0, -5));
+        charSprite->runAction(moveEvent);
+    }
+}
+
 void TestScene::UpdatePlayer()
 {
-    if (InputHandler::GetInstance().GetKeyDown(EventKeyboard::KeyCode::KEY_LEFT_ARROW))
+    if (shouldMoveLeft)
         MovePlayerLeft();
 
-    if (InputHandler::GetInstance().GetKeyDown(EventKeyboard::KeyCode::KEY_RIGHT_ARROW))
+    if (shouldMoveRight)
         MovePlayerRight();
 
-    if (InputHandler::GetInstance().GetKeyDown(EventKeyboard::KeyCode::KEY_UP_ARROW))
+    if (shouldMoveUp)
         MovePlayerUp();
 
-    if (InputHandler::GetInstance().GetKeyDown(EventKeyboard::KeyCode::KEY_DOWN_ARROW))
+    if (shouldMoveDown)
         MovePlayerDown();
+
+
+    MovePlayer();
+
 
 	if (InputHandler::GetInstance().GetKeyDown(EventKeyboard::KeyCode::KEY_1))
 		animController->PlayAnimation("Special1", false);
@@ -474,9 +547,8 @@ void TestScene::UpdatePlayer()
 
 void TestScene::StopAnimation()
 {
-	animController->StopAnimation();
-	CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
-
+    animController->StopAnimation();
+    CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
 }
 
 void TestScene::PlayWalkingSoundEffect()
