@@ -6,6 +6,8 @@
 // Test Scene
 #include "TestScene.h"
 
+#include "MainMenuScene.h"
+
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
 
@@ -100,10 +102,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // create a scene. it's an autorelease object
     //auto scene = HelloWorld::createScene();
-	auto scene = TestScene::createScene();
+    auto scene = TestScene::createScene();
+	//auto scene = MainMenuScene::createScene();
 
     // run
-    director->runWithScene(scene);
+    //director->runWithScene(scene);
 
     // init with first scene
     SceneManager::GetInstance().Start(scene);
@@ -113,6 +116,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // add other levels
     SceneManager::GetInstance().AddLevel("ello level", HelloWorld::createScene());
+    SceneManager::GetInstance().AddLevel("test scene", TestScene::createScene());
 
     return true;
 }

@@ -8,6 +8,7 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
+    //Shutdown();
 }
 
 bool SceneManager::init()
@@ -114,5 +115,19 @@ Scene* SceneManager::GetLevel(string sceneName)
 
 void SceneManager::Shutdown()
 {
+    // release
+    for (auto it : m_LevelMap)
+    {
+        it.second->release();
+    }
+
+    for (auto it : m_SharedScenesMap)
+    {
+        it.second->release();
+    }
+
+    // pop all scenes away
     theDirector->popToSceneStackLevel(0);
+
+    theDirector->end();
 }
