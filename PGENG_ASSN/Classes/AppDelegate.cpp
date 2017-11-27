@@ -117,7 +117,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // add other levels
     SceneManager::GetInstance().AddLevel("ello level", HelloWorld::createScene());
     SceneManager::GetInstance().AddLevel("test scene", TestScene::createScene());
-    SceneManager::GetInstance().AddLevel("menu", MainMenuScene::createScene());
+    SceneManager::GetInstance().AddLevel("menu", scene);
 
     return true;
 }

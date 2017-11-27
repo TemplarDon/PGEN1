@@ -35,7 +35,6 @@ bool TestScene::init()
     // Reset all binded actions 
     InputHandler::GetInstance().ClearActionMaps();
 
-
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     Size playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
@@ -68,7 +67,8 @@ bool TestScene::init()
     auto characterSprite = Sprite::create("Blue_Front1.png");
     characterSprite->setName("MainCharacter");
     characterSprite->setAnchorPoint(Vec2::ZERO);
-    characterSprite->setPosition(0, 20);
+    characterSprite->setPosition(1000, 1000);
+    characterSprite->setScale(0.4);
     
     spriteNode->addChild(characterSprite, 1);
 
@@ -99,17 +99,11 @@ bool TestScene::init()
     InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_X, bind(&TestScene::AddSceneTestFunction, this), true);
     InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_C, bind(&TestScene::PopSceneTestFunction, this), true);
 
-    SetListeners();
-    InitAnimationActions();
-    InitShader();
-    InitTilemap();
-    scheduleUpdate();
-
-	//Stops animation when movement buttons are released
-	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&TestScene::StopAnimation, this), false, false, true);
-	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&TestScene::StopAnimation, this), false, false, true);
-	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&TestScene::StopAnimation, this), false, false, true);
-	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&TestScene::StopAnimation, this), false, false, true);
+    //Stops animation when movement buttons are released
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&TestScene::StopAnimation, this), false, false, true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&TestScene::StopAnimation, this), false, false, true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&TestScene::StopAnimation, this), false, false, true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&TestScene::StopAnimation, this), false, false, true);
 
     //Add Moveplayer when button is press and held
     InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&TestScene::MovePlayerUp, this), true);
@@ -122,12 +116,19 @@ bool TestScene::init()
     InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&TestScene::StopPlayerDown, this), false, false, true);
     InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&TestScene::StopPlayerLeft, this), false, false, true);
     InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&TestScene::StopPlayerRight, this), false, false, true);
-    
-	//Play walking sound effect when movement buttons are pressed
-	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&TestScene::PlayWalkingSoundEffect, this), true);
-	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&TestScene::PlayWalkingSoundEffect, this), true);
-	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&TestScene::PlayWalkingSoundEffect, this), true);
-	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&TestScene::PlayWalkingSoundEffect, this), true);
+
+    //Play walking sound effect when movement buttons are pressed
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&TestScene::PlayWalkingSoundEffect, this), true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&TestScene::PlayWalkingSoundEffect, this), true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&TestScene::PlayWalkingSoundEffect, this), true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&TestScene::PlayWalkingSoundEffect, this), true);
+
+    SetListeners();
+    InitAnimationActions();
+    InitShader();
+    InitTilemap();
+    scheduleUpdate();
+
 
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Audio/BGM.wav");
 	CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
@@ -141,8 +142,8 @@ void TestScene::update(float _dt)
     
     UpdatePlayer();
 
-    //Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
-    //mainCam->setPosition(charSprite->getPosition());
+    Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
+    mainCam->setPosition(charSprite->getPosition());
 
     //rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
     //this->visit();
@@ -164,7 +165,7 @@ void TestScene::InitShader()
 
 	//shaderCharEffect->link();
 	//shaderCharEffect->updateUniforms();
-
+    
 	//GLProgramState* state = GLProgramState::getOrCreateWithGLProgram(shaderCharEffect);
 	//
 	//auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
@@ -387,7 +388,7 @@ void TestScene::InputKeyboardTestFunction()
 
 void TestScene::SwitchSceneTestFunction()
 {
-    SceneManager::GetInstance().TransitionLevel("ello level", SceneManager::TRANSITION_TYPES::FADE);
+    SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
 }
 
 void TestScene::AddSceneTestFunction()

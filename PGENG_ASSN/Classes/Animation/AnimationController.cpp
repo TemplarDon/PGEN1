@@ -44,7 +44,6 @@ void AnimationController::StopAnimation()
 	currentAnim = NULL;
 }
 
-
 bool AnimationController::Init(Node * node)
 {
 	if(node == NULL)
@@ -58,7 +57,6 @@ bool AnimationController::Init(Node * node)
 AnimationController::AnimationController()
 {
 }
-
 
 AnimationController::~AnimationController()
 {

@@ -70,6 +70,7 @@ bool MainMenuScene::init()
     auto *menu = Menu::create(menu_play, menu_quit, nullptr);
     menu->setPosition(Point(0, 0));
     menu->setName("menu");
+    menu->retain();
     menu_play->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 3));
     menu_quit->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 2));
 

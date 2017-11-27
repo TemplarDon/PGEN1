@@ -99,7 +99,7 @@ Layer* SceneManager::CreateLayerFromScene(Scene* sourceScene)
         Sprite* rendtexSprite = Sprite::createWithTexture(rendtex->getSprite()->getTexture());
 
         rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
-        sourceScene->visit();
+        sourceScene->visit(/*Director::getInstance()->getRenderer(), Camera::getDefaultCamera()->getPosition(), Camera::getDefaultCamera()->getCameraFlag()*/);
         rendtex->end();
         rendtexSprite->setTexture(rendtex->getSprite()->getTexture());
         rendtexSprite->setName("prevscene_bg");
@@ -136,6 +136,8 @@ void SceneManager::TransitionLevel(string newScene, TRANSITION_TYPES transition)
 
     if (toTransition != nullptr)
     {
+        toTransition->removeAllChildren();
+        toTransition->init();
         if (transition == TRANSITION_TYPES::NIL)
         {
             theDirector->replaceScene(toTransition);
