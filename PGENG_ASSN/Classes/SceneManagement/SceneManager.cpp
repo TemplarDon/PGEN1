@@ -136,8 +136,8 @@ void SceneManager::TransitionLevel(string newScene, TRANSITION_TYPES transition)
 
     if (toTransition != nullptr)
     {
-        toTransition->removeAllChildren();
-        toTransition->init();
+        //toTransition->removeAllChildren();
+        //toTransition->init();
         if (transition == TRANSITION_TYPES::NIL)
         {
             theDirector->replaceScene(toTransition);
