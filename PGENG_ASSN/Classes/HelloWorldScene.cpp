@@ -5,17 +5,7 @@ USING_NS_CC;
 
 Scene* HelloWorld::createScene()
 {
-    //return HelloWorld::create();
-
-    auto scene = Scene::createWithPhysics();
-
-    auto layer = HelloWorld::create();
-	layer->setName("Scene");
-	layer->retain();
-
-    scene->addChild(layer);
-
-    return scene;
+    return HelloWorld::create();
 }
 
 // Print useful error message instead of segfaulting when files are not there.
@@ -38,7 +28,6 @@ bool HelloWorld::init()
     
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    Size playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -116,47 +105,16 @@ bool HelloWorld::init()
     auto characterSprite = Sprite::create("Blue_Front1.png");
     characterSprite->setName("MainCharacter");
     characterSprite->setAnchorPoint(Vec2::ZERO);
-    characterSprite->setPosition(0, playingSize.height * 0.5);
-
-    auto physics = PhysicsBody::createBox(characterSprite->getContentSize(), PhysicsMaterial(0.1f, 0.1f, 0.0f));
-    physics->setDynamic(true);
-    characterSprite->addComponent(physics);
+    characterSprite->setPosition(0, 0);
 
     spriteNode->addChild(characterSprite, 1);
 
-    //// Character Movement
-    //auto moveEvent = MoveBy::create(5.0f, Vec2(5.0f, 0));
-    //characterSprite->runAction(moveEvent->clone());
+    // Character Movement
+    auto moveEvent = MoveBy::create(5.0f, Vec2(5.0f, 0));
+    characterSprite->runAction(moveEvent->clone());
 
     // Add to this node tree
     this->addChild(spriteNode, 1);
-
-    // World: floor
-    auto nodeItems = Node::create();
-    nodeItems->setName("nodeItems");
-
-    auto sprite = Sprite::create("ZigzagGrass_Mud_Round.png");
-
-    float groundSpriteWidth = sprite->getContentSize().width;
-    float  groundSpriteHeight = sprite->getContentSize().height;
-    int numToRender = ceil(playingSize.width / groundSpriteWidth);
-
-    float groundPosition = playingSize.height * 0.15f;
-
-    for (int i = 0; i < numToRender; ++i)
-    {
-        auto tempSprite = Sprite::create("ZigzagGrass_Mud_Round.png");
-        tempSprite->setAnchorPoint(Vec2::ZERO);
-        tempSprite->setPosition(groundSpriteWidth * i, groundPosition);
-
-        auto physics = PhysicsBody::createBox(tempSprite->getContentSize(), PhysicsMaterial(0.1f, 0.1f, 0.0f));
-        physics->setDynamic(false);
-        tempSprite->addComponent(physics);
-
-        nodeItems->addChild(tempSprite, 0);
-    }
-
-    this->addChild(nodeItems, 1);
 
     return true;
 }

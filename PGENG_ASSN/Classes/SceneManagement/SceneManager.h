@@ -38,7 +38,7 @@ public:
     Scene* GetSharedScene(string sceneName);
     Scene* GetLevel(string levelName);
 
-    void TransitionLevel(string newScene, TRANSITION_TYPES transition = TRANSITION_TYPES::NIL, bool hasPhysicsParentLayer = false);
+    void TransitionLevel(string newScene, TRANSITION_TYPES transition = TRANSITION_TYPES::NIL);
 
     void Shutdown();
 
