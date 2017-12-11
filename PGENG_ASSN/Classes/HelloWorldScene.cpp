@@ -10,6 +10,8 @@ Scene* HelloWorld::createScene()
     auto scene = Scene::createWithPhysics();
 
     auto layer = HelloWorld::create();
+	layer->setName("Scene");
+	layer->retain();
 
     scene->addChild(layer);
 
