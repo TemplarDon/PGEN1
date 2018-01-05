@@ -74,7 +74,7 @@ void SceneManager::AddSceneToStack(string name, bool leaveOldScene)
             toAdd->removeChildByName("pause_bg");
             Layer* newLayer = CreateLayerFromScene(oldScene);
             newLayer->setName("pause_bg");
-            addTo->addChild(newLayer);
+            addTo->addChild(newLayer, -1);
         }
     }
 }
@@ -127,7 +127,7 @@ void SceneManager::AddLayerToScene(string sceneToAddTo, string layer)
     GetLevel(sceneToAddTo)->addChild(rendtexSprite);
 }
 
-void SceneManager::TransitionLevel(string newScene, TRANSITION_TYPES transition)
+void SceneManager::TransitionLevel(string newScene, TRANSITION_TYPES transition, bool hasPhysicsParentLayer)
 {
     Scene* toTransition = GetLevel(newScene);
  
@@ -136,7 +136,15 @@ void SceneManager::TransitionLevel(string newScene, TRANSITION_TYPES transition)
 
     if (toTransition != nullptr)
     {
+        Node* scene = nullptr;
+        if (hasPhysicsParentLayer)
+            scene = toTransition->getChildByName("Scene");
+
         toTransition->removeAllChildren();
+
+        if (hasPhysicsParentLayer)
+            toTransition->addChild(scene);
+
         toTransition->init();
         if (transition == TRANSITION_TYPES::NIL)
         {
