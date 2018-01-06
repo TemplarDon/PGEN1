@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.0" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextobjectid="3">
+ <tileset firstgid="1" name="roguelikeSheet_transparent" tilewidth="16" tileheight="16" spacing="1" tilecount="1767" columns="57">
+  <image source="../TileSheets/roguelikeSheet_transparent.png" width="968" height="526"/>
+ </tileset>
+ <tileset firstgid="1768" name="collidable" tilewidth="16" tileheight="16" spacing="1" tilecount="1" columns="1">
+  <image source="../TileSheets/collidable.png" width="16" height="16"/>
+ </tileset>
+ <layer name="Ground" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1DEKwDAMBEFXzv9/nCfEGMNJzhTT3yLQHGNMAACAn3g+pPftbK7c0nn7TkN666k7pPeudKS3nOhI73ALHdV07ej4T1f3d+1Ib9FwT8MtHektOnRUo6OeWzoAgDpe8MY7Fg==
+  </data>
+ </layer>
+ <layer name="Obstacles" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztldsNwjAMRdtI3YEx2KPtD0wBc4AHKUMxBivQSLVqmaTpk9iSj2SpVX6uff0oCsMwDMMwctG63AqWwzX7f3Dxd6mA+/1vSfB3TYAbA/PRREgvKPGEategN4Zm7Z5PGY5rlVvZdi6VjjxufQ/dhz46DaGRrs/htXEecC9I28XUo6m+Qt0g9D5Sj2J5tOQmekD4bYzlAQH9ufzAvcq/lyKtnzRxLsfQQk38fivS7WmI9oeSvm2YTl//5wrt9F7kgGum9a8TumgN9rjpe8G9SfXUGt/+Aeri+Whkznz4PFM9l5s5+8nnKXWP0fqm6i2572h9U/WWOt9rkOwJMqUR36R7ktpX0vUjUvfQEUi/HSFCs6LRMy3zYBiGYRzHF+UHNcw=
+  </data>
+ </layer>
+ <layer name="Water" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmEsOwyAMRF01vVQb5VL9Xb8gRSqxQAlOhYd0njS7LHiYgEGEEEIIGueQYc7FeSx7GENOc+7Sp0usxUO+HjGT64hspLXY4pGuQaR1WOuhv0epHT3wPeKeNRRS49ySnEdNevW4hrySvNsPOUutB8r8a+iBxVOW6/0mfXpo1upDj7ZYPXT/qNO6n9T/i07pvPiXOuZ6HZSeP8XS3yDWiB5Y0MOP3Fmh31x68Nh796LHb7F6oN0lrR7e8685isdaL1m6j6F5bKH2fQ8VemBBDyyO4pHbm73Pb0IINh/V7yY6
+  </data>
+ </layer>
+ <layer name="CollideMap" width="50" height="50" opacity="0.38">
+  <properties>
+   <property name="Collidable" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztl1kOwzAIRPPV+x+zx8ivG3kJMMBQMVKkNrENL16YXFer1Wq12PT9/F5VNeZelWWWd1WON/fGZ5J1GPVONByr/6d59WRCcqzaR+w5b45nWy+eFcfuOvXf3feSNd5uf0RKGvs0V1k1VcPxtl0FjjFPBg+A4GAQsj5L52hsi1YER8QZh/JLK47ZHGTNx+y9a85gb7+lqQksvvckBEeFOqnJKcMDs/TxysNSA5Ae1TJeNodlbOT3BpLDsp6sZ0/2/kDFR3O8Gc+6F7RxPWU9F9B18OnVTl529lsbj0HVOaQed9U/IkfpM0kfRj+lGZNlXUnEyiHNgYEDEY+BA6F/4sj8jm21WvV0A+Xp1Oc=
+  </data>
+ </layer>
+ <objectgroup name="PathfinderPoints">
+  <object id="1" x="219.333" y="532.667" width="28" height="28.3333">
+   <properties>
+    <property name="Point" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="2" x="538" y="295.5" width="25" height="24">
+   <properties>
+    <property name="Point" type="int" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

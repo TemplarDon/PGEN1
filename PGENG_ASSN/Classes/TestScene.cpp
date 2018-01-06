@@ -132,7 +132,6 @@ bool TestScene::init()
 
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Audio/BGM.wav");
 	CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
-
     return true;
 }
 

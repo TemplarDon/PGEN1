@@ -1,0 +1,37 @@
+#ifndef __PATROLLING_FSM_H__
+#define __PATROLLING_FSM_H__
+
+#include "BaseFSM.h"
+
+class PatrollingFSM : public BaseFSM
+{
+public:
+    PatrollingFSM(TMXTiledMap* map);
+    ~PatrollingFSM();
+
+private:
+    virtual void Sense();  // get/receive updates from the world
+    virtual int Think();   // process the updates
+    virtual void Act(int value);     // act upon any change in behaviour
+
+    float m_nearDistCheck;
+
+public:
+
+    enum PATROLLING_STATES
+    {
+        IDLE,
+        PATROLLING,
+        DEAD,
+
+        NUM_STATES,
+    };
+
+    PATROLLING_STATES m_currentState;
+
+    map<int, Vec2> m_waypoints;
+    int m_idx;
+
+};
+
+#endif
