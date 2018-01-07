@@ -88,7 +88,7 @@ void PatrollingFSM::Act(int value)
     switch (m_currentState)
     {
     case PATROLLING_STATES::IDLE:
-        m_patrolTarget = m_pathFinder->RandomPosition(8);
+        m_patrolTarget = m_pathFinder->RandomPosition(5);
         break;
 
     case PATROLLING_STATES::PATROLLING:

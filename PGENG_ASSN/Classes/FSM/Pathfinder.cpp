@@ -20,7 +20,7 @@ void Pathfinder::Init(TMXTiledMap* map)
     m_currentIdx = 0;
     maxLoops = 500;
 
-    m_reachedDist = 15.f;
+    m_reachedDist = 10.f;
 
     m_openList = vector<PathfinderNode*>();
     m_closedList = vector<PathfinderNode*>();
