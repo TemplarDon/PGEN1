@@ -4,6 +4,8 @@
 #include "cocos2d.h"
 #include "Animation\AnimationController.h"
 #include "Player\Player.h"
+#include "Interactables\interactable.h"
+
 
 using namespace cocos2d;
 
@@ -39,6 +41,7 @@ public:
     void OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event);
     void OnMouseEvent(Event* _event);
     bool onContactBegin(PhysicsContact& contact);
+	bool onContactSeperate(PhysicsContact& contact);
 
     virtual void update(float _dt);
 
@@ -69,6 +72,9 @@ private:
     Sprite* rendtexSprite;
     Vec2 spawnPos;
     Player* player;
+
+
+	MenuItemFont* menu_play;
 };
 
 #endif // __TEST_SCENE_H__
