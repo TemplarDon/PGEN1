@@ -102,7 +102,10 @@ void PatrollingFSM::Act(int value)
 
         auto moveEvent = MoveBy::create(0, moveby * m_moveSpeed);
         this->runAction(moveEvent);
-        
+
+        //PhysicsBody* curPhysics = getChildByName("sprite")->getPhysicsBody();
+        //curPhysics->applyForce(moveby * m_moveForce);
+
         // Play anim based on pathfinder dir
         switch (m_pathFinder->m_currDir)
         {
@@ -111,8 +114,6 @@ void PatrollingFSM::Act(int value)
         case Pathfinder::DIR::LEFT: animController->PlayAnimation("Left"); break;
         case Pathfinder::DIR::RIGHT: animController->PlayAnimation("Right"); break;
         }
-
-
 
         break;
     }
