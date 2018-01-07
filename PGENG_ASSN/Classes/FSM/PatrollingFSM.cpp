@@ -88,7 +88,7 @@ void PatrollingFSM::Act(int value)
     switch (m_currentState)
     {
     case PATROLLING_STATES::IDLE:
-        m_patrolTarget = m_pathFinder->RandomPosition(5);
+        m_patrolTarget = m_pathFinder->RandomPosition(3);
         break;
 
     case PATROLLING_STATES::PATROLLING:
@@ -112,8 +112,7 @@ void PatrollingFSM::Act(int value)
         case Pathfinder::DIR::RIGHT: animController->PlayAnimation("Right"); break;
         }
 
-        //PhysicsBody* curPhysics = getChildByName("sprite")->getPhysicsBody();
-        //curPhysics->applyForce(moveby * m_moveForce);
+
 
         break;
     }

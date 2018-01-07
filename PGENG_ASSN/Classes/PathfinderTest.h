@@ -89,7 +89,7 @@ private:
     GLProgram* proPostProcess;
     RenderTexture* rendtex;
     Sprite* rendtexSprite;
-
+    Vec2 spawnPos;
 };
 
 #endif // __TEST_SCENE_H__

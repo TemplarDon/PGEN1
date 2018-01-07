@@ -81,12 +81,12 @@ bool PathfinderTest::init()
     characterSprite->setName("MainCharacter");
     characterSprite->setAnchorPoint(Vec2::ZERO);
     characterSprite->setPosition(250, 250);
-    characterSprite->setScale(0.4);
+    characterSprite->setScale(0.2);
 
     // PhysicsBody
     auto physicsBody = PhysicsBody::createBox(
         characterSprite->getContentSize(),
-        PhysicsMaterial(0.1f, 1.0f, 0.0f)
+        PhysicsMaterial(0.1f, 0, 0.0f)
         );
 
     physicsBody->setDynamic(true);
@@ -94,37 +94,37 @@ bool PathfinderTest::init()
     physicsBody->setRotationEnable(false);
     
     physicsBody->setCategoryBitmask(PLAYER_BITMASK);
-    physicsBody->setCollisionBitmask(ENEMY_BITMASK); 
-    physicsBody->setContactTestBitmask(ENEMY_BITMASK);
+    physicsBody->setCollisionBitmask(ENEMY_BITMASK | WALLS_BITMASK); 
+    physicsBody->setContactTestBitmask(ENEMY_BITMASK | WALLS_BITMASK);
 
     characterSprite->addComponent(physicsBody);
 
     spriteNode->addChild(characterSprite, 1);
 
 
-    auto characterSprite2 = Sprite::create("Blue_Front1.png");
-    characterSprite2->setName("MainCharacter2");
-    characterSprite2->setAnchorPoint(Vec2::ZERO);
-    characterSprite2->setPosition(250, 100);
-    characterSprite2->setScale(0.4);
+    //auto characterSprite2 = Sprite::create("Blue_Front1.png");
+    //characterSprite2->setName("MainCharacter2");
+    //characterSprite2->setAnchorPoint(Vec2::ZERO);
+    //characterSprite2->setPosition(250, 100);
+    //characterSprite2->setScale(0.4);
 
-    // PhysicsBody2
-    auto physicsBody2 = PhysicsBody::createBox(
-        characterSprite2->getContentSize(),
-        PhysicsMaterial(0.1f, 1.0f, 0.0f)
-        );
+    //// PhysicsBody2
+    //auto physicsBody2 = PhysicsBody::createBox(
+    //    characterSprite2->getContentSize(),
+    //    PhysicsMaterial(0.1f, 1.0f, 0.0f)
+    //    );
 
-    physicsBody2->setDynamic(true);
-    physicsBody2->setGravityEnable(false);
-    physicsBody2->setRotationEnable(false);
-    
-    physicsBody2->setCategoryBitmask(NEUTRAL_BITMASK);
-    physicsBody2->setCollisionBitmask(ENEMY_BITMASK);
-    physicsBody2->setContactTestBitmask(ENEMY_BITMASK);
+    //physicsBody2->setDynamic(true);
+    //physicsBody2->setGravityEnable(false);
+    //physicsBody2->setRotationEnable(false);
+    //
+    //physicsBody2->setCategoryBitmask(NEUTRAL_BITMASK);
+    //physicsBody2->setCollisionBitmask(ENEMY_BITMASK);
+    //physicsBody2->setContactTestBitmask(ENEMY_BITMASK);
 
-    characterSprite2->addComponent(physicsBody2);
+    //characterSprite2->addComponent(physicsBody2);
 
-    spriteNode->addChild(characterSprite2, 1);
+    //spriteNode->addChild(characterSprite2, 1);
 
     //Animation Controller
     animController = new AnimationController();
@@ -350,16 +350,63 @@ void PathfinderTest::InitAnimationActions()
 
 void PathfinderTest::InitTilemap()
 {
-    auto map = TMXTiledMap::create("Map/PathfinderTest.tmx");
+    auto map = TMXTiledMap::create("Map/Dungeon.tmx");
     addChild(map, 0, 99);
     //auto layer = map->getLayer("Layer0");
+
+    // Disable collidemap layer
+    map->getLayer("CollideMap")->setVisible(false);
+    map->getLayer("InaccessibleMap")->setVisible(false);
+ 
+    // Create collision boxes
+    auto collisionNode = Node::create();
+    collisionNode->setName("collisionNode");
+
+    auto collideMap = map->layerNamed("CollideMap");
+
+    int width = map->getMapSize().width;
+    int height = map->getMapSize().height;
+
+    for (int x = 0; x < width; ++x)
+    {
+        for (int y = 0; y < height; ++y)
+        {
+            // Check if tile is in collidemap
+            auto colllide_sprite = collideMap->tileAt(Vec2(x, y));
+
+            if (colllide_sprite)
+            {
+                Vec2 pos = collideMap->tileAt(Vec2(x, y))->getPosition();
+                auto aNode = Node::create();
+                aNode->setPosition(pos);
+
+                Size sz = map->getTileSize();
+                auto physicsBody = PhysicsBody::createBox(
+                    sz,
+                    PhysicsMaterial(0.1f, 0, 0.0f)
+                    );
+
+                physicsBody->setDynamic(false);
+
+                physicsBody->setCategoryBitmask(WALLS_BITMASK);
+                physicsBody->setCollisionBitmask(PLAYER_BITMASK | ENEMY_BITMASK);
+                physicsBody->setContactTestBitmask(PLAYER_BITMASK | ENEMY_BITMASK);
+                aNode->addComponent(physicsBody);
+
+                collisionNode->addChild(aNode);
+            }
+        }
+    }
+
+    addChild(collisionNode);
+
 }
 
 void PathfinderTest::InitFSM()
 {
     TMXTiledMap* map = (TMXTiledMap*)getChildByTag(99);
 
-    auto enemySpawnGroup = map->getObjectGroup("EnemySpawns");
+    auto enemySpawnGroup = map->getObjectGroup("Spawns");
 
     if (enemySpawnGroup != nullptr)
     {
@@ -371,17 +418,28 @@ void PathfinderTest::InitFSM()
             auto point = itr.asValueMap();
             Vec2 pos = Vec2(point["x"].asInt(), point["y"].asInt());
 
-            stringstream ss;
-            ss << count;
-            string str = ss.str();
+            if (!point["isPlayerSpawn"].asBool())
+            {
+                stringstream ss;
+                ss << count;
+                string str = ss.str();
 
-            PatrollingFSM* testFSM = new PatrollingFSM(map, "White_Front1.png");
-            testFSM->setName("patrollingFSM" + str);
-            testFSM->setTag(FSM_TAG);
-            testFSM->setPosition(pos);
-            addChild(testFSM);
+                PatrollingFSM* testFSM = new PatrollingFSM(map, "White_Front1.png");
+                testFSM->setName("patrollingFSM" + str);
+                testFSM->setTag(FSM_TAG);
+                testFSM->setPosition(pos);
+                addChild(testFSM);
 
-            ++count;
+                ++count;
+            }
+            else
+            {
+                // set player pos
+                auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+                charSprite->setPosition(pos);
+
+                spawnPos = pos;
+            }
         }
     }
 }
@@ -487,8 +545,6 @@ void PathfinderTest::OnMouseEvent(Event* _event)
 
 bool PathfinderTest::onContactBegin(PhysicsContact& contact)
 {
-    CCLOG("Collision called");
-
     auto shapeA = contact.getShapeA()->getBody();
     auto shapeB = contact.getShapeB()->getBody();
 
@@ -500,21 +556,57 @@ bool PathfinderTest::onContactBegin(PhysicsContact& contact)
     }
 
     // PLAYER & ENEMY
-    if ((shapeA->getCategoryBitmask() == PLAYER_BITMASK & shapeB->getCollisionBitmask() == ENEMY_BITMASK) == 0
-        || (shapeB->getCategoryBitmask() == ENEMY_BITMASK & shapeA->getCollisionBitmask() == PLAYER_BITMASK) == 0)
+    //if ((shapeA->getCategoryBitmask() == PLAYER_BITMASK & shapeB->getCollisionBitmask() == ENEMY_BITMASK) == 0
+    //    || (shapeB->getCategoryBitmask() == ENEMY_BITMASK & shapeA->getCollisionBitmask() == PLAYER_BITMASK) == 0)
+    if ((shapeA->getCategoryBitmask() == PLAYER_BITMASK && shapeB->getCategoryBitmask() == ENEMY_BITMASK)
+        || (shapeB->getCategoryBitmask() == ENEMY_BITMASK && shapeA->getCategoryBitmask() == PLAYER_BITMASK))
     {
+        CCLOG("Player reset pos");
+
         if (shapeA->getCategoryBitmask() == PLAYER_BITMASK)
         {
-            shapeA->getNode()->setPosition(Vec2(250, 250));
+            shapeA->getNode()->setPosition(spawnPos);
+            shapeA->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
         }
         else
         {
-            shapeB->getNode()->setPosition(Vec2(250, 250));
+            shapeB->getNode()->setPosition(spawnPos);
+            shapeB->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
         }
+
+        return false;
     }
 
+    // PLAYER & WALL
+    if ((shapeA->getCategoryBitmask() == PLAYER_BITMASK && shapeB->getCategoryBitmask() == WALLS_BITMASK)
+        || (shapeB->getCategoryBitmask() == WALLS_BITMASK && shapeA->getCategoryBitmask() == PLAYER_BITMASK))
+    {
+        if (shapeA->getCategoryBitmask() == PLAYER_BITMASK)
+        {
+            shapeA->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+        }
+        else
+        {
+            shapeB->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+        }
+        return false;
+    }
 
-    CCLOG("Collision continue");
+    // ENEMY & WALL
+    if ((shapeA->getCategoryBitmask() == ENEMY_BITMASK && shapeB->getCategoryBitmask() == WALLS_BITMASK)
+        || (shapeB->getCategoryBitmask() == WALLS_BITMASK && shapeA->getCategoryBitmask() == ENEMY_BITMASK))
+    {
+        if (shapeA->getCategoryBitmask() == ENEMY_BITMASK)
+        {
+            shapeA->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+        }
+        else
+        {
+            shapeB->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+        }
+        return false;
+    }
+
     return true;
 }
 
@@ -639,26 +731,36 @@ void PathfinderTest::MovePlayer()
 
     if (shouldMoveLeft)
     {
-        auto moveEvent = MoveBy::create(0, Vec2(-5, 0));
-        charSprite->runAction(moveEvent);
+        //auto moveEvent = MoveBy::create(0, Vec2(-5, 0));
+        //charSprite->runAction(moveEvent);
+
+        charSprite->getPhysicsBody()->setVelocity(Vec2(-100, 0));
     }
 
     if (shouldMoveRight)
     {
-        auto moveEvent = MoveBy::create(0, Vec2(5, 0));
-        charSprite->runAction(moveEvent);
+        //auto moveEvent = MoveBy::create(0, Vec2(5, 0));
+        //charSprite->runAction(moveEvent);
+
+        charSprite->getPhysicsBody()->setVelocity(Vec2(100, 0));
     }
 
     if (shouldMoveUp)
     {
-        auto moveEvent = MoveBy::create(0, Vec2(0, 5));
-        charSprite->runAction(moveEvent);
+        //auto moveEvent = MoveBy::create(0, Vec2(0, 5));
+        //charSprite->runAction(moveEvent);
+
+        charSprite->getPhysicsBody()->setVelocity(Vec2(0, 100));
+
     }
 
     if (shouldMoveDown)
     {
-        auto moveEvent = MoveBy::create(0, Vec2(0, -5));
-        charSprite->runAction(moveEvent);
+        //auto moveEvent = MoveBy::create(0, Vec2(0, -5));
+        //charSprite->runAction(moveEvent);
+
+        charSprite->getPhysicsBody()->setVelocity(Vec2(0, -100));
+
     }
 }
 
