@@ -528,18 +528,24 @@ bool GameScene::onContactBegin(PhysicsContact& contact)
     auto shapeA = contact.getShapeA()->getBody();
     auto shapeB = contact.getShapeB()->getBody();
 
-    if ((shapeA->getCategoryBitmask() & shapeB->getCollisionBitmask()) == 0
-        || (shapeB->getCategoryBitmask() & shapeA->getCollisionBitmask()) == 0)
-    {
-        // shapes can't collide
+    if (shapeA->getNode() == nullptr || shapeB->getNode() == nullptr)
         return false;
-    }
+
+    if (shapeA == nullptr || shapeB == nullptr)
+        return false;
+
+    //if ((shapeA->getCategoryBitmask() & shapeB->getCollisionBitmask()) == 0
+    //    || (shapeB->getCategoryBitmask() & shapeA->getCollisionBitmask()) == 0)
+    //{
+    //    // shapes can't collide
+    //    return false;
+    //}
 
     // PLAYER & ENEMY
     //if ((shapeA->getCategoryBitmask() == PLAYER_BITMASK & shapeB->getCollisionBitmask() == ENEMY_BITMASK) == 0
     //    || (shapeB->getCategoryBitmask() == ENEMY_BITMASK & shapeA->getCollisionBitmask() == PLAYER_BITMASK) == 0)
     if ((shapeA->getCategoryBitmask() == PLAYER_BITMASK && shapeB->getCategoryBitmask() == ENEMY_BITMASK)
-        || (shapeB->getCategoryBitmask() == ENEMY_BITMASK && shapeA->getCategoryBitmask() == PLAYER_BITMASK))
+        || (shapeB->getCategoryBitmask() == PLAYER_BITMASK && shapeA->getCategoryBitmask() == ENEMY_BITMASK))
     {
         CCLOG("Player reset pos");
 
@@ -554,40 +560,35 @@ bool GameScene::onContactBegin(PhysicsContact& contact)
             shapeB->getNode()->setPosition(spawnPos);
             shapeB->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
             dynamic_cast<Player*>(shapeB->getNode())->TakeDamage(0);
-            
         }
 
         return false;
     }
 
-    // PLAYER & WALL
-    if ((shapeA->getCategoryBitmask() == PLAYER_BITMASK && shapeB->getCategoryBitmask() == WALLS_BITMASK)
-        || (shapeB->getCategoryBitmask() == WALLS_BITMASK && shapeA->getCategoryBitmask() == PLAYER_BITMASK))
-    {
-        if (shapeA->getCategoryBitmask() == PLAYER_BITMASK)
-        {
-            shapeA->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
-        }
-        else
-        {
-            shapeB->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0)); 
-            
-        }
-        return false;
-    }
-
-    // ENEMY & WALL
-    if ((shapeA->getCategoryBitmask() == ENEMY_BITMASK && shapeB->getCategoryBitmask() == WALLS_BITMASK)
-        || (shapeB->getCategoryBitmask() == WALLS_BITMASK && shapeA->getCategoryBitmask() == ENEMY_BITMASK))
+    if ((shapeA->getCategoryBitmask() == PLAYER_PROJECTILE_BITMASK && shapeB->getCategoryBitmask() == ENEMY_BITMASK)
+        || (shapeB->getCategoryBitmask() == PLAYER_PROJECTILE_BITMASK && shapeA->getCategoryBitmask() == ENEMY_BITMASK))
     {
         if (shapeA->getCategoryBitmask() == ENEMY_BITMASK)
         {
-            shapeA->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+            Node* test = shapeA->getNode();
+
+            dynamic_cast<BaseFSM*>(shapeA->getNode()->getParent())->m_isActive = false;
+            shapeA->getNode()->removeFromParent();
+            shapeB->getNode()->removeFromParent();
+
+            return false;
         }
         else
         {
-            shapeB->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+            Node* test = shapeB->getNode();
+
+            dynamic_cast<BaseFSM*>(shapeB->getNode()->getParent())->m_isActive = false;
+            shapeA->getNode()->removeFromParent();
+            shapeB->getNode()->removeFromParent();
+
+            return false;
         }
+
         return false;
     }
 
