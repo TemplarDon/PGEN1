@@ -111,6 +111,9 @@
     <ClCompile Include="..\Classes\Weapon\WeaponBase.cpp">
       <Filter>src\Weapon</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\GameScene.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -193,6 +196,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Weapon\WeaponBase.h">
       <Filter>src\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameScene.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

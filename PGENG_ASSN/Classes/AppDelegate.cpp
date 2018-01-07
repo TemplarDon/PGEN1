@@ -8,6 +8,7 @@
 
 #include "MainMenuScene.h"
 #include "PathfinderTest.h"
+#include "GameScene.h"
 
 // #define USE_AUDIO_ENGINE 1
  #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -119,7 +120,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // add other levels
     SceneManager::GetInstance().AddLevel("ello level", HelloWorld::createScene());
     SceneManager::GetInstance().AddLevel("pathfinder", PathfinderTest::createScene());
-    SceneManager::GetInstance().AddLevel("test scene", TestScene::createScene());
+    SceneManager::GetInstance().AddLevel("test scene", GameScene::createScene());
     SceneManager::GetInstance().AddLevel("menu", scene);
     SceneManager::GetInstance().FinishSetup();
     return true;

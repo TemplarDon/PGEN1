@@ -43,7 +43,8 @@ void Player::InitAnimation()
     Sprite* characterBaseSprite = Sprite::create("Player/PlayerBowTilesheet.png");
 
     characterBaseSprite->setName("MainCharacter");
-    characterBaseSprite->setAnchorPoint(Vec2(0.5f, 0.5f));
+    characterBaseSprite->setAnchorPoint(Vec2::ZERO);
+    characterBaseSprite->setScale(0.2);
 
     animController = new AnimationController();
     animController->Init(characterBaseSprite);
@@ -109,7 +110,7 @@ void Player::InitActions()
 
 void Player::InitPhysicBody()
 {
-    auto physicsBody = PhysicsBody::createBox(Size(50.f, 50.f),
+    auto physicsBody = PhysicsBody::createBox(Size(15.f, 15.f),
         PhysicsMaterial(0.1f, 1.0f, 0.0f));
 
     physicsBody->setGravityEnable(false);
