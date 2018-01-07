@@ -1,4 +1,5 @@
 #include "SceneManager.h"
+#include "Input\InputHandler.h"
 
 SceneManager::SceneManager()
 {
@@ -53,6 +54,11 @@ void SceneManager::AddSharedScene(string name, Scene* toAdd)
 {
     m_SharedScenesMap[name] = toAdd;
     m_SharedScenesMap[name]->retain();
+}
+
+void SceneManager::FinishSetup()
+{
+    InputHandler::GetInstance().ClearActionMaps();
 }
 
 void SceneManager::AddSceneToStack(string name, bool leaveOldScene)

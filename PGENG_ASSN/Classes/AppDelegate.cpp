@@ -121,7 +121,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     SceneManager::GetInstance().AddLevel("pathfinder", PathfinderTest::createScene());
     SceneManager::GetInstance().AddLevel("test scene", TestScene::createScene());
     SceneManager::GetInstance().AddLevel("menu", scene);
-
+    SceneManager::GetInstance().FinishSetup();
     return true;
 }
 
