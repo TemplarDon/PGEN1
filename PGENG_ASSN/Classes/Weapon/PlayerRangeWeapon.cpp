@@ -22,5 +22,5 @@ void PlayerRangeWeapon::Discharge(Vec2 Direction)
 		b_canFire = false;
 
     WeaponBase::Discharge(Direction);
-    player->getParent()->addChild(Create::playerProjectileEntity(player->getPosition(), 1500 * Direction, 1, 3), 99);
+    player->getParent()->addChild(Create::playerProjectileEntity(player->getPosition(), 900 * Direction, 1, 3), 99);
 }

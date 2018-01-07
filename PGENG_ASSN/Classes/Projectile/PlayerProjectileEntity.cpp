@@ -39,11 +39,11 @@ void PlayerProjectileEntity::CollisionResponse(Node* _other)
 
 void PlayerProjectileEntity::InitPhysicBody()
 {
-    auto characterSprite = Sprite::create("Blue_Front1.png");
+    auto characterSprite = Sprite::create("Player/Rock.png");
     characterSprite->setName("bullet");
     characterSprite->setAnchorPoint(Vec2::ZERO);
     characterSprite->setPosition(0, 0);
-    characterSprite->setScale(0.4);
+    characterSprite->setScale(0.1);
 
     auto physicsBody = PhysicsBody::createBox(characterSprite->getContentSize(),
         PhysicsMaterial(0.1f, 1.0f, 0.0f));

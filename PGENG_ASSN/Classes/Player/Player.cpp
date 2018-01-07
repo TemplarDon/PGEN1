@@ -44,7 +44,7 @@ void Player::InitAnimation()
 
     characterBaseSprite->setName("MainCharacter");
     characterBaseSprite->setAnchorPoint(Vec2::ZERO);
-    characterBaseSprite->setScale(0.2);
+    characterBaseSprite->setScale(0.3);
 
     animController = new AnimationController();
     animController->Init(characterBaseSprite);
@@ -110,7 +110,7 @@ void Player::InitActions()
 
 void Player::InitPhysicBody()
 {
-    auto physicsBody = PhysicsBody::createBox(Size(15.f, 15.f),
+    auto physicsBody = PhysicsBody::createBox(Size(8.f, 8.f),
         PhysicsMaterial(0.1f, 1.0f, 0.0f));
 
     physicsBody->setGravityEnable(false);
@@ -199,22 +199,22 @@ void Player::MovePlayer()
     {
         case MOVEDIR_LEFT:
         {
-            getPhysicsBody()->setVelocity(Vec2(-300.f, 0.0f));
+            getPhysicsBody()->setVelocity(Vec2(-250.f, 0.0f));
             break;
         }
         case MOVEDIR_RIGHT:
         {
-            getPhysicsBody()->setVelocity(Vec2(300.f, 0.0f));
+            getPhysicsBody()->setVelocity(Vec2(250.f, 0.0f));
         }
             break;
         case MOVEDIR_UP:
         {
-            getPhysicsBody()->setVelocity(Vec2(0.0f, 300.f));
+            getPhysicsBody()->setVelocity(Vec2(0.0f, 250.f));
             break;
         }
         case MOVEDIR_DOWN:
         {
-            getPhysicsBody()->setVelocity(Vec2(0.0f, -300.f));
+            getPhysicsBody()->setVelocity(Vec2(0.0f, -250.f));
             break;
         }
         case MOVEDIR_IDLE:
