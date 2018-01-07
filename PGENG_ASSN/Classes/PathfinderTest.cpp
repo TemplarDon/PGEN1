@@ -7,6 +7,7 @@
 #include "FSM\PatrollingFSM.h"
 
 #define COCOS2D_DEBUG 1
+#define FSM_TAG 5
 
 using namespace CocosDenshion;
 
@@ -90,6 +91,8 @@ bool PathfinderTest::init()
 
     physicsBody->setDynamic(true);
     physicsBody->setGravityEnable(false);
+    physicsBody->setRotationEnable(false);
+    
     physicsBody->setCategoryBitmask(PLAYER_BITMASK);
     physicsBody->setCollisionBitmask(ENEMY_BITMASK); 
     physicsBody->setContactTestBitmask(ENEMY_BITMASK);
@@ -113,6 +116,8 @@ bool PathfinderTest::init()
 
     physicsBody2->setDynamic(true);
     physicsBody2->setGravityEnable(false);
+    physicsBody2->setRotationEnable(false);
+    
     physicsBody2->setCategoryBitmask(NEUTRAL_BITMASK);
     physicsBody2->setCollisionBitmask(ENEMY_BITMASK);
     physicsBody2->setContactTestBitmask(ENEMY_BITMASK);
@@ -176,12 +181,8 @@ bool PathfinderTest::init()
     InitAnimationActions();
     InitShader();
     InitTilemap();
+    InitFSM();
     scheduleUpdate();
-
-    // FSM
-    PatrollingFSM* testFSM = new PatrollingFSM((TMXTiledMap*)getChildByTag(99), "White_Front1.png");
-    testFSM->setName("testFSM");
-    addChild(testFSM);
 
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Audio/BGM.wav");
     CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
@@ -194,8 +195,20 @@ void PathfinderTest::update(float _dt)
 
     UpdatePlayer();
 
-    BaseFSM* testFSM = (BaseFSM*)getChildByName("testFSM");
-    testFSM->RunFSM();
+    Vector<Node*> myVector = getChildren();
+    Vector<Node*>::iterator myIterator;
+
+    for (myIterator = myVector.begin(); myIterator != myVector.end(); ++myIterator)
+    {
+        auto mySprite = *myIterator;
+
+        if (mySprite->getTag() == FSM_TAG)
+        {
+            dynamic_cast<BaseFSM*>(mySprite)->RunFSM();
+        }
+    }
+
+    //UpdateFSM();
 
     Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
     mainCam->setPosition(charSprite->getPosition());
@@ -335,6 +348,37 @@ void PathfinderTest::InitTilemap()
     auto map = TMXTiledMap::create("Map/PathfinderTest.tmx");
     addChild(map, 0, 99);
     //auto layer = map->getLayer("Layer0");
+}
+
+void PathfinderTest::InitFSM()
+{
+    TMXTiledMap* map = (TMXTiledMap*)getChildByTag(99);
+
+    auto enemySpawnGroup = map->getObjectGroup("EnemySpawns");
+
+    if (enemySpawnGroup != nullptr)
+    {
+        auto enemySpawns = enemySpawnGroup->getObjects();
+
+        int count = 0;
+        for (auto &itr : enemySpawns)
+        {
+            auto point = itr.asValueMap();
+            Vec2 pos = Vec2(point["x"].asInt(), point["y"].asInt());
+
+            stringstream ss;
+            ss << count;
+            string str = ss.str();
+
+            PatrollingFSM* testFSM = new PatrollingFSM(map, "White_Front1.png");
+            testFSM->setName("patrollingFSM" + str);
+            testFSM->setTag(FSM_TAG);
+            testFSM->setPosition(pos);
+            addChild(testFSM);
+
+            ++count;
+        }
+    }
 }
 
 void PathfinderTest::SetListeners()
@@ -636,6 +680,11 @@ void PathfinderTest::UpdatePlayer()
 
     if (InputHandler::GetInstance().GetKeyDown(EventKeyboard::KeyCode::KEY_2))
         animController->PlayAnimation("Special2", false);
+
+}
+
+void PathfinderTest::UpdateFSM()
+{
 
 }
 

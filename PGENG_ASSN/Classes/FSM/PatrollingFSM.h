@@ -26,9 +26,10 @@ public:
     };
 
     PATROLLING_STATES m_currentState;
+    Vec2 m_patrolTarget;
 
-    map<int, Vec2> m_waypoints;
-    int m_idx;
+    //map<int, Vec2> m_waypoints;
+    //int m_idx;
 
 };
 

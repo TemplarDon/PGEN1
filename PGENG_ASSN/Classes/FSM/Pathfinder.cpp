@@ -20,7 +20,7 @@ void Pathfinder::Init(TMXTiledMap* map)
     m_currentIdx = 0;
     maxLoops = 500;
 
-    m_reachedDist = 0.001f;
+    m_reachedDist = 12.f;
 
     m_openList = vector<PathfinderNode*>();
     m_closedList = vector<PathfinderNode*>();
@@ -87,6 +87,9 @@ void Pathfinder::FindPath(Vec2 dest)
 
         m_currentNode = GetNode(m_currentPos);
     }
+
+    if (!m_currentNode)
+        return;
 
     vector<PathfinderNode*> neighbours;
     int loopCount = 0;
@@ -211,7 +214,8 @@ Vec2 Pathfinder::FollowPath()
 
     if (!m_pathComplete)
     {
-        if (m_currentPos.distance(m_path[m_currentIdx]->m_pos) <= m_reachedDist)
+        float dist = m_currentPos.distance(m_path[m_currentIdx]->m_pos);
+        if (dist <= m_reachedDist)
         {
             ++m_currentIdx;
         }
@@ -318,4 +322,32 @@ void Pathfinder::RefreshNodeList()
             m_nodeList[x][y]->Reset();
         }
     }
+}
+
+Vec2 Pathfinder::RandomPosition(int range)
+{
+    Vec2 returnVec = Vec2(-1, -1);
+
+    m_currentNode = GetNode(m_currentPos);
+    int maxRetries = 5;
+    while (maxRetries > 0)
+    {
+        int randX = random(-range, range);
+        int randY = random(-range, range);
+
+        randX = clampf(randX + m_currentNode->m_gridPos.x, 0, m_mapSize.x - 1);
+        randY = clampf(randY + m_currentNode->m_gridPos.y, 0, m_mapSize.y - 1);
+
+        PathfinderNode* randNode = m_nodeList[randX][randY];
+        randNode->Reset();
+
+        if (ValidateNode(randNode) && m_currentNode != randNode)
+        {
+            return randNode->m_pos;
+        }
+
+        --maxRetries;
+    }
+
+    return returnVec;
 }

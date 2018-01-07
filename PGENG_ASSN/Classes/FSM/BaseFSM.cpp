@@ -4,7 +4,7 @@ BaseFSM::BaseFSM(TMXTiledMap* map, string sprite)
 : m_map(map)
 , m_spriteStr(sprite)
 , m_health(3)
-, m_moveSpeed(1000)
+, m_moveSpeed(1.5)
 {
     if (Node::init())
         init();
@@ -43,6 +43,8 @@ bool BaseFSM::init()
 
     physicsBody->setDynamic(true);
     physicsBody->setGravityEnable(false);
+    physicsBody->setRotationEnable(false);
+
     physicsBody->setCategoryBitmask(ENEMY_BITMASK);
     physicsBody->setCollisionBitmask(PLAYER_BITMASK | NEUTRAL_BITMASK);
     physicsBody->setContactTestBitmask(PLAYER_BITMASK | NEUTRAL_BITMASK);

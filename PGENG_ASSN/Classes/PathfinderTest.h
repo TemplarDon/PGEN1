@@ -31,6 +31,9 @@ public:
     // Tilemap Init
     void InitTilemap();
 
+    // FSM Init
+    void InitFSM();
+
     //Key Press
     void OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event);
     void OnMouseEvent(Event* _event);
@@ -66,6 +69,8 @@ public:
     bool shouldMoveDown = false;
     bool shouldMoveLeft = false;
     bool shouldMoveRight = false;
+
+    void UpdateFSM();
 
 private:
     enum ANIMLIST

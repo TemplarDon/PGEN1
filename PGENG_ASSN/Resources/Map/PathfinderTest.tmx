@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.1" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextobjectid="6">
+<map version="1.0" tiledversion="1.1.1" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextobjectid="11">
  <tileset firstgid="1" name="roguelikeSheet_transparent" tilewidth="16" tileheight="16" spacing="1" tilecount="1767" columns="57">
   <image source="../TileSheets/roguelikeSheet_transparent.png" width="968" height="526"/>
  </tileset>
@@ -26,10 +26,10 @@
    <property name="Collidable" type="bool" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztl1kOwzAIRPPV+x+zx8ivG3kJMMBQMVKkNrENL16YXFer1Wq12PT9/F5VNeZelWWWd1WON/fGZ5J1GPVONByr/6d59WRCcqzaR+w5b45nWy+eFcfuOvXf3feSNd5uf0RKGvs0V1k1VcPxtl0FjjFPBg+A4GAQsj5L52hsi1YER8QZh/JLK47ZHGTNx+y9a85gb7+lqQksvvckBEeFOqnJKcMDs/TxysNSA5Ae1TJeNodlbOT3BpLDsp6sZ0/2/kDFR3O8Gc+6F7RxPWU9F9B18OnVTl529lsbj0HVOaQed9U/IkfpM0kfRj+lGZNlXUnEyiHNgYEDEY+BA6F/4sj8jm21WvV0A+Xp1Oc=
+   eJztlEEOwyAMBHPq/5/ZZ/RKkSmxu14vikdCIgIcBmOuq2maplHj/fpupzJ7nOhiOTzBw+vMOhOkx7xu942EkQ/GXc32sNZmsPLwtFVcJkiPyncO4eHNlYqHJy6LqMeqXwXCQwHkvfJ6jnPRMDwYb1x2nVs5qMqHde4R/8z6iuYDlcdsEB6Vbt56UPKIxFfx+GfvY5/pMa+Pxqv22O0tMl7twawFtfpQ9bgTD1EL7Hf3rpOKxxhnF9eae9r5z5zugagP1h69Y7/WsD2y3nHVe+VB1cO7BwUPxP8UPBC0R9M0T+UDTWv2GA==
   </data>
  </layer>
- <objectgroup name="PathfinderPoints">
+ <objectgroup name="PathfinderPoints" visible="0">
   <object id="1" x="219.333" y="532.667" width="28" height="28.3333">
    <properties>
     <property name="Point" type="int" value="0"/>
@@ -49,6 +49,17 @@
    <properties>
     <property name="Point" type="int" value="2"/>
    </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="EnemySpawns">
+  <object id="7" x="387.833" y="321.5" width="22" height="23">
+   <ellipse/>
+  </object>
+  <object id="9" x="220" y="590.5" width="22" height="23">
+   <ellipse/>
+  </object>
+  <object id="10" x="601" y="264.5" width="22" height="23">
+   <ellipse/>
   </object>
  </objectgroup>
 </map>

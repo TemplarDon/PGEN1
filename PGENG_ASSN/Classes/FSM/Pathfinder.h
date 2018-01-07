@@ -13,6 +13,7 @@ public:
     void UpdateCurrentPosition(Vec2 pos);
     void FindPath(Vec2 dest);
     Vec2 FollowPath();
+    Vec2 RandomPosition(int range);
 
     bool m_pathFound;
     bool m_pathComplete;
