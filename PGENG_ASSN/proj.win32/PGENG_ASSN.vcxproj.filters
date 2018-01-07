@@ -34,6 +34,15 @@
     <Filter Include="src\Interactables">
       <UniqueIdentifier>{00362140-4251-4a34-8e0f-4001f850c3b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Player">
+      <UniqueIdentifier>{bd0fd05e-b1ae-4c59-a0cd-99b23b4aaf82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Weapon">
+      <UniqueIdentifier>{bc6828ab-c0ff-4025-80a4-e3e66ad0fab2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Projectile">
+      <UniqueIdentifier>{c12e5e0a-ddfc-448f-ba84-a708add62d72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -86,6 +95,21 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Interactables\Interactable.cpp">
       <Filter>src\Interactables</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Player\Player.cpp">
+      <Filter>src\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Projectile\PlayerProjectileEntity.cpp">
+      <Filter>src\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Projectile\ProjectileBase.cpp">
+      <Filter>src\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Weapon\PlayerRangeWeapon.cpp">
+      <Filter>src\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Weapon\WeaponBase.cpp">
+      <Filter>src\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +178,21 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Interactables\Interactable.h">
       <Filter>src\Interactables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player\Player.h">
+      <Filter>src\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Projectile\PlayerProjectileEntity.h">
+      <Filter>src\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Projectile\ProjectileBase.h">
+      <Filter>src\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Weapon\PlayerRangeWeapon.h">
+      <Filter>src\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Weapon\WeaponBase.h">
+      <Filter>src\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

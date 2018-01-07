@@ -12,7 +12,17 @@ USING_NS_CC;
 
 Scene* TestScene::createScene()
 {
-    return TestScene::create();
+    auto scene = Scene::createWithPhysics();
+    scene->setName("PhyscsBase");
+
+    auto layer = TestScene::create();
+
+    layer->setName("Scene");
+    layer->retain();
+
+    scene->addChild(layer);
+
+    return scene;
 }
 
 // Print useful error message instead of segfaulting when files are not there.
@@ -60,7 +70,8 @@ bool TestScene::init()
     //    nodeItems->addChild(tempSprite, 0);
     //}
 
-    // Character	
+    /*
+    // Character
     auto spriteNode = Node::create();
     spriteNode->setName("SpriteNode");
 
@@ -69,12 +80,12 @@ bool TestScene::init()
     characterSprite->setAnchorPoint(Vec2::ZERO);
     characterSprite->setPosition(1000, 1000);
     characterSprite->setScale(0.4);
-    
+
     spriteNode->addChild(characterSprite, 1);
 
-	//Animation Controller
-	animController = new AnimationController();
-	animController->Init(characterSprite);
+    //Animation Controller
+    animController = new AnimationController();
+    animController->Init(characterSprite);
 
     // Character Movement
     //auto moveEvent = MoveBy::create(5.0f, Vec2(5.0f, 0));
@@ -90,6 +101,7 @@ bool TestScene::init()
     // Add to this node tree
     //this->addChild(nodeItems, 1);
     this->addChild(spriteNode, 1);
+    */
 
     // Use this function to assign functions to specific key press
     InputHandler::GetInstance().AssignMouseAction(EventMouse::MouseButton::BUTTON_LEFT, bind(&TestScene::InputMouseTestFunction, this), true);
@@ -99,51 +111,29 @@ bool TestScene::init()
     InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_X, bind(&TestScene::AddSceneTestFunction, this), true);
     InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_C, bind(&TestScene::PopSceneTestFunction, this), true);
 
-    //Stops animation when movement buttons are released
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&TestScene::StopAnimation, this), false, false, true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&TestScene::StopAnimation, this), false, false, true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&TestScene::StopAnimation, this), false, false, true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&TestScene::StopAnimation, this), false, false, true);
-
-    //Add Moveplayer when button is press and held
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&TestScene::MovePlayerUp, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&TestScene::MovePlayerDown, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&TestScene::MovePlayerLeft, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&TestScene::MovePlayerRight, this), true);
-
-    //Add Moveplayer when button is released
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&TestScene::StopPlayerUp, this), false, false, true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&TestScene::StopPlayerDown, this), false, false, true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&TestScene::StopPlayerLeft, this), false, false, true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&TestScene::StopPlayerRight, this), false, false, true);
-
-    //Play walking sound effect when movement buttons are pressed
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&TestScene::PlayWalkingSoundEffect, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&TestScene::PlayWalkingSoundEffect, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&TestScene::PlayWalkingSoundEffect, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&TestScene::PlayWalkingSoundEffect, this), true);
+    //Init Player
+    player = new Player();
+    player->init();
+    this->addChild(player, 99);
 
     SetListeners();
-    InitAnimationActions();
+    //InitAnimationActions();
     InitShader();
     InitTilemap();
     scheduleUpdate();
 
-
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Audio/BGM.wav");
-	CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
+    CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
     return true;
 }
 
 void TestScene::update(float _dt)
 {
-    auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
-    
-    UpdatePlayer();
+    //auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
 
     Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
-    mainCam->setPosition(charSprite->getPosition());
-
+    mainCam->setPosition(player->getPosition());
+    
     //rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
     //this->visit();
     //rendtex->end();
@@ -153,145 +143,145 @@ void TestScene::update(float _dt)
 
 void TestScene::InitShader()
 {
-	//Vec2 mLoc(0.5f, 0.5f);
-	//
-	//// Specific order according to shaders
-	//auto shaderCharEffect = new GLProgram();
-	//shaderCharEffect->initWithFilenames("Shaders/Basic.vsh", "Shaders/CharEffect.fsh");
-	//shaderCharEffect->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-	//shaderCharEffect->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
-	//shaderCharEffect->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD);
+    //Vec2 mLoc(0.5f, 0.5f);
+    //
+    //// Specific order according to shaders
+    //auto shaderCharEffect = new GLProgram();
+    //shaderCharEffect->initWithFilenames("Shaders/Basic.vsh", "Shaders/CharEffect.fsh");
+    //shaderCharEffect->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+    //shaderCharEffect->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+    //shaderCharEffect->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD);
 
-	//shaderCharEffect->link();
-	//shaderCharEffect->updateUniforms();
-    
-	//GLProgramState* state = GLProgramState::getOrCreateWithGLProgram(shaderCharEffect);
-	//
-	//auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
-	//charSprite->setGLProgram(shaderCharEffect);
-	//charSprite->setGLProgramState(state);
-	//state->setUniformVec2("loc", mLoc);
+    //shaderCharEffect->link();
+    //shaderCharEffect->updateUniforms();
 
-	//proPostProcess = GLProgram::createWithFilenames("Shaders/Basic.vsh", "Shaders/GreyScale.fsh");
-	//proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-	//proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
-	//proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD);
-	//proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD1, GLProgram::VERTEX_ATTRIB_TEX_COORD1);
-	//proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD2, GLProgram::VERTEX_ATTRIB_TEX_COORD2);
-	//proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD3, GLProgram::VERTEX_ATTRIB_TEX_COORD3);
-	//proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_NORMAL, GLProgram::VERTEX_ATTRIB_NORMAL);
-	//proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT, GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
-	//proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_BLEND_INDEX, GLProgram::VERTEX_ATTRIB_BLEND_INDEX);
+    //GLProgramState* state = GLProgramState::getOrCreateWithGLProgram(shaderCharEffect);
+    //
+    //auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+    //charSprite->setGLProgram(shaderCharEffect);
+    //charSprite->setGLProgramState(state);
+    //state->setUniformVec2("loc", mLoc);
 
-	//proPostProcess->link();
-	//proPostProcess->updateUniforms();
+    //proPostProcess = GLProgram::createWithFilenames("Shaders/Basic.vsh", "Shaders/GreyScale.fsh");
+    //proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+    //proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+    //proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD);
+    //proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD1, GLProgram::VERTEX_ATTRIB_TEX_COORD1);
+    //proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD2, GLProgram::VERTEX_ATTRIB_TEX_COORD2);
+    //proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD3, GLProgram::VERTEX_ATTRIB_TEX_COORD3);
+    //proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_NORMAL, GLProgram::VERTEX_ATTRIB_NORMAL);
+    //proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT, GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
+    //proPostProcess->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_BLEND_INDEX, GLProgram::VERTEX_ATTRIB_BLEND_INDEX);
 
-	//rendtex = RenderTexture::create(Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height);
-	//rendtex->retain();
+    //proPostProcess->link();
+    //proPostProcess->updateUniforms();
 
-	//rendtexSprite = Sprite::createWithTexture(rendtex->getSprite()->getTexture());
-	//rendtexSprite->setTextureRect(Rect(0, 0, rendtexSprite->getTexture()->getContentSize().width, rendtexSprite->getTexture()->getContentSize().height));
-	//rendtexSprite->setAnchorPoint(Point::ZERO);
-	//rendtexSprite->setPosition(Point::ZERO);
-	//rendtexSprite->setFlippedY(true);
-	//rendtexSprite->setGLProgram(proPostProcess);
-	//this->addChild(rendtexSprite, 2);
+    //rendtex = RenderTexture::create(Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height);
+    //rendtex->retain();
+
+    //rendtexSprite = Sprite::createWithTexture(rendtex->getSprite()->getTexture());
+    //rendtexSprite->setTextureRect(Rect(0, 0, rendtexSprite->getTexture()->getContentSize().width, rendtexSprite->getTexture()->getContentSize().height));
+    //rendtexSprite->setAnchorPoint(Point::ZERO);
+    //rendtexSprite->setPosition(Point::ZERO);
+    //rendtexSprite->setFlippedY(true);
+    //rendtexSprite->setGLProgram(proPostProcess);
+    //this->addChild(rendtexSprite, 2);
 }
 
 void TestScene::InitAnimationActions()
 {
-	AnimateBuilder::GetInstance().LoadSpriteSheet("sprite sheet", "spritesheet_test.png", 6, 3);
-	AnimateBuilder::GetInstance().LoadAnimateFromLoadedSpriteSheet("Special1", "sprite sheet", 6, 12);	//Only half of the sprite sheet
+    AnimateBuilder::GetInstance().LoadSpriteSheet("sprite sheet", "spritesheet_test.png", 6, 3);
+    AnimateBuilder::GetInstance().LoadAnimateFromLoadedSpriteSheet("Special1", "sprite sheet", 6, 12);	//Only half of the sprite sheet
+    AnimateBuilder::GetInstance().LoadAnimateFromWholeSpriteSheet("Special2", "spritesheet_test.png", 6, 3);	//Whole sprite sheet
 
-	AnimateBuilder::GetInstance().LoadAnimateFromWholeSpriteSheet("Special2", "spritesheet_test.png", 6, 3);	//Whole sprite sheet
+    AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Front", { "Blue_Front2.png", "Blue_Front1.png", "Blue_Front3.png", "Blue_Front1.png" });
+    AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Back", { "Blue_Back2.png", "Blue_Back1.png", "Blue_Back3.png", "Blue_Back1.png" });
+    AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Left", { "Blue_Left2.png", "Blue_Left1.png", "Blue_Left3.png", "Blue_Left1.png" });
+    AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Right", { "Blue_Right2.png", "Blue_Right1.png", "Blue_Right3.png", "Blue_Right1.png" });
 
-	AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Front", { "Blue_Front2.png", "Blue_Front1.png", "Blue_Front3.png", "Blue_Front1.png" });
-	AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Back", { "Blue_Back2.png", "Blue_Back1.png", "Blue_Back3.png", "Blue_Back1.png" });
-	AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Left", { "Blue_Left2.png", "Blue_Left1.png", "Blue_Left3.png", "Blue_Left1.png" });
-	AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Right", { "Blue_Right2.png", "Blue_Right1.png", "Blue_Right3.png", "Blue_Right1.png" });
+    animController->AddAnimate("Special1", AnimateBuilder::GetInstance().GetAnimate("Special1"));
+    animController->AddAnimate("Special2", AnimateBuilder::GetInstance().GetAnimate("Special2"));
+    animController->AddAnimate("Front", AnimateBuilder::GetInstance().GetAnimate("Front"));
+    animController->AddAnimate("Back", AnimateBuilder::GetInstance().GetAnimate("Back"));
+    animController->AddAnimate("Left", AnimateBuilder::GetInstance().GetAnimate("Left"));
+    animController->AddAnimate("Right", AnimateBuilder::GetInstance().GetAnimate("Right"));
 
-	animController->AddAnimate("Special1", AnimateBuilder::GetInstance().GetAnimate("Special1"));
-	animController->AddAnimate("Special2", AnimateBuilder::GetInstance().GetAnimate("Special2"));
-	animController->AddAnimate("Front", AnimateBuilder::GetInstance().GetAnimate("Front"));
-	animController->AddAnimate("Back", AnimateBuilder::GetInstance().GetAnimate("Back"));
-	animController->AddAnimate("Left", AnimateBuilder::GetInstance().GetAnimate("Left"));
-	animController->AddAnimate("Right", AnimateBuilder::GetInstance().GetAnimate("Right"));
-	/*Vector<SpriteFrame*> frontFrames;
-	frontFrames.reserve(4);
+    /*Vector<SpriteFrame*> frontFrames;
+    frontFrames.reserve(4);
 
-	frontFrames.pushBack(SpriteFrame::create("Blue_Front2.png", Rect(0, 0, 65, 81)));
-	frontFrames.pushBack(SpriteFrame::create("Blue_Front1.png", Rect(0, 0, 65, 81)));
-	frontFrames.pushBack(SpriteFrame::create("Blue_Front3.png", Rect(0, 0, 65, 81)));
-	frontFrames.pushBack(SpriteFrame::create("Blue_Front1.png", Rect(0, 0, 65, 81)));
+    frontFrames.pushBack(SpriteFrame::create("Blue_Front2.png", Rect(0, 0, 65, 81)));
+    frontFrames.pushBack(SpriteFrame::create("Blue_Front1.png", Rect(0, 0, 65, 81)));
+    frontFrames.pushBack(SpriteFrame::create("Blue_Front3.png", Rect(0, 0, 65, 81)));
+    frontFrames.pushBack(SpriteFrame::create("Blue_Front1.png", Rect(0, 0, 65, 81)));
 
-	Animation* frontAnimation = Animation::createWithSpriteFrames(frontFrames, 0.5f);
-	Animate* animateFront = Animate::create(frontAnimation);
+    Animation* frontAnimation = Animation::createWithSpriteFrames(frontFrames, 0.5f);
+    Animate* animateFront = Animate::create(frontAnimation);
 
-	v_mainCharAnimation[FRONT] = animateFront;
+    v_mainCharAnimation[FRONT] = animateFront;
 
-	Vector<SpriteFrame*> backFrames;
-	backFrames.reserve(4);
+    Vector<SpriteFrame*> backFrames;
+    backFrames.reserve(4);
 
-	backFrames.pushBack(SpriteFrame::create("Blue_Back2.png", Rect(0, 0, 65, 81)));
-	backFrames.pushBack(SpriteFrame::create("Blue_Back1.png", Rect(0, 0, 65, 81)));
-	backFrames.pushBack(SpriteFrame::create("Blue_Back3.png", Rect(0, 0, 65, 81)));
-	backFrames.pushBack(SpriteFrame::create("Blue_Back1.png", Rect(0, 0, 65, 81)));
+    backFrames.pushBack(SpriteFrame::create("Blue_Back2.png", Rect(0, 0, 65, 81)));
+    backFrames.pushBack(SpriteFrame::create("Blue_Back1.png", Rect(0, 0, 65, 81)));
+    backFrames.pushBack(SpriteFrame::create("Blue_Back3.png", Rect(0, 0, 65, 81)));
+    backFrames.pushBack(SpriteFrame::create("Blue_Back1.png", Rect(0, 0, 65, 81)));
 
-	Animation* backAnimation = Animation::createWithSpriteFrames(backFrames, 0.5f);
-	Animate* animateBack = Animate::create(backAnimation);
+    Animation* backAnimation = Animation::createWithSpriteFrames(backFrames, 0.5f);
+    Animate* animateBack = Animate::create(backAnimation);
 
-	v_mainCharAnimation[BACK] = animateBack;
+    v_mainCharAnimation[BACK] = animateBack;
 
-	Vector<SpriteFrame*> leftFrames;
-	leftFrames.reserve(4);
+    Vector<SpriteFrame*> leftFrames;
+    leftFrames.reserve(4);
 
-	leftFrames.pushBack(SpriteFrame::create("Blue_Left2.png", Rect(0, 0, 65, 81)));
-	leftFrames.pushBack(SpriteFrame::create("Blue_Left1.png", Rect(0, 0, 65, 81)));
-	leftFrames.pushBack(SpriteFrame::create("Blue_Left3.png", Rect(0, 0, 65, 81)));
-	leftFrames.pushBack(SpriteFrame::create("Blue_Left1.png", Rect(0, 0, 65, 81)));
+    leftFrames.pushBack(SpriteFrame::create("Blue_Left2.png", Rect(0, 0, 65, 81)));
+    leftFrames.pushBack(SpriteFrame::create("Blue_Left1.png", Rect(0, 0, 65, 81)));
+    leftFrames.pushBack(SpriteFrame::create("Blue_Left3.png", Rect(0, 0, 65, 81)));
+    leftFrames.pushBack(SpriteFrame::create("Blue_Left1.png", Rect(0, 0, 65, 81)));
 
-	Animation* leftAnimation = Animation::createWithSpriteFrames(leftFrames, 0.5f);
-	Animate* animateLeft = Animate::create(leftAnimation);
+    Animation* leftAnimation = Animation::createWithSpriteFrames(leftFrames, 0.5f);
+    Animate* animateLeft = Animate::create(leftAnimation);
 
-	v_mainCharAnimation[LEFT] = animateLeft;
+    v_mainCharAnimation[LEFT] = animateLeft;
 
-	Vector<SpriteFrame*> rightFrames;
-	rightFrames.reserve(4);
+    Vector<SpriteFrame*> rightFrames;
+    rightFrames.reserve(4);
 
-	rightFrames.pushBack(SpriteFrame::create("Blue_right2.png", Rect(0, 0, 65, 81)));
-	rightFrames.pushBack(SpriteFrame::create("Blue_right1.png", Rect(0, 0, 65, 81)));
-	rightFrames.pushBack(SpriteFrame::create("Blue_right3.png", Rect(0, 0, 65, 81)));
-	rightFrames.pushBack(SpriteFrame::create("Blue_right1.png", Rect(0, 0, 65, 81)));
+    rightFrames.pushBack(SpriteFrame::create("Blue_right2.png", Rect(0, 0, 65, 81)));
+    rightFrames.pushBack(SpriteFrame::create("Blue_right1.png", Rect(0, 0, 65, 81)));
+    rightFrames.pushBack(SpriteFrame::create("Blue_right3.png", Rect(0, 0, 65, 81)));
+    rightFrames.pushBack(SpriteFrame::create("Blue_right1.png", Rect(0, 0, 65, 81)));
 
-	Animation* rightAnimation = Animation::createWithSpriteFrames(rightFrames, 0.5f);
-	Animate* animateRight = Animate::create(rightAnimation);
+    Animation* rightAnimation = Animation::createWithSpriteFrames(rightFrames, 0.5f);
+    Animate* animateRight = Animate::create(rightAnimation);
 
-	v_mainCharAnimation[RIGHT] = animateRight;
+    v_mainCharAnimation[RIGHT] = animateRight;
 
-	for (int i = 0; i < NUM_ANIM; ++i)
-	{
-		v_mainCharAnimation[i]->retain();
-	}*/
+    for (int i = 0; i < NUM_ANIM; ++i)
+    {
+    v_mainCharAnimation[i]->retain();
+    }*/
 }
 
 void TestScene::InitTilemap()
 {
     auto map = TMXTiledMap::create("Map/Tilemap.tmx");
-    addChild(map, 0, 99); 
-    //auto layer = map->getLayer("Layer0");
+    addChild(map, 0, 0);
+    auto layer = map->getLayer("Layer0");
 }
 
 void TestScene::SetListeners()
 {
-	// Keyboard Listener
-	auto keyboardListener = EventListenerKeyboard::create();
-	keyboardListener->onKeyPressed = CC_CALLBACK_2(TestScene::OnKeyPressed, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
+    // Keyboard Listener
+    auto keyboardListener = EventListenerKeyboard::create();
+    keyboardListener->onKeyPressed = CC_CALLBACK_2(TestScene::OnKeyPressed, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
-	// Mouse Listener
-	auto mouseListener = EventListenerMouse::create();
-	mouseListener->onMouseDown = CC_CALLBACK_1(TestScene::OnMouseEvent, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+    // Mouse Listener
+    auto mouseListener = EventListenerMouse::create();
+    mouseListener->onMouseDown = CC_CALLBACK_1(TestScene::OnMouseEvent, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
 }
 
 void TestScene::menuCloseCallback(Ref* pSender)
@@ -299,7 +289,7 @@ void TestScene::menuCloseCallback(Ref* pSender)
     //Close the cocos2d-x game scene and quit the application
     Director::getInstance()->end();
 
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
 
@@ -311,68 +301,68 @@ void TestScene::menuCloseCallback(Ref* pSender)
 
 void TestScene::OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event)
 {
-	//switch (_keycode)
-	//{
-	//	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-	//	{
-	//		auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
-	//		auto moveEvent = MoveBy::create(0.0f, Vec2(10.0f, 0));
-	//		//charSprite->stopActionByTag(1);
-	//		charSprite->runAction(moveEvent);
-	//	}
-	//	break;
+    //switch (_keycode)
+    //{
+    //	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+    //	{
+    //		auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+    //		auto moveEvent = MoveBy::create(0.0f, Vec2(10.0f, 0));
+    //		//charSprite->stopActionByTag(1);
+    //		charSprite->runAction(moveEvent);
+    //	}
+    //	break;
 
-	//	case EventKeyboard::KeyCode::KEY_LEFT_ARROW :
-	//	{
-	//		auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
-	//		auto moveEvent = MoveBy::create(0.0f, Vec2(-10.0f, 0));
- //           //charSprite->stopAllActions();
-	//		charSprite->runAction(moveEvent);
-	//	}
-	//	break;
+    //	case EventKeyboard::KeyCode::KEY_LEFT_ARROW :
+    //	{
+    //		auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+    //		auto moveEvent = MoveBy::create(0.0f, Vec2(-10.0f, 0));
+    //           //charSprite->stopAllActions();
+    //		charSprite->runAction(moveEvent);
+    //	}
+    //	break;
 
-	//	case EventKeyboard::KeyCode::KEY_K:
-	//	{
-	//		CCDirector::getInstance()->replaceScene(
-	//			TransitionFlipAngular::create(1.5, TestScene::createScene())
-	//		);
-	//	}
-	//	break;
-	//}
+    //	case EventKeyboard::KeyCode::KEY_K:
+    //	{
+    //		CCDirector::getInstance()->replaceScene(
+    //			TransitionFlipAngular::create(1.5, TestScene::createScene())
+    //		);
+    //	}
+    //	break;
+    //}
 }
 
 void TestScene::OnMouseEvent(Event* _event)
 {
-	EventMouse* mouseEvent = (EventMouse*)_event;
+    EventMouse* mouseEvent = (EventMouse*)_event;
 
-	//if (mouseEvent->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT)
-	//{
-	//	Vec2 mousePos = Vec2(mouseEvent->getCursorX(), mouseEvent->getCursorY());
+    //if (mouseEvent->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT)
+    //{
+    //	Vec2 mousePos = Vec2(mouseEvent->getCursorX(), mouseEvent->getCursorY());
 
-	//	auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
-	//	charSprite->stopAllActions();
+    //	auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
+    //	charSprite->stopAllActions();
 
-	//	auto moveEvent = MoveTo::create(1.0f, mousePos);
-	//	charSprite->runAction(moveEvent);
+    //	auto moveEvent = MoveTo::create(1.0f, mousePos);
+    //	charSprite->runAction(moveEvent);
 
-	//	float mouseXChange = mousePos.x - charSprite->getPosition().x;
-	//	float mouseYChange = mousePos.y - charSprite->getPosition().y;
+    //	float mouseXChange = mousePos.x - charSprite->getPosition().x;
+    //	float mouseYChange = mousePos.y - charSprite->getPosition().y;
 
-	//	if (fabs(mouseXChange) > fabs(mouseYChange))
-	//	{
-	//		if (mouseXChange > 0)
-	//			charSprite->runAction(RepeatForever::create(v_mainCharAnimation[RIGHT]));
-	//		else
-	//			charSprite->runAction(RepeatForever::create(v_mainCharAnimation[LEFT]));
-	//	}
-	//	else
-	//	{
-	//		if (mouseYChange > 0)
-	//			charSprite->runAction(RepeatForever::create(v_mainCharAnimation[BACK]));
-	//		else
-	//			charSprite->runAction(RepeatForever::create(v_mainCharAnimation[FRONT]));
-	//	}
-	//}
+    //	if (fabs(mouseXChange) > fabs(mouseYChange))
+    //	{
+    //		if (mouseXChange > 0)
+    //			charSprite->runAction(RepeatForever::create(v_mainCharAnimation[RIGHT]));
+    //		else
+    //			charSprite->runAction(RepeatForever::create(v_mainCharAnimation[LEFT]));
+    //	}
+    //	else
+    //	{
+    //		if (mouseYChange > 0)
+    //			charSprite->runAction(RepeatForever::create(v_mainCharAnimation[BACK]));
+    //		else
+    //			charSprite->runAction(RepeatForever::create(v_mainCharAnimation[FRONT]));
+    //	}
+    //}
 }
 
 void TestScene::InputMouseTestFunction()
@@ -403,155 +393,4 @@ void TestScene::PopSceneTestFunction()
 void TestScene::SwitchSceneTest(cocos2d::Ref* pSender)
 {
     SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
-}
-
-void TestScene::MovePlayerUp()
-{
-    //auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
-    //charSprite->stopAllActions();
-
-	animController->PlayAnimation("Back");
-
-    shouldMoveUp = true;
-
-    //auto moveEvent = MoveBy::create(0, Vec2(0, 10));
-    //charSprite->runAction(moveEvent);
-
-	//CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
-    //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
-}
-
-void TestScene::MovePlayerDown()
-{
-    //auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
-    //charSprite->stopAllActions();
-    
-	animController->PlayAnimation("Front");
-
-    shouldMoveDown = true;
-
-    //auto moveEvent = MoveBy::create(0, Vec2(0, -10));
-    //charSprite->runAction(moveEvent);
-
-    // CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
-    //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
-}
-
-void TestScene::MovePlayerLeft()
-{
-    //auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
-    //charSprite->stopAllActions();
-
-	animController->PlayAnimation("Left");
-
-    shouldMoveLeft = true;
-
-    // auto moveEvent = MoveBy::create(0, Vec2(-10, 0));
-    //charSprite->runAction(moveEvent);
-
-    //CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
-    //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
-}
-
-void TestScene::MovePlayerRight()
-{
-    //auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
-    //charSprite->stopAllActions();
-
-	animController->PlayAnimation("Right");
-
-    shouldMoveRight = true;
-
-    //auto moveEvent = MoveBy::create(0,  Vec2(10, 0));
-    //charSprite->runAction(moveEvent);
-
-    //CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
-    //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
-   
-}
-
-void TestScene::StopPlayerUp()
-{
-    shouldMoveUp = false;
-}
-
-void TestScene::StopPlayerDown()
-{
-    shouldMoveDown = false;
-}
-
-void TestScene::StopPlayerLeft()
-{
-    shouldMoveLeft = false;
-}
-
-void TestScene::StopPlayerRight()
-{
-    shouldMoveRight = false;
-}
-
-void TestScene::MovePlayer()
-{
-    auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
-
-    if (shouldMoveLeft)
-    {   
-        auto moveEvent = MoveBy::create(0, Vec2(-5, 0));
-        charSprite->runAction(moveEvent);
-    }
-
-    if (shouldMoveRight)
-    {
-        auto moveEvent = MoveBy::create(0, Vec2(5, 0));
-        charSprite->runAction(moveEvent);
-    }
-
-    if (shouldMoveUp)
-    {
-        auto moveEvent = MoveBy::create(0, Vec2(0, 5));
-        charSprite->runAction(moveEvent);
-    }
-
-    if (shouldMoveDown)
-    {
-        auto moveEvent = MoveBy::create(0, Vec2(0, -5));
-        charSprite->runAction(moveEvent);
-    }
-}
-
-void TestScene::UpdatePlayer()
-{
-    if (shouldMoveLeft)
-        MovePlayerLeft();
-
-    if (shouldMoveRight)
-        MovePlayerRight();
-
-    if (shouldMoveUp)
-        MovePlayerUp();
-
-    if (shouldMoveDown)
-        MovePlayerDown();
-
-
-    MovePlayer();
-
-
-	if (InputHandler::GetInstance().GetKeyDown(EventKeyboard::KeyCode::KEY_1))
-		animController->PlayAnimation("Special1", false);
-
-	if (InputHandler::GetInstance().GetKeyDown(EventKeyboard::KeyCode::KEY_2))
-		animController->PlayAnimation("Special2", false);
-
-}
-
-void TestScene::StopAnimation()
-{
-    animController->StopAnimation();
-    CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
-}
-
-void TestScene::PlayWalkingSoundEffect()
-{
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Walking.wav");
 }
