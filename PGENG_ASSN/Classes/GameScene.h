@@ -41,7 +41,7 @@ public:
     void OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event);
     void OnMouseEvent(Event* _event);
     bool onContactBegin(PhysicsContact& contact);
-	bool onContactSeperate(PhysicsContact& contact);
+	void onContactSeperate(PhysicsContact& contact);
 
     virtual void update(float _dt);
 

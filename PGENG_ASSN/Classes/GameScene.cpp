@@ -675,7 +675,7 @@ void GameScene::SwitchSceneTest(cocos2d::Ref* pSender)
     SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
 }
 
-bool GameScene::onContactSeperate(PhysicsContact & contact)
+void GameScene::onContactSeperate(PhysicsContact & contact)
 {
 	auto bodyA = contact.getShapeA()->getBody();
 	auto bodyB = contact.getShapeB()->getBody();
@@ -703,5 +703,4 @@ bool GameScene::onContactSeperate(PhysicsContact & contact)
 		break;
 	}
 
-	return true;
 }
