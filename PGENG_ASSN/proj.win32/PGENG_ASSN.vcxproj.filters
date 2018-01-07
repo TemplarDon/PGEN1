@@ -31,6 +31,9 @@
     <Filter Include="src\FSM">
       <UniqueIdentifier>{564de31e-c2b8-433e-88b5-ab946c681a7e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Interactables">
+      <UniqueIdentifier>{00362140-4251-4a34-8e0f-4001f850c3b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -80,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\FSM\PatrollingFSM.cpp">
       <Filter>src\FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Interactables\Interactable.cpp">
+      <Filter>src\Interactables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\BitmasksHeader.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Interactables\Interactable.h">
+      <Filter>src\Interactables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

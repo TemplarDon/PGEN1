@@ -159,6 +159,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Grid\SpatialPartition.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\Input\InputHandler.cpp" />
+    <ClCompile Include="..\Classes\Interactables\Interactable.cpp" />
     <ClCompile Include="..\Classes\MainMenuScene.cpp" />
     <ClCompile Include="..\Classes\PathfinderTest.cpp" />
     <ClCompile Include="..\Classes\SceneManagement\SceneManager.cpp" />
@@ -182,6 +183,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\Input\InputAction.h" />
     <ClInclude Include="..\Classes\Input\InputHandler.h" />
+    <ClInclude Include="..\Classes\Interactables\Interactable.h" />
     <ClInclude Include="..\Classes\MainMenuScene.h" />
     <ClInclude Include="..\Classes\PathfinderTest.h" />
     <ClInclude Include="..\Classes\SceneManagement\SceneManager.h" />
