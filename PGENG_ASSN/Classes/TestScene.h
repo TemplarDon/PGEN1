@@ -2,6 +2,7 @@
 #define __TEST_SCENE_H__
 
 #include "cocos2d.h"
+#include "Player\Player.h"
 #include "Animation\AnimationController.h"
 
 using namespace cocos2d;
@@ -54,29 +55,6 @@ public:
 
     void SwitchSceneTest(cocos2d::Ref* pSender);
     
-    void UpdatePlayer();
-
-    void MovePlayer();
-    void MovePlayerUp();
-    void MovePlayerDown();
-    void MovePlayerLeft();
-    void MovePlayerRight();
-
-    void StopPlayerUp();
-    void StopPlayerDown();
-    void StopPlayerLeft();
-    void StopPlayerRight();
-
-   
-
-	void StopAnimation();
-	void PlayWalkingSoundEffect();
-
-    bool shouldMoveUp = false;
-    bool shouldMoveDown = false;
-    bool shouldMoveLeft = false;
-    bool shouldMoveRight = false;
-
 private:
     Animate* v_mainCharAnimation[NUM_ANIM];
 
@@ -85,6 +63,8 @@ private:
 	GLProgram* proPostProcess;
 	RenderTexture* rendtex;
 	Sprite* rendtexSprite;
+
+    Player* player;
 
 };
 

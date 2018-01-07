@@ -8,6 +8,7 @@
 
 #include "MainMenuScene.h"
 #include "PathfinderTest.h"
+#include "GameScene.h"
 
 // #define USE_AUDIO_ENGINE 1
  #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -74,6 +75,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setOpenGLView(glview);
     }
 
+#define CC_SPRITE_DEBUG_DRAW 0
     // turn on display FPS
     director->setDisplayStats(true);
 
@@ -81,7 +83,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0f / 60);
 
     // Set the design resolution
-    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
+    glview->setDesignResolutionSize(smallResolutionSize.width, smallResolutionSize.height, ResolutionPolicy::NO_BORDER);
     auto frameSize = glview->getFrameSize();
     // if the frame's height is larger than the height of medium size.
     if (frameSize.height > mediumResolutionSize.height)
@@ -119,7 +121,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // add other levels
     SceneManager::GetInstance().AddLevel("ello level", HelloWorld::createScene());
     SceneManager::GetInstance().AddLevel("pathfinder", PathfinderTest::createScene());
-    SceneManager::GetInstance().AddLevel("test scene", TestScene::createScene());
+    SceneManager::GetInstance().AddLevel("test scene", GameScene::createScene());
     SceneManager::GetInstance().AddLevel("menu", scene);
     SceneManager::GetInstance().FinishSetup();
     return true;

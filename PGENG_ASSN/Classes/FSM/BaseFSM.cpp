@@ -4,7 +4,7 @@ BaseFSM::BaseFSM(TMXTiledMap* map, string sprite)
 : m_map(map)
 , m_spriteStr(sprite)
 , m_health(3)
-, m_moveSpeed(1.5)
+, m_moveSpeed(1.1)
 {
     if (Node::init())
         init();
@@ -30,15 +30,16 @@ bool BaseFSM::init()
     // Sprite
     auto sprite = Sprite::create(m_spriteStr);
     sprite->setName("sprite");
+    sprite->setScale(0.5);
+    //sprite->setAnchorPoint(Vec2(0.5, 0.5));
 
     addChild(sprite);
-    getChildByName("sprite")->setScale(0.2);
-    getChildByName("sprite")->setAnchorPoint(Vec2::ZERO);
+    m_sprite = sprite;
 
     // PhysicsBody
     auto physicsBody = PhysicsBody::createBox(
-        sprite->getContentSize(),
-        PhysicsMaterial(5.f, 1.0f, 0.0f)
+        m_map->getTileSize(), // assumes that all enemy will be same size as tile
+        PhysicsMaterial(5.f, 0, 0.0f)
         );
 
     physicsBody->setDynamic(true);
@@ -46,8 +47,8 @@ bool BaseFSM::init()
     physicsBody->setRotationEnable(false);
 
     physicsBody->setCategoryBitmask(ENEMY_BITMASK);
-    physicsBody->setCollisionBitmask(PLAYER_BITMASK | NEUTRAL_BITMASK);
-    physicsBody->setContactTestBitmask(PLAYER_BITMASK | NEUTRAL_BITMASK);
+    physicsBody->setCollisionBitmask(PLAYER_BITMASK);
+    physicsBody->setContactTestBitmask(PLAYER_BITMASK);
 
     sprite->addComponent(physicsBody);
 }

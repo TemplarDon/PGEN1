@@ -20,13 +20,14 @@ void Pathfinder::Init(TMXTiledMap* map)
     m_currentIdx = 0;
     maxLoops = 500;
 
-    m_reachedDist = 12.f;
+    m_reachedDist = 1.f;
 
     m_openList = vector<PathfinderNode*>();
     m_closedList = vector<PathfinderNode*>();
     m_path = vector<PathfinderNode*>();
 
     auto collideMap = map->layerNamed("CollideMap");
+    auto inaccessibleMap = map->layerNamed("InaccessibleMap");
     auto groundMap = map->layerNamed("Ground");
 
     m_mapSize = Vec2(map->getMapSize());
@@ -44,9 +45,11 @@ void Pathfinder::Init(TMXTiledMap* map)
             PathfinderNode* node = new PathfinderNode();
 
             // Check if tile is in collidemap
-            auto sprite = collideMap->tileAt(Vec2(x, y));
+            auto colllide_sprite = collideMap->tileAt(Vec2(x, y));
+            auto inaccessible_sprite = inaccessibleMap->tileAt(Vec2(x, y));
+
             Vec2 pos = groundMap->tileAt(Vec2(x, y))->getPosition();
-            if (sprite)
+            if (colllide_sprite || inaccessible_sprite)
             {
                 // if in, tile is collidable
                 node->Init(-1, pos, x, y);
@@ -230,6 +233,25 @@ Vec2 Pathfinder::FollowPath()
             m_currentIdx = 0;
 
             return Vec2();
+        }
+
+        // Assign direction
+        float diffX = abs(m_path[m_currentIdx]->m_pos.x - m_currentPos.x);
+        float diffY = abs(m_path[m_currentIdx]->m_pos.y - m_currentPos.y);
+
+        if (diffX > diffY)
+        {
+            if (m_path[m_currentIdx]->m_pos.x > m_currentPos.x)
+                m_currDir = DIR::RIGHT;
+            else
+                m_currDir = DIR::LEFT;
+        }
+        else
+        {
+            if (m_path[m_currentIdx]->m_pos.y > m_currentPos.y)
+                m_currDir = DIR::UP;
+            else
+                m_currDir = DIR::DOWN;
         }
 
         return (m_path[m_currentIdx]->m_pos - m_currentPos).getNormalized();

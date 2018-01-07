@@ -129,7 +129,7 @@ void MainMenuScene::OnMouseEvent(Event* _event)
 
         if (name == "play_btn")
         {
-            SceneManager::GetInstance().TransitionLevel("test scene", SceneManager::TRANSITION_TYPES::FADE);
+            SceneManager::GetInstance().TransitionLevel("test scene", SceneManager::TRANSITION_TYPES::FADE, true);
         }
         else if (name == "quit_btn")
         {
