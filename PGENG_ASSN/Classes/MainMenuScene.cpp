@@ -145,7 +145,7 @@ void MainMenuScene::OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event)
 
 void MainMenuScene::Play(Ref *pSender)
 {
-    SceneManager::GetInstance().TransitionLevel("test scene", SceneManager::TRANSITION_TYPES::FADE);
+    SceneManager::GetInstance().TransitionLevel("test scene", SceneManager::TRANSITION_TYPES::FADE, true);
 }
 
 void MainMenuScene::PlayPathfinderTest(Ref *pSender)

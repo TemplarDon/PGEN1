@@ -87,6 +87,9 @@
     <ClCompile Include="..\Classes\Interactables\Interactable.cpp">
       <Filter>src\Interactables</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Interactables\NPC.cpp">
+      <Filter>src\Interactables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -153,6 +156,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Interactables\Interactable.h">
+      <Filter>src\Interactables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Interactables\NPC.h">
       <Filter>src\Interactables</Filter>
     </ClInclude>
   </ItemGroup>
