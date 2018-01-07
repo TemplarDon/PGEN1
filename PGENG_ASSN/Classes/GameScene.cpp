@@ -157,7 +157,25 @@ bool GameScene::init()
     player = new Player();
     player->init();
     player->setName("player");
+	player->getPhysicsBody()->setTag(PHYSICS_TAG_PLAYER);
     this->addChild(player, 99);
+
+	//Some quick and dirty menu stuff
+	menu_play = MenuItemFont::create("thingy");
+	menu_play->setString("Hello.");
+
+	auto *menu = Menu::create(menu_play, nullptr);
+	menu->setPosition(220, 200);
+	menu->setName("menu");
+	menu->retain();
+	menu_play->setPosition(0,0);
+	menu_play->setVisible(false);
+
+	this->addChild(menu, 100);
+
+	//Interactables
+	auto asdasd = new Interactable();
+	asdasd->Init(this);
 
     SetListeners();
     InitAnimationActions();
@@ -440,6 +458,10 @@ void GameScene::SetListeners()
     auto contactListener = EventListenerPhysicsContact::create();
     contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBegin, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
+
+	auto contactListener_sep = EventListenerPhysicsContact::create();
+	contactListener_sep->onContactSeparate = CC_CALLBACK_1(GameScene::onContactSeperate, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener_sep, this);
 }
 
 void GameScene::menuCloseCallback(Ref* pSender)
@@ -525,6 +547,34 @@ void GameScene::OnMouseEvent(Event* _event)
 
 bool GameScene::onContactBegin(PhysicsContact& contact)
 {
+	//Ran collision stuff
+	auto bodyA = contact.getShapeA()->getBody();
+	auto bodyB = contact.getShapeB()->getBody();
+
+	switch (bodyA->getTag())
+	{
+		//When player collides with...
+	case PHYSICS_TAG_PLAYER:
+	{
+		switch (bodyB->getTag())
+		{
+			//...Interactable
+		case PHYSICS_TAG_INTERACTABLE:
+		{
+			(static_cast<Interactable*>(bodyB->getNode()))->OnInteract();
+			menu_play->setVisible(true);
+			break;
+		}
+		}
+	}
+	break;
+
+
+	default:
+		break;
+	}
+	//Enf of ran collision stuff
+
     auto shapeA = contact.getShapeA()->getBody();
     auto shapeB = contact.getShapeB()->getBody();
 
@@ -623,4 +673,35 @@ void GameScene::PopSceneTestFunction()
 void GameScene::SwitchSceneTest(cocos2d::Ref* pSender)
 {
     SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
+}
+
+bool GameScene::onContactSeperate(PhysicsContact & contact)
+{
+	auto bodyA = contact.getShapeA()->getBody();
+	auto bodyB = contact.getShapeB()->getBody();
+
+	switch (bodyA->getTag())
+	{
+		//When player seperates with...
+	case PHYSICS_TAG_PLAYER:
+	{
+		switch (bodyB->getTag())
+		{
+			//...Interactable
+		case PHYSICS_TAG_INTERACTABLE:
+		{
+			(static_cast<Interactable*>(bodyB->getNode()))->OnInteractLeave();
+			menu_play->setVisible(false);
+			break;
+		}
+		}
+	}
+	break;
+
+
+	default:
+		break;
+	}
+
+	return true;
 }

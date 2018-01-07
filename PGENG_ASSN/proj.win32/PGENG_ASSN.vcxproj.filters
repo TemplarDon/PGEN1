@@ -114,6 +114,9 @@
     <ClCompile Include="..\Classes\GameScene.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Interactables\NPC.cpp">
+      <Filter>src\Interactables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -199,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\GameScene.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Interactables\NPC.h">
+      <Filter>src\Interactables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
