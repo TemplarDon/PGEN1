@@ -15,6 +15,15 @@ public:
     Vec2 FollowPath();
     Vec2 RandomPosition(int range);
 
+    enum DIR
+    {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT,
+    };
+
+    DIR m_currDir;
     bool m_pathFound;
     bool m_pathComplete;
 

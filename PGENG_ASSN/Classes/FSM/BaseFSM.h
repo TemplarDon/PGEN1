@@ -4,6 +4,8 @@
 #include "cocos2d.h"
 #include "Pathfinder.h"
 #include "BitmasksHeader.h"
+#include "Animation\AnimationController.h"
+#include "Animation\SpriteBuilder.h"
 
 using namespace cocos2d;
 using namespace std;
@@ -15,8 +17,21 @@ class BaseFSM : public Node
 protected:
     BaseFSM(TMXTiledMap* map, string sprite);
     
+    enum ANIMLIST
+    {
+        FRONT = 0,
+        LEFT,
+        RIGHT,
+        BACK,
+        NUM_ANIM,
+    };
+
+    Animate* animArr[NUM_ANIM];
+    AnimationController* animController;
+
     Pathfinder* m_pathFinder;
     TMXTiledMap* m_map;
+    Sprite* m_sprite;
 
 public:
     bool init();

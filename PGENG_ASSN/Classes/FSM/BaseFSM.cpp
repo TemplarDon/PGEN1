@@ -30,10 +30,11 @@ bool BaseFSM::init()
     // Sprite
     auto sprite = Sprite::create(m_spriteStr);
     sprite->setName("sprite");
+    sprite->setScale(0.5);
+    sprite->setAnchorPoint(Vec2::ZERO);
 
     addChild(sprite);
-    getChildByName("sprite")->setScale(0.2);
-    getChildByName("sprite")->setAnchorPoint(Vec2::ZERO);
+    m_sprite = sprite;
 
     // PhysicsBody
     auto physicsBody = PhysicsBody::createBox(

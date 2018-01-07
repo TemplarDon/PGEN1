@@ -29,6 +29,8 @@ bool MainMenuScene::init()
         return false;
     }
 
+    InputHandler::GetInstance().ClearActionMaps();
+
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     Size playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));

@@ -27,6 +27,19 @@ PatrollingFSM::PatrollingFSM(TMXTiledMap* map, string sprite)
 
     //    setPosition(m_waypoints[0]);
     //}
+
+    animController = new AnimationController();
+    animController->Init(m_sprite);
+
+    AnimateBuilder::GetInstance().LoadAnimateFromLoadedSpriteSheet("Patrol_Back", "patrol", 0, 8);
+    AnimateBuilder::GetInstance().LoadAnimateFromLoadedSpriteSheet("Patrol_Left", "patrol", 9, 17);
+    AnimateBuilder::GetInstance().LoadAnimateFromLoadedSpriteSheet("Patrol_Front", "patrol", 18, 26);
+    AnimateBuilder::GetInstance().LoadAnimateFromLoadedSpriteSheet("Patrol_Right", "patrol", 27, 35);
+
+    animController->AddAnimate("Back", AnimateBuilder::GetInstance().GetAnimate("Patrol_Back"));
+    animController->AddAnimate("Left", AnimateBuilder::GetInstance().GetAnimate("Patrol_Left"));
+    animController->AddAnimate("Front", AnimateBuilder::GetInstance().GetAnimate("Patrol_Front"));
+    animController->AddAnimate("Right", AnimateBuilder::GetInstance().GetAnimate("Patrol_Right"));
 }
 
 PatrollingFSM::~PatrollingFSM()
@@ -90,6 +103,15 @@ void PatrollingFSM::Act(int value)
         auto moveEvent = MoveBy::create(0, moveby * m_moveSpeed);
         this->runAction(moveEvent);
         
+        // Play anim based on pathfinder dir
+        switch (m_pathFinder->m_currDir)
+        {
+        case Pathfinder::DIR::UP: animController->PlayAnimation("Back"); break;
+        case Pathfinder::DIR::DOWN: animController->PlayAnimation("Front"); break;
+        case Pathfinder::DIR::LEFT: animController->PlayAnimation("Left"); break;
+        case Pathfinder::DIR::RIGHT: animController->PlayAnimation("Right"); break;
+        }
+
         //PhysicsBody* curPhysics = getChildByName("sprite")->getPhysicsBody();
         //curPhysics->applyForce(moveby * m_moveForce);
 

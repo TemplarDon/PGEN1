@@ -195,6 +195,7 @@ void PathfinderTest::update(float _dt)
 
     UpdatePlayer();
 
+    // NOT THE BEST WAY PROBABLY, BETTER TO HAVE ENTITY CLASS WITH UPDATE
     Vector<Node*> myVector = getChildren();
     Vector<Node*>::iterator myIterator;
 
@@ -341,6 +342,10 @@ void PathfinderTest::InitAnimationActions()
     {
     v_mainCharAnimation[i]->retain();
     }*/
+
+
+    // FSM animations
+    AnimateBuilder::GetInstance().LoadSpriteSheet("patrol", "spritesheet_patrol.png", 4, 9);
 }
 
 void PathfinderTest::InitTilemap()

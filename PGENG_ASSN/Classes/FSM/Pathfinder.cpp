@@ -20,7 +20,7 @@ void Pathfinder::Init(TMXTiledMap* map)
     m_currentIdx = 0;
     maxLoops = 500;
 
-    m_reachedDist = 12.f;
+    m_reachedDist = 15.f;
 
     m_openList = vector<PathfinderNode*>();
     m_closedList = vector<PathfinderNode*>();
@@ -230,6 +230,25 @@ Vec2 Pathfinder::FollowPath()
             m_currentIdx = 0;
 
             return Vec2();
+        }
+
+        // Assign direction
+        float diffX = abs(m_path[m_currentIdx]->m_pos.x - m_currentPos.x);
+        float diffY = abs(m_path[m_currentIdx]->m_pos.y - m_currentPos.y);
+
+        if (diffX > diffY)
+        {
+            if (m_path[m_currentIdx]->m_pos.x > m_currentPos.x)
+                m_currDir = DIR::RIGHT;
+            else
+                m_currDir = DIR::LEFT;
+        }
+        else
+        {
+            if (m_path[m_currentIdx]->m_pos.y > m_currentPos.y)
+                m_currDir = DIR::UP;
+            else
+                m_currDir = DIR::DOWN;
         }
 
         return (m_path[m_currentIdx]->m_pos - m_currentPos).getNormalized();
