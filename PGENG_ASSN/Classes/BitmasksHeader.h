@@ -1,0 +1,6 @@
+// USE POWER OF 2 
+
+#define PLAYER_BITMASK 1 
+#define ENEMY_BITMASK 2
+#define NEUTRAL_BITMASK 4
+#define WALLS_BITMASK 8

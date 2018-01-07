@@ -150,7 +150,7 @@ void MainMenuScene::Play(Ref *pSender)
 
 void MainMenuScene::PlayPathfinderTest(Ref *pSender)
 {
-    SceneManager::GetInstance().TransitionLevel("pathfinder", SceneManager::TRANSITION_TYPES::FADE);
+    SceneManager::GetInstance().TransitionLevel("pathfinder", SceneManager::TRANSITION_TYPES::FADE, true);
 }
 void MainMenuScene::test()
 {

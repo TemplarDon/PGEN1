@@ -6,15 +6,13 @@
 class PatrollingFSM : public BaseFSM
 {
 public:
-    PatrollingFSM(TMXTiledMap* map);
+    PatrollingFSM(TMXTiledMap* map, string sprite);
     ~PatrollingFSM();
 
 private:
     virtual void Sense();  // get/receive updates from the world
     virtual int Think();   // process the updates
     virtual void Act(int value);     // act upon any change in behaviour
-
-    float m_nearDistCheck;
 
 public:
 

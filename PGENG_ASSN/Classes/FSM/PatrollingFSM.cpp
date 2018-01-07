@@ -1,10 +1,9 @@
 #include "PatrollingFSM.h"
 
-PatrollingFSM::PatrollingFSM(TMXTiledMap* map) 
-: BaseFSM(map)
+PatrollingFSM::PatrollingFSM(TMXTiledMap* map, string sprite) 
+: BaseFSM(map, sprite)
 , m_currentState(PATROLLING_STATES::IDLE)
 , m_idx(1)
-, m_nearDistCheck(10)
 {
     m_waypoints = std::map<int, Vec2>();
 
@@ -58,8 +57,7 @@ int PatrollingFSM::Think()
 
     case PATROLLING_STATES::PATROLLING:
     {
-        float dist = m_waypoints[m_idx].distance(this->getPosition());
-        if (dist < m_nearDistCheck)
+        if (m_pathFinder->m_pathFound)
         {
             ++m_idx;
             if (m_idx >= m_waypoints.size())
@@ -97,6 +95,10 @@ void PatrollingFSM::Act(int value)
 
         auto moveEvent = MoveBy::create(0, moveby);
         this->runAction(moveEvent);
+        
+        //PhysicsBody* curPhysics = getChildByName("sprite")->getPhysicsBody();
+        //curPhysics->applyForce(moveby * m_moveForce);
+
         break;
     }
     case PATROLLING_STATES::DEAD:

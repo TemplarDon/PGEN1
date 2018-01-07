@@ -76,6 +76,9 @@ void Pathfinder::FindPath(Vec2 dest)
         m_pathComplete = false;
         m_pathFound = false;
 
+        m_closedList.clear();
+        m_openList.clear();
+
         RefreshNodeList();
 
         m_destinationNode = GetNode(dest);

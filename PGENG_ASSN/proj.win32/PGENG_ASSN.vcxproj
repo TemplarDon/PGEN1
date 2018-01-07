@@ -170,6 +170,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Animation\SpriteBuilder.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Audio\AudioHandler.h" />
+    <ClInclude Include="..\Classes\BitmasksHeader.h" />
     <ClInclude Include="..\Classes\Common\SingletonNode.h" />
     <ClInclude Include="..\Classes\FSM\BaseFSM.h" />
     <ClInclude Include="..\Classes\FSM\Node.h" />

@@ -15,6 +15,7 @@ public:
     Vec2 FollowPath();
 
     bool m_pathFound;
+    bool m_pathComplete;
 
 private:
     PathfinderNode* m_currentNode;
@@ -25,7 +26,6 @@ private:
     vector<PathfinderNode*> m_closedList;
     vector<PathfinderNode*> m_path;
 
-    bool m_pathComplete;
     bool m_followPathCreated;
     bool m_continueNextFrame;
 

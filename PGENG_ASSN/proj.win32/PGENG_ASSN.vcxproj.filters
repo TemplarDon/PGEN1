@@ -143,6 +143,9 @@
     <ClInclude Include="..\Classes\FSM\PatrollingFSM.h">
       <Filter>src\FSM</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\BitmasksHeader.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

@@ -130,7 +130,7 @@ void SceneManager::AddLayerToScene(string sceneToAddTo, string layer)
 void SceneManager::TransitionLevel(string newScene, TRANSITION_TYPES transition, bool hasPhysicsParentLayer)
 {
     Scene* toTransition = GetLevel(newScene);
- 
+
     if (toTransition == theDirector->getRunningScene())
         return;
 
@@ -138,14 +138,22 @@ void SceneManager::TransitionLevel(string newScene, TRANSITION_TYPES transition,
     {
         Node* scene = nullptr;
         if (hasPhysicsParentLayer)
+        {
             scene = toTransition->getChildByName("Scene");
-
+            scene->removeAllChildren(); 
+        }
         toTransition->removeAllChildren();
 
         if (hasPhysicsParentLayer)
+        {
+            scene->init();
             toTransition->addChild(scene);
+        }
+        else
+        {
+            toTransition->init();
+        }
 
-        toTransition->init();
         if (transition == TRANSITION_TYPES::NIL)
         {
             theDirector->replaceScene(toTransition);

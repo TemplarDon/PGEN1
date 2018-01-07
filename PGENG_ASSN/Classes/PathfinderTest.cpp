@@ -14,7 +14,17 @@ USING_NS_CC;
 
 Scene* PathfinderTest::createScene()
 {
-    return PathfinderTest::create();
+    auto scene = Scene::createWithPhysics();
+    scene->setName("PhysicsBase");
+
+    auto layer = PathfinderTest::create();
+
+    layer->setName("Scene");
+    layer->retain();
+
+    scene->addChild(layer);
+
+    return scene;
 }
 
 // Print useful error message instead of segfaulting when files are not there.
@@ -72,7 +82,44 @@ bool PathfinderTest::init()
     characterSprite->setPosition(250, 250);
     characterSprite->setScale(0.4);
 
+    // PhysicsBody
+    auto physicsBody = PhysicsBody::createBox(
+        characterSprite->getContentSize(),
+        PhysicsMaterial(0.1f, 1.0f, 0.0f)
+        );
+
+    physicsBody->setDynamic(true);
+    physicsBody->setGravityEnable(false);
+    physicsBody->setCategoryBitmask(PLAYER_BITMASK);
+    physicsBody->setCollisionBitmask(ENEMY_BITMASK); 
+    physicsBody->setContactTestBitmask(ENEMY_BITMASK);
+
+    characterSprite->addComponent(physicsBody);
+
     spriteNode->addChild(characterSprite, 1);
+
+
+    auto characterSprite2 = Sprite::create("Blue_Front1.png");
+    characterSprite2->setName("MainCharacter2");
+    characterSprite2->setAnchorPoint(Vec2::ZERO);
+    characterSprite2->setPosition(250, 100);
+    characterSprite2->setScale(0.4);
+
+    // PhysicsBody2
+    auto physicsBody2 = PhysicsBody::createBox(
+        characterSprite2->getContentSize(),
+        PhysicsMaterial(0.1f, 1.0f, 0.0f)
+        );
+
+    physicsBody2->setDynamic(true);
+    physicsBody2->setGravityEnable(false);
+    physicsBody2->setCategoryBitmask(NEUTRAL_BITMASK);
+    physicsBody2->setCollisionBitmask(ENEMY_BITMASK);
+    physicsBody2->setContactTestBitmask(ENEMY_BITMASK);
+
+    characterSprite2->addComponent(physicsBody2);
+
+    spriteNode->addChild(characterSprite2, 1);
 
     //Animation Controller
     animController = new AnimationController();
@@ -132,12 +179,8 @@ bool PathfinderTest::init()
     scheduleUpdate();
 
     // FSM
-    PatrollingFSM* testFSM = new PatrollingFSM((TMXTiledMap*)getChildByTag(99));
-    testFSM->init();
+    PatrollingFSM* testFSM = new PatrollingFSM((TMXTiledMap*)getChildByTag(99), "White_Front1.png");
     testFSM->setName("testFSM");
-    testFSM->addChild(Sprite::create("White_Front1.png"), 0, "sprite");
-    testFSM->getChildByName("sprite")->setScale(0.2);
-    testFSM->getChildByName("sprite")->setAnchorPoint(Vec2::ZERO);
     addChild(testFSM);
 
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Audio/BGM.wav");
@@ -305,6 +348,11 @@ void PathfinderTest::SetListeners()
     auto mouseListener = EventListenerMouse::create();
     mouseListener->onMouseDown = CC_CALLBACK_1(PathfinderTest::OnMouseEvent, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+
+    // Contact Listener
+    auto contactListener = EventListenerPhysicsContact::create();
+    contactListener->onContactBegin = CC_CALLBACK_1(PathfinderTest::onContactBegin, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 }
 
 void PathfinderTest::menuCloseCallback(Ref* pSender)
@@ -386,6 +434,39 @@ void PathfinderTest::OnMouseEvent(Event* _event)
     //			charSprite->runAction(RepeatForever::create(v_mainCharAnimation[FRONT]));
     //	}
     //}
+}
+
+bool PathfinderTest::onContactBegin(PhysicsContact& contact)
+{
+    CCLOG("Collision called");
+
+    auto shapeA = contact.getShapeA()->getBody();
+    auto shapeB = contact.getShapeB()->getBody();
+
+    if ((shapeA->getCategoryBitmask() & shapeB->getCollisionBitmask()) == 0
+        || (shapeB->getCategoryBitmask() & shapeA->getCollisionBitmask()) == 0)
+    {
+        // shapes can't collide
+        return false;
+    }
+
+    // PLAYER & ENEMY
+    if ((shapeA->getCategoryBitmask() == PLAYER_BITMASK & shapeB->getCollisionBitmask() == ENEMY_BITMASK) == 0
+        || (shapeB->getCategoryBitmask() == ENEMY_BITMASK & shapeA->getCollisionBitmask() == PLAYER_BITMASK) == 0)
+    {
+        if (shapeA->getCategoryBitmask() == PLAYER_BITMASK)
+        {
+            shapeA->getNode()->setPosition(Vec2(250, 250));
+        }
+        else
+        {
+            shapeB->getNode()->setPosition(Vec2(250, 250));
+        }
+    }
+
+
+    CCLOG("Collision continue");
+    return true;
 }
 
 void PathfinderTest::InputMouseTestFunction()
