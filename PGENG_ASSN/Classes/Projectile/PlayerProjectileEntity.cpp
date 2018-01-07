@@ -45,7 +45,7 @@ void PlayerProjectileEntity::InitPhysicBody()
     characterSprite->setPosition(0, 0);
     characterSprite->setScale(0.1);
 
-    auto physicsBody = PhysicsBody::createBox(characterSprite->getContentSize(),
+    auto physicsBody = PhysicsBody::createBox(Size(1, 1),
         PhysicsMaterial(0.1f, 1.0f, 0.0f));
 
     physicsBody->setGravityEnable(false);

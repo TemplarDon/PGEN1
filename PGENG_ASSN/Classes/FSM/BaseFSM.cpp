@@ -31,16 +31,17 @@ bool BaseFSM::init()
     // Sprite
     auto sprite = Sprite::create(m_spriteStr);
     sprite->setAnchorPoint(Vec2::ZERO);
+    sprite->setAnchorPoint(Vec2(0.25, 0.25));
+
     sprite->setName("sprite");
     sprite->setScale(0.5);
-    //sprite->setAnchorPoint(Vec2(0.5, 0.5));
 
     addChild(sprite);
     m_sprite = sprite;
 
     // PhysicsBody
     auto physicsBody = PhysicsBody::createBox(
-        Size(10.f, 10.f), // assumes that all enemy will be same size as tile
+        Size(15.f, 15.f), // assumes that all enemy will be same size as tile
         PhysicsMaterial(5.f, 0, 0.0f)
         );
 
@@ -52,7 +53,8 @@ bool BaseFSM::init()
     physicsBody->setCollisionBitmask(PLAYER_BITMASK | WALLS_BITMASK | PLAYER_PROJECTILE_BITMASK);
     physicsBody->setContactTestBitmask(PLAYER_BITMASK | WALLS_BITMASK | PLAYER_PROJECTILE_BITMASK);
 
-    sprite->addComponent(physicsBody);
+    //sprite->addComponent(physicsBody);
+    this->setPhysicsBody(physicsBody);
 }
 
 void BaseFSM::RunFSM()

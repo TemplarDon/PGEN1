@@ -572,7 +572,7 @@ bool GameScene::onContactBegin(PhysicsContact& contact)
         {
             Node* test = shapeA->getNode();
 
-            dynamic_cast<BaseFSM*>(shapeA->getNode()->getParent())->m_isActive = false;
+            dynamic_cast<BaseFSM*>(shapeA->getNode())->m_isActive = false;
             shapeA->getNode()->removeFromParent();
             shapeB->getNode()->removeFromParent();
 
@@ -582,7 +582,7 @@ bool GameScene::onContactBegin(PhysicsContact& contact)
         {
             Node* test = shapeB->getNode();
 
-            dynamic_cast<BaseFSM*>(shapeB->getNode()->getParent())->m_isActive = false;
+            dynamic_cast<BaseFSM*>(shapeB->getNode())->m_isActive = false;
             shapeA->getNode()->removeFromParent();
             shapeB->getNode()->removeFromParent();
 
