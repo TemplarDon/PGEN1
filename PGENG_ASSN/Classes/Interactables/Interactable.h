@@ -2,19 +2,23 @@
 #define INTERACTABLE_H
 
 #include "cocos2d.h"
+#include "BitmasksHeader.h"
+
 using namespace cocos2d;
 
-class Interactable
+class Interactable : public Node
 {
 private:
-
+	MenuItemFont *text;
+	Menu *menu;
 public:
 	Sprite *sprite;
 	PhysicsBody *body;
-	Node *node;
+	bool remove_when_done;
 
 	bool Init(Node *scene);
-	virtual void OnInteract();
+	void OnInteract();
+	void OnInteractLeave();
 
 	Interactable();
 	~Interactable();

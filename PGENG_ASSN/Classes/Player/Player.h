@@ -47,7 +47,7 @@ protected:
 
 	float moveSpeed;
     float invulTime;
-    
+    bool canBeHit = true;
     WeaponBase* weapon;
 
     Node* spriteNode;
