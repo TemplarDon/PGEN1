@@ -47,8 +47,8 @@ bool BaseFSM::init()
     physicsBody->setRotationEnable(false);
 
     physicsBody->setCategoryBitmask(ENEMY_BITMASK);
-    physicsBody->setCollisionBitmask(PLAYER_BITMASK);
-    physicsBody->setContactTestBitmask(PLAYER_BITMASK);
+    physicsBody->setCollisionBitmask(PLAYER_BITMASK | WALLS_BITMASK | PLAYER_PROJECTILE_BITMASK);
+    physicsBody->setContactTestBitmask(PLAYER_BITMASK | WALLS_BITMASK | PLAYER_PROJECTILE_BITMASK);
 
     sprite->addComponent(physicsBody);
 }

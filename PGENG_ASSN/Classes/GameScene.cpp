@@ -538,54 +538,74 @@ bool GameScene::onContactBegin(PhysicsContact& contact)
     // PLAYER & ENEMY
     //if ((shapeA->getCategoryBitmask() == PLAYER_BITMASK & shapeB->getCollisionBitmask() == ENEMY_BITMASK) == 0
     //    || (shapeB->getCategoryBitmask() == ENEMY_BITMASK & shapeA->getCollisionBitmask() == PLAYER_BITMASK) == 0)
+    //if ((shapeA->getNode()->getName() == "player" && shapeB->getNode()->getTag() == FSM_TAG)
+    //    || (shapeB->getNode()->getName() == "player" && shapeA->getNode()->getTag() == FSM_TAG))
     if ((shapeA->getCategoryBitmask() == PLAYER_BITMASK && shapeB->getCategoryBitmask() == ENEMY_BITMASK)
-        || (shapeB->getCategoryBitmask() == ENEMY_BITMASK && shapeA->getCategoryBitmask() == PLAYER_BITMASK))
+        || (shapeA->getCategoryBitmask() == ENEMY_BITMASK && shapeB->getCategoryBitmask() == PLAYER_BITMASK))
     {
         CCLOG("Player reset pos");
 
         if (shapeA->getCategoryBitmask() == PLAYER_BITMASK)
         {
             shapeA->getNode()->setPosition(spawnPos);
-            shapeA->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+            dynamic_cast<Player*>(shapeA->getNode())->TakeDamage(1);
+
         }
         else
         {
             shapeB->getNode()->setPosition(spawnPos);
-            shapeB->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+            dynamic_cast<Player*>(shapeB->getNode())->TakeDamage(1);
+
         }
 
         return false;
     }
 
-    // PLAYER & WALL
-    if ((shapeA->getCategoryBitmask() == PLAYER_BITMASK && shapeB->getCategoryBitmask() == WALLS_BITMASK)
-        || (shapeB->getCategoryBitmask() == WALLS_BITMASK && shapeA->getCategoryBitmask() == PLAYER_BITMASK))
-    {
-        if (shapeA->getCategoryBitmask() == PLAYER_BITMASK)
-        {
-            shapeA->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
-        }
-        else
-        {
-            shapeB->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
-        }
-        return false;
-    }
-
-    // ENEMY & WALL
-    if ((shapeA->getCategoryBitmask() == ENEMY_BITMASK && shapeB->getCategoryBitmask() == WALLS_BITMASK)
-        || (shapeB->getCategoryBitmask() == WALLS_BITMASK && shapeA->getCategoryBitmask() == ENEMY_BITMASK))
+    if ((shapeA->getCategoryBitmask() == PLAYER_PROJECTILE_BITMASK && shapeB->getCategoryBitmask() == ENEMY_BITMASK)
+        || (shapeA->getCategoryBitmask() == ENEMY_BITMASK && shapeB->getCategoryBitmask() == PLAYER_PROJECTILE_BITMASK))
     {
         if (shapeA->getCategoryBitmask() == ENEMY_BITMASK)
         {
-            shapeA->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+            shapeA->getNode()->removeChild(shapeA->getNode());
+
         }
         else
         {
-            shapeB->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+            shapeB->getNode()->removeChild(shapeB->getNode());
         }
+
         return false;
     }
+
+    //// PLAYER & WALL
+    //if ((shapeA->getCategoryBitmask() == PLAYER_BITMASK && shapeB->getCategoryBitmask() == WALLS_BITMASK)
+    //    || (shapeB->getCategoryBitmask() == WALLS_BITMASK && shapeA->getCategoryBitmask() == PLAYER_BITMASK))
+    //{
+    //    if (shapeA->getCategoryBitmask() == PLAYER_BITMASK)
+    //    {
+    //        shapeA->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+    //    }
+    //    else
+    //    {
+    //        shapeB->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+    //    }
+    //    return false;
+    //}
+
+    //// ENEMY & WALL
+    //if ((shapeA->getCategoryBitmask() == ENEMY_BITMASK && shapeB->getCategoryBitmask() == WALLS_BITMASK)
+    //    || (shapeB->getCategoryBitmask() == WALLS_BITMASK && shapeA->getCategoryBitmask() == ENEMY_BITMASK))
+    //{
+    //    if (shapeA->getCategoryBitmask() == ENEMY_BITMASK)
+    //    {
+    //        shapeA->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+    //    }
+    //    else
+    //    {
+    //        shapeB->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+    //    }
+    //    return false;
+    //}
 
     return true;
 }

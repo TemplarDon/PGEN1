@@ -199,22 +199,22 @@ void Player::MovePlayer()
     {
         case MOVEDIR_LEFT:
         {
-            getPhysicsBody()->setVelocity(Vec2(-250.f, 0.0f));
+            getPhysicsBody()->setVelocity(Vec2(-80.f, 0.0f));
             break;
         }
         case MOVEDIR_RIGHT:
         {
-            getPhysicsBody()->setVelocity(Vec2(250.f, 0.0f));
+            getPhysicsBody()->setVelocity(Vec2(80.f, 0.0f));
         }
             break;
         case MOVEDIR_UP:
         {
-            getPhysicsBody()->setVelocity(Vec2(0.0f, 250.f));
+            getPhysicsBody()->setVelocity(Vec2(0.0f, 80.f));
             break;
         }
         case MOVEDIR_DOWN:
         {
-            getPhysicsBody()->setVelocity(Vec2(0.0f, -250.f));
+            getPhysicsBody()->setVelocity(Vec2(0.0f, -80.f));
             break;
         }
         case MOVEDIR_IDLE:
