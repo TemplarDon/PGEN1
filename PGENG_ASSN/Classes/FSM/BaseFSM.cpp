@@ -5,6 +5,7 @@ BaseFSM::BaseFSM(TMXTiledMap* map, string sprite)
 , m_spriteStr(sprite)
 , m_health(3)
 , m_moveSpeed(1.1)
+, m_isActive(true)
 {
     if (Node::init())
         init();
@@ -55,6 +56,9 @@ bool BaseFSM::init()
 
 void BaseFSM::RunFSM()
 {
+    if (!_parent || !m_isActive)
+        return;
+
     m_pathFinder->UpdateCurrentPosition(getPosition());
 
     Sense();

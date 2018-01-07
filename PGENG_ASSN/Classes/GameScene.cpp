@@ -528,12 +528,15 @@ bool GameScene::onContactBegin(PhysicsContact& contact)
     auto shapeA = contact.getShapeA()->getBody();
     auto shapeB = contact.getShapeB()->getBody();
 
-    if ((shapeA->getCategoryBitmask() & shapeB->getCollisionBitmask()) == 0
-        || (shapeB->getCategoryBitmask() & shapeA->getCollisionBitmask()) == 0)
-    {
-        // shapes can't collide
-        return false;
-    }
+    //if ((shapeA->getCategoryBitmask() & shapeB->getCollisionBitmask()) == 0
+    //    || (shapeB->getCategoryBitmask() & shapeA->getCollisionBitmask()) == 0)
+    //{
+    //    // shapes can't collide
+    //    return false;
+    //}
+
+    if (!shapeA->getNode() || !shapeB->getNode())
+        return true;
 
     // PLAYER & ENEMY
     //if ((shapeA->getCategoryBitmask() == PLAYER_BITMASK & shapeB->getCollisionBitmask() == ENEMY_BITMASK) == 0
@@ -557,8 +560,6 @@ bool GameScene::onContactBegin(PhysicsContact& contact)
             dynamic_cast<Player*>(shapeB->getNode())->TakeDamage(1);
 
         }
-
-        return false;
     }
 
     if ((shapeA->getCategoryBitmask() == PLAYER_PROJECTILE_BITMASK && shapeB->getCategoryBitmask() == ENEMY_BITMASK)
@@ -566,15 +567,17 @@ bool GameScene::onContactBegin(PhysicsContact& contact)
     {
         if (shapeA->getCategoryBitmask() == ENEMY_BITMASK)
         {
-            shapeA->getNode()->removeChild(shapeA->getNode());
+            //dynamic_cast<BaseFSM*>(shapeA->getNode())->m_isActive = false;
+            //shapeA->getNode()->stopAllActions();
+            //shapeA->getNode()->removeFromParent();
 
         }
         else
         {
-            shapeB->getNode()->removeChild(shapeB->getNode());
+            //dynamic_cast<BaseFSM*>(shapeB->getNode())->m_isActive = false;
+            //shapeB->getNode()->stopAllActions();
+            //shapeB->getNode()->removeFromParent();
         }
-
-        return false;
     }
 
     //// PLAYER & WALL

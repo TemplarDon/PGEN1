@@ -41,7 +41,7 @@ public:
 
     int m_health;
     float m_moveSpeed;
-
+    bool m_isActive;
 private:
 
     virtual void Sense() = 0;  // get/receive updates from the world
