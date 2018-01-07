@@ -597,11 +597,14 @@ bool GameScene::onContactBegin(PhysicsContact& contact)
         {
             shapeA->getNode()->setPosition(spawnPos);
             shapeA->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+            dynamic_cast<Player*>(shapeA->getNode())->TakeDamage(0);
         }
         else
         {
             shapeB->getNode()->setPosition(spawnPos);
             shapeB->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+            dynamic_cast<Player*>(shapeB->getNode())->TakeDamage(0);
+            
         }
 
         return false;
@@ -617,7 +620,8 @@ bool GameScene::onContactBegin(PhysicsContact& contact)
         }
         else
         {
-            shapeB->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+            shapeB->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0)); 
+            
         }
         return false;
     }
