@@ -29,6 +29,7 @@ public:
     virtual void update(float _dt);
 
     void Play(cocos2d::Ref* pSender);
+    void PlayPathfinderTest(cocos2d::Ref* pSender);
     void test();
 
 };

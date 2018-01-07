@@ -183,7 +183,7 @@ void Pathfinder::FindPath(Vec2 dest)
 
         // Increase the loop and check if over loop limit
         ++loopCount;
-        if (loopCount <= maxLoops)
+        if (loopCount >= maxLoops)
             m_continueNextFrame = true;
     }
 }

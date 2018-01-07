@@ -3,8 +3,8 @@
 PatrollingFSM::PatrollingFSM(TMXTiledMap* map) 
 : BaseFSM(map)
 , m_currentState(PATROLLING_STATES::IDLE)
-, m_idx(10)
-, m_nearDistCheck(0.1f)
+, m_idx(1)
+, m_nearDistCheck(10)
 {
     m_waypoints = std::map<int, Vec2>();
 

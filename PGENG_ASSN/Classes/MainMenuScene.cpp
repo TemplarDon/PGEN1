@@ -64,15 +64,17 @@ bool MainMenuScene::init()
     this->scheduleUpdate();
 
     // Menu
-    MenuItemFont* menu_play = MenuItemFont::create("Play", CC_CALLBACK_1(MainMenuScene::Play, this));
+    MenuItemFont* menu_play = MenuItemFont::create("Play (TestScene)", CC_CALLBACK_1(MainMenuScene::Play, this));
+    MenuItemFont* menu_pathfinder = MenuItemFont::create("Play (PathfinderTest)", CC_CALLBACK_1(MainMenuScene::PlayPathfinderTest, this));
     MenuItemFont* menu_quit = MenuItemFont::create("Quit", CC_CALLBACK_1(MainMenuScene::menuCloseCallback, this));
 
-    auto *menu = Menu::create(menu_play, menu_quit, nullptr);
+    auto *menu = Menu::create(menu_play, menu_quit, menu_pathfinder, nullptr);
     menu->setPosition(Point(0, 0));
     menu->setName("menu");
     menu->retain();
     menu_play->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 3));
-    menu_quit->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 2));
+    menu_pathfinder->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 2));
+    menu_quit->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 1));
 
     this->addChild(menu, 5);
 
@@ -146,6 +148,10 @@ void MainMenuScene::Play(Ref *pSender)
     SceneManager::GetInstance().TransitionLevel("test scene", SceneManager::TRANSITION_TYPES::FADE);
 }
 
+void MainMenuScene::PlayPathfinderTest(Ref *pSender)
+{
+    SceneManager::GetInstance().TransitionLevel("pathfinder", SceneManager::TRANSITION_TYPES::FADE);
+}
 void MainMenuScene::test()
 {
     SceneManager::GetInstance().TransitionLevel("ello level", SceneManager::TRANSITION_TYPES::FADE);
