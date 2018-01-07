@@ -162,8 +162,13 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Interactables\Interactable.cpp" />
     <ClCompile Include="..\Classes\MainMenuScene.cpp" />
     <ClCompile Include="..\Classes\PathfinderTest.cpp" />
+    <ClCompile Include="..\Classes\Player\Player.cpp" />
+    <ClCompile Include="..\Classes\Projectile\PlayerProjectileEntity.cpp" />
+    <ClCompile Include="..\Classes\Projectile\ProjectileBase.cpp" />
     <ClCompile Include="..\Classes\SceneManagement\SceneManager.cpp" />
     <ClCompile Include="..\Classes\TestScene.cpp" />
+    <ClCompile Include="..\Classes\Weapon\PlayerRangeWeapon.cpp" />
+    <ClCompile Include="..\Classes\Weapon\WeaponBase.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -186,8 +191,13 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Interactables\Interactable.h" />
     <ClInclude Include="..\Classes\MainMenuScene.h" />
     <ClInclude Include="..\Classes\PathfinderTest.h" />
+    <ClInclude Include="..\Classes\Player\Player.h" />
+    <ClInclude Include="..\Classes\Projectile\PlayerProjectileEntity.h" />
+    <ClInclude Include="..\Classes\Projectile\ProjectileBase.h" />
     <ClInclude Include="..\Classes\SceneManagement\SceneManager.h" />
     <ClInclude Include="..\Classes\TestScene.h" />
+    <ClInclude Include="..\Classes\Weapon\PlayerRangeWeapon.h" />
+    <ClInclude Include="..\Classes\Weapon\WeaponBase.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

@@ -29,8 +29,6 @@ bool MainMenuScene::init()
         return false;
     }
 
-    InputHandler::GetInstance().ClearActionMaps();
-
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     Size playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
@@ -131,7 +129,7 @@ void MainMenuScene::OnMouseEvent(Event* _event)
 
         if (name == "play_btn")
         {
-            SceneManager::GetInstance().TransitionLevel("test scene", SceneManager::TRANSITION_TYPES::FADE);
+            SceneManager::GetInstance().TransitionLevel("test scene", SceneManager::TRANSITION_TYPES::FADE, true);
         }
         else if (name == "quit_btn")
         {
@@ -147,7 +145,7 @@ void MainMenuScene::OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event)
 
 void MainMenuScene::Play(Ref *pSender)
 {
-    SceneManager::GetInstance().TransitionLevel("test scene", SceneManager::TRANSITION_TYPES::FADE);
+    SceneManager::GetInstance().TransitionLevel("test scene", SceneManager::TRANSITION_TYPES::FADE, true);
 }
 
 void MainMenuScene::PlayPathfinderTest(Ref *pSender)
