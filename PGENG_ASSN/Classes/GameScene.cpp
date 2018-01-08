@@ -151,31 +151,15 @@ bool GameScene::init()
 
     InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_Z, bind(&GameScene::SwitchSceneTestFunction, this), true);
     InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_X, bind(&GameScene::AddSceneTestFunction, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_C, bind(&GameScene::PopSceneTestFunction, this), true);
+	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_C, bind(&GameScene::PopSceneTestFunction, this), true);
+
+	//InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_L, bind(&GameScene::SpawnNPC, this), true);
 
     //Init Player
     player = new Player();
     player->init();
     player->setName("player");
 	player->getPhysicsBody()->setTag(PHYSICS_TAG_PLAYER);
-    this->addChild(player, 99);
-
-	//Some quick and dirty menu stuff
-	menu_play = MenuItemFont::create("thingy");
-	menu_play->setString("Hello.");
-
-	auto *menu = Menu::create(menu_play, nullptr);
-	menu->setPosition(220, 200);
-	menu->setName("menu");
-	menu->retain();
-	menu_play->setPosition(0,0);
-	menu_play->setVisible(false);
-
-	this->addChild(menu, 100);
-
-	//Interactables
-	auto asdasd = new Interactable();
-	asdasd->Init(this);
 
     SetListeners();
     InitAnimationActions();
@@ -184,8 +168,13 @@ bool GameScene::init()
     InitFSM();
     scheduleUpdate();
 
+	m_over = false;
+
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Audio/BGM.wav");
     CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
+
+	cameraOrthoScale.set(234, 160);
+	runAction(DelayTime::create(2.0f));
     return true;
 }
 
@@ -197,6 +186,7 @@ void GameScene::update(float _dt)
     Vector<Node*> myVector = getChildren();
     Vector<Node*>::iterator myIterator;
 
+	bool enemyalive = false;
     for (myIterator = myVector.begin(); myIterator != myVector.end(); ++myIterator)
     {
         auto mySprite = *myIterator;
@@ -204,14 +194,21 @@ void GameScene::update(float _dt)
         if (mySprite->getTag() == FSM_TAG)
         {
             dynamic_cast<BaseFSM*>(mySprite)->RunFSM();
+			enemyalive = true;
         }
     }
+
+	if (!enemyalive)
+	{
+		SpawnNPC();
+	}
 
     //UpdateFSM();
 
     Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
-    mainCam->setPosition(charSprite->getPosition());
-
+	mainCam->initOrthographic(cameraOrthoScale.x, cameraOrthoScale.y, 1, 800);
+    mainCam->setPosition(player->getPosition() - Vec2(cameraOrthoScale.x * 0.5, cameraOrthoScale.y * 0.5));
+	
     //rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
     //this->visit();
     //rendtex->end();
@@ -703,4 +700,33 @@ void GameScene::onContactSeperate(PhysicsContact & contact)
 		break;
 	}
 
+}
+
+void GameScene::SpawnNPC()
+{
+	if (m_over)
+		return;
+
+	//Some quick and dirty menu stuff
+	menu_play = MenuItemFont::create("thingy");
+	menu_play->setString("YOU WIN GOOD JOB.");
+	menu_play->setFontSize(10000);
+	menu_play->setFontSizeObj(6);
+
+	auto *menu = Menu::create(menu_play, nullptr);
+	menu->setPosition(15, 720);
+	menu->setName("menu");
+	menu->retain();
+	menu_play->setPosition(0, 0);
+	menu_play->setVisible(false);
+
+	this->addChild(menu, 100);
+
+	//Interactables
+	auto asdasd = new Interactable();
+	asdasd->Init(this);
+	asdasd->setName("npc");
+	addChild(asdasd, 98);
+
+	m_over = true;
 }

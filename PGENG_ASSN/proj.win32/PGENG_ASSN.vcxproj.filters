@@ -206,6 +206,9 @@
     <ClInclude Include="..\Classes\Interactables\NPC.h">
       <Filter>src\Interactables</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Player\PlayerInfo.h">
+      <Filter>src\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

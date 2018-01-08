@@ -53,6 +53,8 @@ public:
 
     void SwitchSceneTest(cocos2d::Ref* pSender);
 
+	void SpawnNPC();
+
 private:
     enum ANIMLIST
     {
@@ -73,8 +75,10 @@ private:
     Vec2 spawnPos;
     Player* player;
 
+	Vec2 cameraOrthoScale;
 
 	MenuItemFont* menu_play;
+	bool m_over;
 };
 
 #endif // __TEST_SCENE_H__

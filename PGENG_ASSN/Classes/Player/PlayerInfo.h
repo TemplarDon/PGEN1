@@ -13,8 +13,8 @@ class PlayerInfo : public SingletonNode<PlayerInfo>
     friend SingletonNode<PlayerInfo>;
 
 public:
-    PlayerInfo();
-    ~PlayerInfo();
+    PlayerInfo(){};
+    ~PlayerInfo(){};
 
     virtual bool init()
     {

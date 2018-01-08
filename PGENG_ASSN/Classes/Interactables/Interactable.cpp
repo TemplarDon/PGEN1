@@ -11,8 +11,8 @@ bool Interactable::Init(Node *scene)
 	sprite = Sprite::create("Blue_Front1.png");
 	sprite->setName("generic interactable object image");
 	sprite->setAnchorPoint(Vec2::ZERO);
-	sprite->setPosition(200, 150);
-	sprite->setScale(0.4);
+	sprite->setPosition(13, 675);
+	sprite->setScale(0.3);
 	this->addChild(sprite, 98);
 
 	//Addding a physics body - (this is a child of the sprite)
@@ -25,7 +25,7 @@ bool Interactable::Init(Node *scene)
 
 	sprite->addComponent(body);
 
-	scene->addChild(this, 98);
+	//scene->addChild(this, 98);
 
 	/*text = MenuItemFont::create("NPC text");
 	text->setString("Hello.");
@@ -37,7 +37,6 @@ bool Interactable::Init(Node *scene)
 	text->setPosition(Point(500, 500));
 
 	scene->addChild(menu, 5);*/
-	
 	return true;
 }
 

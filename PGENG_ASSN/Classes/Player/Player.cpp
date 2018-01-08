@@ -133,7 +133,7 @@ void Player::TakeDamage(int _amount)
         canBeHit = false;
         cocos2d::Blink* blinkAction = CCBlink::create(1.0f, 10);
         this->runAction(blinkAction);
-        //PlayerInfo::GetInstance().TakeDamage(_amount);
+        PlayerInfo::GetInstance().TakeDamage(_amount);
 
         this->runAction(Sequence::create(
             CCDelayTime::create(invulTime),

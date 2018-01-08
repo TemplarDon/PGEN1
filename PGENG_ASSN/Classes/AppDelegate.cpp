@@ -31,6 +31,7 @@ static cocos2d::Size designResolutionSize = cocos2d::Size(1024, 768); // Set thi
 static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
 static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
+static cocos2d::Size iPhoneResolutionSIze = cocos2d::Size(1152, 648);
 
 AppDelegate::AppDelegate()
 {
@@ -83,7 +84,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0f / 60);
 
     // Set the design resolution
-    glview->setDesignResolutionSize(smallResolutionSize.width, smallResolutionSize.height, ResolutionPolicy::NO_BORDER);
+    glview->setDesignResolutionSize(iPhoneResolutionSIze.width, iPhoneResolutionSIze.height, ResolutionPolicy::NO_BORDER);
     auto frameSize = glview->getFrameSize();
     // if the frame's height is larger than the height of medium size.
     if (frameSize.height > mediumResolutionSize.height)
