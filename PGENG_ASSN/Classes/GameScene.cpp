@@ -160,6 +160,7 @@ bool GameScene::init()
     player->init();
     player->setName("player");
 	player->getPhysicsBody()->setTag(PHYSICS_TAG_PLAYER);
+	addChild(player, 99);
 
     SetListeners();
     InitAnimationActions();
@@ -376,6 +377,8 @@ void GameScene::InitTilemap()
                 aNode->setPosition(pos);
 
                 Size sz = map->getTileSize();
+				sz.height *= 1.15;
+				sz.width *= 1.15;
                 auto physicsBody = PhysicsBody::createBox(
                     sz,
                     PhysicsMaterial(0.1f, 0, 0.0f)
