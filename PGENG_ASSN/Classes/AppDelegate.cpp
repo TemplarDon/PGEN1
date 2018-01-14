@@ -9,6 +9,7 @@
 #include "MainMenuScene.h"
 #include "PathfinderTest.h"
 #include "GameScene.h"
+#include "PauseScene.h"
 
 // #define USE_AUDIO_ENGINE 1
  #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -117,15 +118,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
     SceneManager::GetInstance().Start(scene);
 
     // create database of shared scenes
-    SceneManager::GetInstance().AddSharedScene("ello scene", HelloWorld::createScene());
+    SceneManager::GetInstance().AddSharedScene("pause", PauseScene::createScene());
 
     // add other levels
-    SceneManager::GetInstance().AddLevel("ello level", HelloWorld::createScene());
-    SceneManager::GetInstance().AddLevel("pathfinder", PathfinderTest::createScene());
-    SceneManager::GetInstance().AddLevel("test scene", GameScene::createScene());
-    SceneManager::GetInstance().GetLevel("test scene")->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-
     SceneManager::GetInstance().AddLevel("menu", scene);
+    SceneManager::GetInstance().AddLevel("dungeon scene", GameScene::createScene());
+    SceneManager::GetInstance().GetLevel("dungeon scene")->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     SceneManager::GetInstance().FinishSetup();
     return true;
 }

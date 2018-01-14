@@ -13,23 +13,23 @@
  </layer>
  <layer name="Walls" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmGEKwjAMhUtrvYoH8OIieAHRH6JHcqKCggTs2qVZX7p8sB+FJd2jbfoW5wxtnLxzx4Ln7OvG1yIE3vvc+Fpo0JGzzo/CdR6Y8RLrcYj1c44hta/mRkLHZl0/5xhS56O0DtI6Wxq/5HolkRdVx+qV9+LznxjS8Teyz64j8ajcfXqsBdOBxfu7dx+fsI96dND7hPot6sekfDsXlLrLRZOO7975vQeQfHsuNc+q6eDTi44hcT5QfDsXTfUqRS86zLdjYzqwaOXbqe/+91+e229v5dt76ZcsVQdiv10y79zzmQ6s+UrzWr992vtSeVF1cH03t18vRU8+LzXWgunAwnRgsQ3pcQuemNykRA==
+   eJztmF0KAjEMhEtrvYrXF8ELiD6IHsmKCgpSsD8m2Z1080EfFprsDm3T2ThnaOPonTt0jJPnjeciBNp8ajwXGnS0rPO9c50TMV5iPfaRP2cNqX01NRI6Nmv+nDWkzkdvHczrbG/8kuuVRF5UHatn3rNvHzGU46/ZPrtU4lG5+fKzFkwHFq/v3r59wi7q0ZHfJ7nfyv2YlG+nglJ3qWjS8dk73/cAkm9vhfOsmg46o+hIhfOB4tupaKpXJUbRYb4dG9OBxVy+Pffdv/7LW/vtc/n2UfolS9WB2G+XzDv1+0wH1vt681q//b/5UnlRdVB9N7VfL8VIPq/0rAXTgYXpwCIB9jceQn2nQA==
   </data>
  </layer>
  <objectgroup name="Puzzle">
-  <object id="23" name="ChainedPressurePlate" x="447.667" y="304.167" width="16.25" height="15.75">
+  <object id="23" name="ChainedPressurePlate" x="447.849" y="299.44" width="16.25" height="15.75">
    <properties>
     <property name="ChainNum" type="int" value="4"/>
     <property name="PuzzleID" type="int" value="1"/>
    </properties>
   </object>
-  <object id="26" name="ChainedPressurePlate" x="495.875" y="367.958" width="16.25" height="15.75">
+  <object id="26" name="ChainedPressurePlate" x="495.693" y="362.685" width="16.25" height="15.75">
    <properties>
     <property name="ChainNum" type="int" value="2"/>
     <property name="PuzzleID" type="int" value="1"/>
    </properties>
   </object>
-  <object id="27" name="ChainedPressurePlate" x="544.292" y="303.458" width="16.25" height="15.75">
+  <object id="27" name="ChainedPressurePlate" x="544.11" y="298.367" width="16.25" height="15.75">
    <properties>
     <property name="ChainNum" type="int" value="3"/>
     <property name="PuzzleID" type="int" value="1"/>
@@ -101,7 +101,7 @@
  </layer>
  <layer name="CollideMap" width="50" height="50" opacity="0.55">
   <data encoding="base64" compression="zlib">
-   eJztmMEOwCAIQ3fa/3/mPmPXZQcTpUipfckOZiBpCIhel+nGc89/SH+kjoh91B9FBx0ZeUb4o8nKMVvMDE7Oxyn1sbKv++6a/cy+6PN85j8r0XyxYB1cfGugWz0o1DlL343SSQd6rqkCGds6uGJX61CojxHWwYXKef5HaU4crbugpKNible5nyu9l0TsO+tgnEt29xPrqNl3d7xT60OpXyH9UWSc18j7Y0TXaN0F6+DCOriwjjxeP437BQ==
+   eJztmMEOwCAIQ3fa/3/mPmPXZQcTpUipfckOZiBpCIhel+nGc89/SH+kjoh91B9FBx0ZeUb4o8nKMVvMDE7Oxyn1sbKv++6a/cy+6PN85j8r0XyxYB1cfGugWz0o1DlL343SSQd6rqkCGds6uGJX61CojxHWwYXKef5HaU4crbugpKNible5nyu9l0TsO+tgnEt29xPrqNl3d7xT60OpXyH9UWSc18j7Y0TXaN0F6+DCOrhQ0sH2vvECxgL9zw==
   </data>
  </layer>
 </map>

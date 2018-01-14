@@ -71,17 +71,19 @@ void SceneManager::AddSceneToStack(string name, bool leaveOldScene)
     if (toAdd)
     {
         Scene* oldScene = theDirector->getRunningScene();
-        theDirector->pushScene(GetSharedScene(name));
 
-        Scene* addTo = GetSharedScene(name);
+        toAdd->removeAllChildren();
+        toAdd->init();
 
         if (leaveOldScene)
         {
             toAdd->removeChildByName("pause_bg");
             Layer* newLayer = CreateLayerFromScene(oldScene);
             newLayer->setName("pause_bg");
-            addTo->addChild(newLayer, -1);
+            toAdd->addChild(newLayer, -1);
         }
+
+        theDirector->pushScene(toAdd); 
     }
 }
 
@@ -105,7 +107,11 @@ Layer* SceneManager::CreateLayerFromScene(Scene* sourceScene)
         Sprite* rendtexSprite = Sprite::createWithTexture(rendtex->getSprite()->getTexture());
 
         rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
-        sourceScene->visit(/*Director::getInstance()->getRenderer(), Camera::getDefaultCamera()->getPosition(), Camera::getDefaultCamera()->getCameraFlag()*/);
+        //sourceScene->visit();
+        /*Director::getInstance()->getRenderer(), Camera::getDefaultCamera()->getPosition(), Camera::getDefaultCamera()->getCameraFlag()*/
+
+        //sourceScene->getDefaultCamera()->visit(Director::getInstance()->getRenderer(), sourceScene->getDefaultCamera()->getProjectionMatrix(), true);
+
         rendtex->end();
         rendtexSprite->setTexture(rendtex->getSprite()->getTexture());
         rendtexSprite->setName("prevscene_bg");
@@ -177,7 +183,7 @@ void SceneManager::TransitionSceneWithAnimations(Scene* newScene, TRANSITION_TYP
     {
         case TRANSITION_TYPES::FADE:
         {
-            theDirector->replaceScene(TransitionFade::create(1, newScene));
+            theDirector->replaceScene(TransitionFade::create(1.5, newScene));
             break;
         }
     }
