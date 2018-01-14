@@ -168,7 +168,7 @@ bool GameScene::init()
 	SpawnHeart(Vec2(100, 100));
 	SpawnHeart(Vec2(250, 120));
 	SpawnHeart(Vec2(240, 350));
-	SpawnHeart(Vec2(290, 300));
+	SpawnHeart(Vec2(290, 320));
 	SpawnHeart(Vec2(260, 360));
 
     SetListeners();
