@@ -634,8 +634,11 @@ bool GameScene::onContactBegin(PhysicsContact& contact)
 		{
 			//...Interactable
 		case PHYSICS_TAG_INTERACTABLE:
-		{
-			(static_cast<Interactable*>(bodyB->getNode()))->OnInteract();
+        {
+            Node* bNode = bodyB->getNode();
+            static_cast<Interactable*>(bNode->getParent())->OnInteract();
+
+			//(static_cast<Interactable*>(bodyB->getNode()))->OnInteract();
 			//menu_play->setVisible(true);
 			break;
 		}
@@ -764,6 +767,9 @@ void GameScene::onContactSeperate(PhysicsContact & contact)
 			//...Interactable
 		case PHYSICS_TAG_INTERACTABLE:
 		{
+            Node* bNode = bodyB->getNode();
+            static_cast<Interactable*>(bNode->getParent())->OnInteractLeave();
+
 			//(static_cast<Interactable*>(bodyB->getNode()))->OnInteractLeave();
 			//menu_play->setVisible(false);
 			break;
