@@ -132,6 +132,9 @@
     <ClCompile Include="..\Classes\Puzzle\Button.cpp">
       <Filter>src\Puzzle</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Interactables\HeartDrops.cpp">
+      <Filter>src\Interactables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -235,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Puzzle\Button.h">
       <Filter>src\Puzzle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Interactables\HeartDrops.h">
+      <Filter>src\Interactables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
