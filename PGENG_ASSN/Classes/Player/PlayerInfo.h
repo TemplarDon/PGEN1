@@ -31,6 +31,8 @@ public:
     inline int GetMaxHealth(){ return this->maxHealth; }
     inline void SetMaxHealth(unsigned int _newHealth){ this->maxHealth = _newHealth; }
 
+    inline void ResetHealth(){ this->currentHealth = this->maxHealth; }
+
     inline void TakeDamage(int amount){ this->currentHealth -= amount; if (maxHealth < 0){ maxHealth = 0; } }
 
 	inline unsigned int GetScore(){ return this->score; }
