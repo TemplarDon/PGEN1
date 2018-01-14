@@ -567,6 +567,17 @@ void GameScene::SetListeners()
 	auto contactListener_sep = EventListenerPhysicsContact::create();
 	contactListener_sep->onContactSeparate = CC_CALLBACK_1(GameScene::onContactSeperate, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener_sep, this);
+
+    // Adds enemydeath listener
+    auto enemyDeathListener = EventListenerCustom::create("enemy_death", [=](EventCustom* event){
+
+        CCLOG("enemy death received");
+
+        Vec2* pos = static_cast<Vec2*>(event->getUserData());
+        SpawnHeart(*pos);
+
+    });
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(enemyDeathListener, this);
 }
 
 void GameScene::menuCloseCallback(Ref* pSender)

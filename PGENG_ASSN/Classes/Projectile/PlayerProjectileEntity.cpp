@@ -48,11 +48,21 @@ bool PlayerProjectileEntity::OnCollisionEnter(const PhysicsContact &contact)
         dynamic_cast<BaseFSM*>(bodyA->getNode())->m_isActive = false;
         bodyA->getNode()->removeFromParentAndCleanup(true);
 
+        // dispatch enemy dead event
+        EventCustom event("enemy_death");
+        event.setUserData(new Vec2(bodyA->getPosition()));
+        _eventDispatcher->dispatchEvent(&event);
+
     }
     else if (bodyB->getTag() == PHYSICS_TAG_ENEMY && bodyA->getNode() == this)
     {
         dynamic_cast<BaseFSM*>(bodyB->getNode())->m_isActive = false;
         bodyB->getNode()->removeFromParentAndCleanup(true);
+
+        // dispatch enemy dead event
+        EventCustom event("enemy_death");
+        event.setUserData(new Vec2(bodyB->getPosition()));
+        _eventDispatcher->dispatchEvent(&event);
     }
 
     removeFromParentAndCleanup(true);
