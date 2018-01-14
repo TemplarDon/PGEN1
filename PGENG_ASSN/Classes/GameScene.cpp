@@ -375,13 +375,14 @@ void GameScene::InitTilemap()
 
             if (colllide_sprite)
             {
-                Vec2 pos = collideMap->tileAt(Vec2(x, y))->getPosition();
+                
                 auto aNode = Node::create();
+                Size sz = map->getTileSize();
+                Vec2 pos = collideMap->tileAt(Vec2(x, y))->getPosition() + (sz *0.5f);
+
                 aNode->setPosition(pos);
 
-                Size sz = map->getTileSize();
-				sz.height *= 1.15;
-				sz.width *= 1.15;
+                
                 auto physicsBody = PhysicsBody::createBox(
                     sz,
                     PhysicsMaterial(0.1f, 0, 0.0f)
@@ -763,7 +764,7 @@ void GameScene::onContactSeperate(PhysicsContact & contact)
 			//...Interactable
 		case PHYSICS_TAG_INTERACTABLE:
 		{
-			(static_cast<Interactable*>(bodyB->getNode()))->OnInteractLeave();
+			//(static_cast<Interactable*>(bodyB->getNode()))->OnInteractLeave();
 			//menu_play->setVisible(false);
 			break;
 		}
