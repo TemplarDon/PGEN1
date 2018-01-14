@@ -43,8 +43,11 @@
     <Filter Include="src\Projectile">
       <UniqueIdentifier>{c12e5e0a-ddfc-448f-ba84-a708add62d72}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Puzzle">
-      <UniqueIdentifier>{7afdaf3c-8199-4614-a1d0-9e736284b362}</UniqueIdentifier>
+    <Filter Include="src\Puzzles">
+      <UniqueIdentifier>{3658e569-d257-45c6-ba02-412343bb1981}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Scenes">
+      <UniqueIdentifier>{7a653252-7e63-4e1d-a45d-75d23f0912ed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -54,20 +57,11 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\TestScene.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Input\InputHandler.cpp">
       <Filter>src\Input</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\SceneManagement\SceneManager.cpp">
       <Filter>src\SceneManagement</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\MainMenuScene.cpp">
-      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Audio\AudioHandler.cpp">
       <Filter>src\Audio</Filter>
@@ -83,9 +77,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Animation\SpriteBuilder.cpp">
       <Filter>src\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PathfinderTest.cpp">
-      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\FSM\BaseFSM.cpp">
       <Filter>src\FSM</Filter>
@@ -114,30 +105,50 @@
     <ClCompile Include="..\Classes\Weapon\WeaponBase.cpp">
       <Filter>src\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\GameScene.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Interactables\NPC.cpp">
       <Filter>src\Interactables</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Puzzle\Puzzle.cpp">
-      <Filter>src\Puzzle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Puzzle\PuzzleElement.cpp">
-      <Filter>src\Puzzle</Filter>
+    <ClCompile Include="..\Classes\Puzzle\ChainedPressurePlate.cpp">
+      <Filter>src\Puzzles</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Puzzle\PressurePlate.cpp">
-      <Filter>src\Puzzle</Filter>
+      <Filter>src\Puzzles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Puzzle\Puzzle.cpp">
+      <Filter>src\Puzzles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Puzzle\PuzzleElement.cpp">
+      <Filter>src\Puzzles</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Puzzle\Button.cpp">
-      <Filter>src\Puzzle</Filter>
+      <Filter>src\Puzzles</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Puzzle\ChainedPressurePlate.cpp">
-      <Filter>src\Puzzle</Filter>
+    <ClCompile Include="..\Classes\Interactables\HeartDrops.cpp">
+      <Filter>src\Interactables</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Interactables\HeartDrops.cpp" />
+    <ClCompile Include="..\Classes\Projectile\PlayerMeleeHitboxEntity.cpp">
+      <Filter>src\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Weapon\PlayerMeleeWeapon.cpp">
+      <Filter>src\Projectile</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\PauseScene.cpp">
-      <Filter>src</Filter>
+      <Filter>src\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
+      <Filter>src\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MainMenuScene.cpp">
+      <Filter>src\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PathfinderTest.cpp">
+      <Filter>src\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TestScene.cpp">
+      <Filter>src\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameScene.cpp">
+      <Filter>src\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,12 +156,6 @@
       <Filter>win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\TestScene.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Input\InputAction.h">
@@ -164,9 +169,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\SceneManagement\SceneManager.h">
       <Filter>src\SceneManagement</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\MainMenuScene.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Audio\AudioHandler.h">
       <Filter>src\Audio</Filter>
@@ -182,9 +184,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Animation\SpriteBuilder.h">
       <Filter>src\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PathfinderTest.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\FSM\BaseFSM.h">
       <Filter>src\FSM</Filter>
@@ -222,33 +221,53 @@
     <ClInclude Include="..\Classes\Weapon\WeaponBase.h">
       <Filter>src\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\GameScene.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Interactables\NPC.h">
       <Filter>src\Interactables</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Player\PlayerInfo.h">
       <Filter>src\Player</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Puzzle\Puzzle.h">
-      <Filter>src\Puzzle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Puzzle\PuzzleElement.h">
-      <Filter>src\Puzzle</Filter>
+    <ClInclude Include="..\Classes\Puzzle\ChainedPressurePlate.h">
+      <Filter>src\Puzzles</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Puzzle\PressurePlate.h">
-      <Filter>src\Puzzle</Filter>
+      <Filter>src\Puzzles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Puzzle\Puzzle.h">
+      <Filter>src\Puzzles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Puzzle\PuzzleElement.h">
+      <Filter>src\Puzzles</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Puzzle\Button.h">
-      <Filter>src\Puzzle</Filter>
+      <Filter>src\Puzzles</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Puzzle\ChainedPressurePlate.h">
-      <Filter>src\Puzzle</Filter>
+    <ClInclude Include="..\Classes\Interactables\HeartDrops.h">
+      <Filter>src\Interactables</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Interactables\HeartDrops.h" />
+    <ClInclude Include="..\Classes\Projectile\PlayerMeleeHitboxEntity.h">
+      <Filter>src\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Weapon\PlayerMeleeWeapon.h">
+      <Filter>src\Projectile</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\PauseScene.h">
-      <Filter>src</Filter>
+      <Filter>src\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HelloWorldScene.h">
+      <Filter>src\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MainMenuScene.h">
+      <Filter>src\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PathfinderTest.h">
+      <Filter>src\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TestScene.h">
+      <Filter>src\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameScene.h">
+      <Filter>src\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

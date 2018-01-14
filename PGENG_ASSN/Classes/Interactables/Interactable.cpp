@@ -22,7 +22,6 @@ bool Interactable::Init(Node *scene)
 
 	body->setTag(PHYSICS_TAG_INTERACTABLE);
 	body->setContactTestBitmask(PLAYER_BITMASK);
-
 	sprite->addComponent(body);
 
 	//scene->addChild(this, 98);

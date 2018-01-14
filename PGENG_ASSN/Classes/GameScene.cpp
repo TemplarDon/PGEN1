@@ -164,6 +164,13 @@ bool GameScene::init()
 	player->getPhysicsBody()->setTag(PHYSICS_TAG_PLAYER);
 	addChild(player, 99);
 
+	//Spawn some hearts
+	SpawnHeart(Vec2(100, 100));
+	SpawnHeart(Vec2(250, 120));
+	SpawnHeart(Vec2(240, 350));
+	SpawnHeart(Vec2(290, 320));
+	SpawnHeart(Vec2(260, 360));
+
     SetListeners();
     InitAnimationActions();
     InitShader();
@@ -567,13 +574,13 @@ void GameScene::SetListeners()
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener_sep, this);
 
     // Adds enemydeath listener
-    auto enemyDeathListener = EventListenerCustom::create("enemy_death", [=](EventCustom* event){
-
+    auto enemyDeathListener = EventListenerCustom::create("enemy_death", [=](EventCustom* event)
+    {
         CCLOG("enemy death received");
-
         Vec2* pos = static_cast<Vec2*>(event->getUserData());
         SpawnHeart(*pos);
 
+		//player->setPosition(*pos);
     });
     _eventDispatcher->addEventListenerWithSceneGraphPriority(enemyDeathListener, this);
 }
@@ -679,7 +686,8 @@ bool GameScene::onContactBegin(PhysicsContact& contact)
             static_cast<Interactable*>(bNode->getParent())->OnInteract();
 
 			//(static_cast<Interactable*>(bodyB->getNode()))->OnInteract();
-			//menu_play->setVisible(true);
+			if(m_over)
+				menu_play->setVisible(true);
 			break;
 		}
 		}
@@ -725,7 +733,8 @@ void GameScene::onContactSeperate(PhysicsContact & contact)
             static_cast<Interactable*>(bNode->getParent())->OnInteractLeave();
 
 			//(static_cast<Interactable*>(bodyB->getNode()))->OnInteractLeave();
-			//menu_play->setVisible(false);
+			if (m_over)
+				menu_play->setVisible(false);
 			break;
 		}
 		}
@@ -768,9 +777,11 @@ void GameScene::SpawnNPC()
 
 void GameScene::SpawnHeart(Vec2 pos)
 {
-	//Test heart object
+    //Test heart object
 	auto hrt = new HeartDrop();
-	hrt->Init(this);
+	hrt->Init(this, pos);
 	hrt->setPosition(pos);
-	addChild(hrt, 98);
+	hrt->sprite->setPosition(pos);
+	this->addChild(hrt, 98);
+
 }
