@@ -10,6 +10,7 @@
 #include "PathfinderTest.h"
 #include "GameScene.h"
 #include "PauseScene.h"
+#include "EndRoom.h"
 
 // #define USE_AUDIO_ENGINE 1
  #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -124,6 +125,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     SceneManager::GetInstance().AddLevel("menu", scene);
     SceneManager::GetInstance().AddLevel("dungeon scene", GameScene::createScene());
     SceneManager::GetInstance().GetLevel("dungeon scene")->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    SceneManager::GetInstance().AddLevel("end room", EndRoom::createScene());
+
     SceneManager::GetInstance().FinishSetup();
     return true;
 }

@@ -150,6 +150,12 @@
     <ClCompile Include="..\Classes\GameScene.cpp">
       <Filter>src\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\EndRoom.cpp">
+      <Filter>src\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Interactables\Exit.cpp">
+      <Filter>src\Interactables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -268,6 +274,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\GameScene.h">
       <Filter>src\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\EndRoom.h">
+      <Filter>src\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Interactables\Exit.h">
+      <Filter>src\Interactables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
