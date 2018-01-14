@@ -116,11 +116,11 @@ void Player::InitActions()
 
 void Player::InitPhysicBody()
 {
-    Size hitboxSize = AnimateBuilder::GetInstance().GetSpriteSize("player_bow", 1, 1) * 0.25f;
+    Size hitboxSize = AnimateBuilder::GetInstance().GetSpriteSize("player_bow", 1, 1) * 0.2f;
 
     auto physicsBody = PhysicsBody::createBox(hitboxSize,
         PhysicsMaterial(1.0f, 1.0f, 0.0f),
-        hitboxSize * 0.55f);
+        hitboxSize * 0.7f);
     
     physicsBody->setDynamic(true);
     physicsBody->setGravityEnable(false);
@@ -128,7 +128,7 @@ void Player::InitPhysicBody()
     physicsBody->setRotationEnable(false);
 
     physicsBody->setCategoryBitmask(PLAYER_BITMASK);
-    physicsBody->setCollisionBitmask(ENEMY_BITMASK | WALLS_BITMASK | PRESSURE_PLATE);
+    physicsBody->setCollisionBitmask(ENEMY_BITMASK | WALLS_BITMASK);
     physicsBody->setContactTestBitmask(ENEMY_BITMASK | WALLS_BITMASK | PRESSURE_PLATE);
 
     this->setPhysicsBody(physicsBody);

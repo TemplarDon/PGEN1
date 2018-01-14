@@ -569,10 +569,9 @@ void GameScene::SetListeners()
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener_sep, this);
 
     // Adds enemydeath listener
-    auto enemyDeathListener = EventListenerCustom::create("enemy_death", [=](EventCustom* event){
-
+    auto enemyDeathListener = EventListenerCustom::create("enemy_death", [=](EventCustom* event)
+    {
         CCLOG("enemy death received");
-
         Vec2* pos = static_cast<Vec2*>(event->getUserData());
         SpawnHeart(*pos);
 
@@ -785,9 +784,9 @@ void GameScene::SpawnNPC()
 
 void GameScene::SpawnHeart(Vec2 pos)
 {
-	//Test heart object
+    //Test heart object
 	auto hrt = new HeartDrop();
-	hrt->Init(this);
-	hrt->setPosition(pos);
+    hrt->Init(this);
+    hrt->setPosition(pos);
 	addChild(hrt, 98);
 }

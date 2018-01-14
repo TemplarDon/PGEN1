@@ -135,8 +135,14 @@
     <ClCompile Include="..\Classes\Puzzle\ChainedPressurePlate.cpp">
       <Filter>src\Puzzle</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Weapon\PlayerMeleeWeapon.cpp">
+      <Filter>src\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Projectile\PlayerMeleeHitboxEntity.cpp">
+      <Filter>src\Projectile</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\Interactables\HeartDrops.cpp">
-      <Filter>src\FSM</Filter>
+      <Filter>src\Interactables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,8 +251,14 @@
     <ClInclude Include="..\Classes\Puzzle\ChainedPressurePlate.h">
       <Filter>src\Puzzle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Weapon\PlayerMeleeWeapon.h">
+      <Filter>src\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Projectile\PlayerMeleeHitboxEntity.h">
+      <Filter>src\Projectile</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\Interactables\HeartDrops.h">
-      <Filter>src\FSM</Filter>
+      <Filter>src\Interactables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

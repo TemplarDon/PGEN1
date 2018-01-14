@@ -5,7 +5,7 @@ BaseFSM::BaseFSM(TMXTiledMap* map, string sprite)
 : m_map(map)
 , m_spriteStr(sprite)
 , m_health(3)
-, m_moveSpeed(1.1)
+, m_moveSpeed(0.75f)
 , m_isActive(true)
 {
     if (Node::init())
