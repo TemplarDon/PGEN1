@@ -153,9 +153,7 @@ bool GameScene::init()
     InputHandler::GetInstance().AssignMouseAction(EventMouse::MouseButton::BUTTON_LEFT, bind(&GameScene::InputMouseTestFunction, this), true);
     InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&GameScene::InputKeyboardTestFunction, this), true);
 
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_Z, bind(&GameScene::SwitchSceneTestFunction, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_X, bind(&GameScene::AddSceneTestFunction, this), true);
-	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_C, bind(&GameScene::PopSceneTestFunction, this), true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_TAB, bind(&GameScene::Pause, this), true);
 
 	//InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_L, bind(&GameScene::SpawnNPC, this), true);
 
@@ -712,24 +710,9 @@ void GameScene::InputKeyboardTestFunction()
     //CCLOG("Keyboard Function");
 }
 
-void GameScene::SwitchSceneTestFunction()
+void GameScene::Pause()
 {
-    SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
-}
-
-void GameScene::AddSceneTestFunction()
-{
-    SceneManager::GetInstance().AddSceneToStack("ello scene", true);
-}
-
-void GameScene::PopSceneTestFunction()
-{
-    SceneManager::GetInstance().PopSceneFromStack();
-}
-
-void GameScene::SwitchSceneTest(cocos2d::Ref* pSender)
-{
-    SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
+    SceneManager::GetInstance().AddSceneToStack("pause", true);
 }
 
 void GameScene::onContactSeperate(PhysicsContact & contact)

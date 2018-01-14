@@ -1,4 +1,4 @@
-#include "MainMenuScene.h"
+#include "PauseScene.h"
 #include "SimpleAudioEngine.h"
 #include "Input\InputHandler.h"
 #include "SceneManagement\SceneManager.h"
@@ -7,9 +7,9 @@ USING_NS_CC;
 
 using namespace ui;
 
-Scene* MainMenuScene::createScene()
+Scene* PauseScene::createScene()
 {
-    return MainMenuScene::create();
+    return PauseScene::create();
 }
 
 // Print useful error message instead of segfaulting when files are not there.
@@ -20,7 +20,7 @@ static void problemLoading(const char* filename)
 }
 
 // on "init" you need to initialize your instance
-bool MainMenuScene::init()
+bool PauseScene::init()
 {
     //////////////////////////////
     // 1. super init first
@@ -60,8 +60,8 @@ bool MainMenuScene::init()
     this->scheduleUpdate();
 
     // Menu
-    MenuItemFont* menu_play = MenuItemFont::create("Play", CC_CALLBACK_1(MainMenuScene::Play, this));
-    MenuItemFont* menu_quit = MenuItemFont::create("Quit", CC_CALLBACK_1(MainMenuScene::menuCloseCallback, this));
+    MenuItemFont* menu_play = MenuItemFont::create("Resume", CC_CALLBACK_1(PauseScene::Resume, this));
+    MenuItemFont* menu_quit = MenuItemFont::create("Quit", CC_CALLBACK_1(PauseScene::Quit, this));
 
     auto *menu = Menu::create(menu_play, menu_quit, nullptr);
     menu->setPosition(Point(0, 0));
@@ -75,27 +75,27 @@ bool MainMenuScene::init()
     return true;
 }
 
-void MainMenuScene::update(float _dt)
+void PauseScene::update(float _dt)
 {
     Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
     auto visibleSize = Director::getInstance()->getVisibleSize();
     mainCam->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 2)));
 }
 
-void MainMenuScene::SetListeners()
+void PauseScene::SetListeners()
 {
     // Keyboard Listener
     auto keyboardListener = EventListenerKeyboard::create();
-    keyboardListener->onKeyPressed = CC_CALLBACK_2(MainMenuScene::OnKeyPressed, this);
+    keyboardListener->onKeyPressed = CC_CALLBACK_2(PauseScene::OnKeyPressed, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
     // Mouse Listener
     auto mouseListener = EventListenerMouse::create();
-    mouseListener->onMouseDown = CC_CALLBACK_1(MainMenuScene::OnMouseEvent, this);
+    mouseListener->onMouseDown = CC_CALLBACK_1(PauseScene::OnMouseEvent, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
 }
 
-void MainMenuScene::menuCloseCallback(Ref* pSender)
+void PauseScene::menuCloseCallback(Ref* pSender)
 {
     //Close the cocos2d-x game scene and quit the application
     Director::getInstance()->end();
@@ -112,7 +112,7 @@ void MainMenuScene::menuCloseCallback(Ref* pSender)
 
 }
 
-void MainMenuScene::OnMouseEvent(Event* _event)
+void PauseScene::OnMouseEvent(Event* _event)
 {
     EventMouse* mouseEvent = (EventMouse*)_event;
 
@@ -132,12 +132,17 @@ void MainMenuScene::OnMouseEvent(Event* _event)
     }
 }
 
-void MainMenuScene::OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event)
+void PauseScene::OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event)
 {
 
 }
 
-void MainMenuScene::Play(Ref *pSender)
+void PauseScene::Resume(Ref *pSender)
 {
-    SceneManager::GetInstance().TransitionLevel("dungeon scene", SceneManager::TRANSITION_TYPES::FADE, true);
+    SceneManager::GetInstance().PopSceneFromStack();
+}
+
+void PauseScene::Quit(Ref *pSender)
+{
+    SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
 }

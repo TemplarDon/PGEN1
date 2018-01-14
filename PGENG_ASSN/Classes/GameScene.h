@@ -50,9 +50,7 @@ public:
 
     void InputMouseTestFunction();
     void InputKeyboardTestFunction();
-    void SwitchSceneTestFunction();
-    void AddSceneTestFunction();
-    void PopSceneTestFunction();
+    void Pause();
 
     void SwitchSceneTest(cocos2d::Ref* pSender);
 
