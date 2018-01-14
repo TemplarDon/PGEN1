@@ -1,4 +1,5 @@
 #include "BaseFSM.h"
+#include "Player\Player.h"
 
 BaseFSM::BaseFSM(TMXTiledMap* map, string sprite) 
 : m_map(map)
@@ -54,6 +55,8 @@ bool BaseFSM::init()
 
     //sprite->addComponent(physicsBody);
     this->setPhysicsBody(physicsBody);
+
+    return true;
 }
 
 void BaseFSM::RunFSM()
@@ -71,4 +74,9 @@ void BaseFSM::RunFSM()
         Act(actValue);
     }
 
+}
+
+bool BaseFSM::OnCollisionEnter(const PhysicsContact &contact)
+{
+    return true;
 }

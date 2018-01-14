@@ -6,7 +6,7 @@
 
 Player::Player():
 moveSpeed(1),
-invulTime(1.0f),
+invulTime(2.0f),
 spriteNode(nullptr),
 animController(nullptr),
 currentMoveDirection(PlayerMoveDir::MOVEDIR_LEFT)
@@ -121,7 +121,8 @@ void Player::InitPhysicBody()
     auto physicsBody = PhysicsBody::createBox(hitboxSize,
         PhysicsMaterial(1.0f, 1.0f, 0.0f),
         hitboxSize * 0.55f);
-
+    
+    physicsBody->setDynamic(true);
     physicsBody->setGravityEnable(false);
     physicsBody->setTag(PHYSICS_TAG_PLAYER);
     physicsBody->setRotationEnable(false);
@@ -138,7 +139,7 @@ void Player::TakeDamage(int _amount)
     if (canBeHit)
     {
         canBeHit = false;
-        cocos2d::Blink* blinkAction = CCBlink::create(1.0f, 10);
+        cocos2d::Blink* blinkAction = CCBlink::create(invulTime, invulTime * 10);
         this->runAction(blinkAction);
         PlayerInfo::GetInstance().TakeDamage(_amount);
 
@@ -147,7 +148,7 @@ void Player::TakeDamage(int _amount)
             CallFunc::create([&]()
         {
             canBeHit = true;
-        }
+        } 
             ),
             NULL
             ));

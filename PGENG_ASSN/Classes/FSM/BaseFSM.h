@@ -34,7 +34,7 @@ protected:
     Sprite* m_sprite;
 
 public:
-    bool init();
+    virtual bool init();
 
     virtual ~BaseFSM();
     void RunFSM();
@@ -42,6 +42,8 @@ public:
     int m_health;
     float m_moveSpeed;
     bool m_isActive;
+
+    virtual bool OnCollisionEnter(const PhysicsContact &contact);
 private:
 
     virtual void Sense() = 0;  // get/receive updates from the world

@@ -377,7 +377,6 @@ void GameScene::InitTilemap()
 
             if (colllide_sprite)
             {
-                
                 auto aNode = Node::create();
                 Size sz = map->getTileSize();
                 Vec2 pos = collideMap->tileAt(Vec2(x, y))->getPosition() + (sz * 0.5f);
@@ -393,10 +392,10 @@ void GameScene::InitTilemap()
                     );
 
                 physicsBody->setDynamic(false);
-
+                physicsBody->setTag(PHYSICS_TAG_WALL);
                 physicsBody->setCategoryBitmask(WALLS_BITMASK);
-                physicsBody->setCollisionBitmask(PLAYER_BITMASK | ENEMY_BITMASK);
-                physicsBody->setContactTestBitmask(PLAYER_BITMASK | ENEMY_BITMASK);
+                physicsBody->setCollisionBitmask(PLAYER_BITMASK | ENEMY_BITMASK | PLAYER_PROJECTILE_BITMASK);
+                physicsBody->setContactTestBitmask(PLAYER_BITMASK | ENEMY_BITMASK | PLAYER_PROJECTILE_BITMASK);
                 aNode->addComponent(physicsBody);
 
                 collisionNode->addChild(aNode);
@@ -434,6 +433,7 @@ void GameScene::InitFSM()
                 testFSM->setName("patrollingFSM" + str);
                 testFSM->setTag(FSM_TAG);
                 testFSM->setPosition(pos);
+                testFSM->init();
                 addChild(testFSM);
 
                 ++count;
@@ -676,91 +676,20 @@ bool GameScene::onContactBegin(PhysicsContact& contact)
 		}
 	}
 	break;
-
-
 	default:
 		break;
 	}
-	//Enf of ran collision stuff
-
-    auto shapeA = contact.getShapeA()->getBody();
-    auto shapeB = contact.getShapeB()->getBody();
-
-    if (shapeA->getNode() == nullptr || shapeB->getNode() == nullptr)
-        return false;
-
-    if (shapeA == nullptr || shapeB == nullptr)
-        return false;
-
-    //if ((shapeA->getCategoryBitmask() & shapeB->getCollisionBitmask()) == 0
-    //    || (shapeB->getCategoryBitmask() & shapeA->getCollisionBitmask()) == 0)
-    //{
-    //    // shapes can't collide
-    //    return false;
-    //}
-
-    // PLAYER & ENEMY
-    //if ((shapeA->getCategoryBitmask() == PLAYER_BITMASK & shapeB->getCollisionBitmask() == ENEMY_BITMASK) == 0
-    //    || (shapeB->getCategoryBitmask() == ENEMY_BITMASK & shapeA->getCollisionBitmask() == PLAYER_BITMASK) == 0)
-    if ((shapeA->getCategoryBitmask() == PLAYER_BITMASK && shapeB->getCategoryBitmask() == ENEMY_BITMASK)
-        || (shapeB->getCategoryBitmask() == PLAYER_BITMASK && shapeA->getCategoryBitmask() == ENEMY_BITMASK))
-    {
-        CCLOG("Player reset pos");
-
-        if (shapeA->getCategoryBitmask() == PLAYER_BITMASK)
-        {
-            shapeA->getNode()->setPosition(spawnPos);
-            shapeA->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
-            dynamic_cast<Player*>(shapeA->getNode())->TakeDamage(0);
-        }
-        else
-        {
-            shapeB->getNode()->setPosition(spawnPos);
-            shapeB->getNode()->getPhysicsBody()->setVelocity(Vec2(0, 0));
-            dynamic_cast<Player*>(shapeB->getNode())->TakeDamage(0);
-        }
-
-        return false;
-    }
-
-    if ((shapeA->getCategoryBitmask() == PLAYER_PROJECTILE_BITMASK && shapeB->getCategoryBitmask() == ENEMY_BITMASK)
-        || (shapeB->getCategoryBitmask() == PLAYER_PROJECTILE_BITMASK && shapeA->getCategoryBitmask() == ENEMY_BITMASK))
-    {
-        if (shapeA->getCategoryBitmask() == ENEMY_BITMASK)
-        {
-            Node* test = shapeA->getNode();
-
-            dynamic_cast<BaseFSM*>(shapeA->getNode())->m_isActive = false;
-            shapeA->getNode()->removeFromParent();
-            shapeB->getNode()->removeFromParent();
-
-            return false;
-        }
-        else
-        {
-            Node* test = shapeB->getNode();
-
-            dynamic_cast<BaseFSM*>(shapeB->getNode())->m_isActive = false;
-            shapeA->getNode()->removeFromParent();
-            shapeB->getNode()->removeFromParent();
-
-            return false;
-        }
-
-        return false;
-    }
-
     return true;
 }
 
 void GameScene::InputMouseTestFunction()
 {
-    CCLOG("Mouse Function");
+    //CCLOG("Mouse Function");
 }
 
 void GameScene::InputKeyboardTestFunction()
 {
-    CCLOG("Keyboard Function");
+    //CCLOG("Keyboard Function");
 }
 
 void GameScene::SwitchSceneTestFunction()

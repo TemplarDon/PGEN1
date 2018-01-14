@@ -135,6 +135,9 @@
     <ClCompile Include="..\Classes\Puzzle\ChainedPressurePlate.cpp">
       <Filter>src\Puzzle</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Interactables\HeartDrops.cpp">
+      <Filter>src\FSM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -241,6 +244,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Puzzle\ChainedPressurePlate.h">
       <Filter>src\Puzzle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Interactables\HeartDrops.h">
+      <Filter>src\FSM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
