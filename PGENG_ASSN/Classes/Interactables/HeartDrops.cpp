@@ -1,5 +1,6 @@
 #include "HeartDrops.h"
 #include "Player\/PlayerInfo.h"
+#include "BitmasksHeader.h"
 
 bool HeartDrop::Init(Node *scene, Vec2 pos)
 {
@@ -27,6 +28,7 @@ bool HeartDrop::Init(Node *scene, Vec2 pos)
 	body->setDynamic(false);
 
 	body->setTag(PHYSICS_TAG_INTERACTABLE);
+    body->setCollisionBitmask(PHYSICS_TAG_INTERACTABLE);
 	body->setContactTestBitmask(PLAYER_BITMASK);
 
 	sprite->addComponent(body);

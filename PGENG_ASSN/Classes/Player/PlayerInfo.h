@@ -60,7 +60,6 @@ protected:
     
 	unsigned int score;
 	unsigned int highscore = 0;
-
 	unsigned int healthPotions = 0;
 };
 
