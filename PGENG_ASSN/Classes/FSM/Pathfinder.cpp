@@ -194,6 +194,15 @@ void Pathfinder::FindPath(Vec2 dest)
         ++loopCount;
         if (loopCount >= maxLoops)
             m_continueNextFrame = true;
+
+        // Break if current node is null
+        if (m_currentNode == nullptr)
+        {
+            // set m_pathComplete to true to make AI find a new pos
+            m_continueNextFrame = false;
+            m_pathComplete = true;
+            return;
+        }
     }
 }
 
