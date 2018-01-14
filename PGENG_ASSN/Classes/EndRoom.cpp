@@ -181,6 +181,9 @@ bool EndRoom::init()
 
     cameraOrthoScale.set(234, 160);
     runAction(DelayTime::create(2.0f));
+
+    PlayerInfo::GetInstance().SetHighScore(PlayerInfo::GetInstance().GetScore());
+
     return true;
 }
 

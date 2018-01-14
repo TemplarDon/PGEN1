@@ -59,6 +59,11 @@ bool MainMenuScene::init()
     SetListeners();
     this->scheduleUpdate();
 
+    // Text
+    auto text = Label::createWithSystemFont("MAIN MENU", "Arial", 32);
+    text->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 3.5));
+    addChild(text, 5);
+
     // Menu
     MenuItemFont* menu_play = MenuItemFont::create("Play", CC_CALLBACK_1(MainMenuScene::Play, this));
     MenuItemFont* menu_quit = MenuItemFont::create("Quit", CC_CALLBACK_1(MainMenuScene::menuCloseCallback, this));
