@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.1" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextobjectid="56">
+<map version="1.0" tiledversion="1.1.1" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextobjectid="57">
  <tileset firstgid="1" name="roguelikeSheet_transparent" tilewidth="16" tileheight="16" spacing="1" tilecount="1767" columns="57">
   <image source="../TileSheets/roguelikeSheet_transparent.png" width="968" height="526"/>
  </tileset>
@@ -8,7 +8,7 @@
  </tileset>
  <layer name="Ground" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt1EEOgCAMRFESju1JuI4ncy0LA9rQGfyLiQkJaR9SWi2lEascZT6R+3H4Od7UWBEcWsGhlb++Vzj8HCvOJbsnHDiU+naccxwevbo6znr/ujqeDP26umOHezVzx7Ic0f8qu2cc+o4RV3ZPOHBE1p2ZU5U5x+Hv+BocOHDoOyL349jTMeJaURcHDofg0Iqi4wKKIIF0
+   eJzt1EEOgCAMRFESju1JuI4nc60LAtrQGfyLiYkJaR+1tlpKI1Y5ynwiz+Pwc7ypsSI4tIJDK3/9X+Hwc6y4l+yecOBQ6ttxz3Fo9nrW+7P3XtkxYlRzPPvqzcPtu9plP2Zmk+WInlV2zzj0HSOu7J5w4IisO7OnKnuOw9/xNThw4NB3RJ7HsadjxLWiLg4cDsGhFUXHBeLagpw=
   </data>
  </layer>
  <layer name="Walls" width="50" height="50">
@@ -17,9 +17,9 @@
   </data>
  </layer>
  <objectgroup name="Puzzle">
-  <object id="23" name="ChainedPressurePlate" x="448" y="320.167" width="16.25" height="15.75">
+  <object id="23" name="ChainedPressurePlate" x="447.667" y="304.167" width="16.25" height="15.75">
    <properties>
-    <property name="ChainNum" type="int" value="3"/>
+    <property name="ChainNum" type="int" value="4"/>
     <property name="PuzzleID" type="int" value="1"/>
    </properties>
   </object>
@@ -29,9 +29,9 @@
     <property name="PuzzleID" type="int" value="1"/>
    </properties>
   </object>
-  <object id="27" name="ChainedPressurePlate" x="544.292" y="320.458" width="16.25" height="15.75">
+  <object id="27" name="ChainedPressurePlate" x="544.292" y="303.458" width="16.25" height="15.75">
    <properties>
-    <property name="ChainNum" type="int" value="1"/>
+    <property name="ChainNum" type="int" value="3"/>
     <property name="PuzzleID" type="int" value="1"/>
    </properties>
   </object>
@@ -52,6 +52,12 @@
   </object>
   <object id="54" name="Door" x="496" y="256.065" width="16" height="15.8696">
    <properties>
+    <property name="PuzzleID" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="56" name="ChainedPressurePlate" x="319.208" y="351.792" width="16.25" height="15.75">
+   <properties>
+    <property name="ChainNum" type="int" value="1"/>
     <property name="PuzzleID" type="int" value="1"/>
    </properties>
   </object>
