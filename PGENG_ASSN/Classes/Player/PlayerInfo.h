@@ -21,6 +21,7 @@ public:
         maxHealth = 5;
         currentHealth = 5;
         score = 0;
+		healthPotions = 0;
         return true;
     };
 
@@ -38,12 +39,26 @@ public:
 	inline unsigned int GetHighScore(){ return this->highscore; }
 	inline void SetHighScore(unsigned int _score){ this->highscore = _score; }
 
+	inline unsigned int GetNumberOfHealthPotions(){ return this->healthPotions; }
+	inline void AddHealthPotions(unsigned int amount) { this->healthPotions += amount; }
+	inline void SetNumberOfHealthPotions(unsigned int amount) { this->healthPotions = amount; }
+	inline bool UseHealthPotion() 
+	{ 
+		if (!healthPotions || this->currentHealth >= this->maxHealth)
+			return false; 
+
+		this->currentHealth++;
+		return true;
+	}
+
 protected:
     float maxHealth = 5;
     float currentHealth = 5;
     
 	unsigned int score;
 	unsigned int highscore = 0;
+
+	unsigned int healthPotions = 0;
 };
 
 #endif

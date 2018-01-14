@@ -57,6 +57,7 @@ public:
     void SwitchSceneTest(cocos2d::Ref* pSender);
 
 	void SpawnNPC();
+	void SpawnHeart(Vec2 pos);
 
 private:
     enum ANIMLIST

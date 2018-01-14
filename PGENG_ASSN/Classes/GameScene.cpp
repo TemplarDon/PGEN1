@@ -3,6 +3,7 @@
 #include "SceneManagement\SceneManager.h"
 #include "SimpleAudioEngine.h"
 #include "Animation\SpriteBuilder.h"
+#include "Interactables\HeartDrops.h"
 
 #include "FSM\PatrollingFSM.h"
 #include "Puzzle\Puzzle.h"
@@ -840,4 +841,13 @@ void GameScene::SpawnNPC()
 	addChild(asdasd, 98);
 
 	m_over = true;
+}
+
+void GameScene::SpawnHeart(Vec2 pos)
+{
+	//Test heart object
+	auto hrt = new HeartDrop();
+	hrt->Init(this);
+	hrt->setPosition(pos);
+	addChild(hrt, 98);
 }
