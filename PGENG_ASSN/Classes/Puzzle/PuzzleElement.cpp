@@ -12,6 +12,7 @@ bool PuzzleElement::Init(Node * scene)
     this->setName("generic puzzle piece");
 
     m_IsCompleted = false;
+    m_puzzleID = -1;
     return true;
 }
 

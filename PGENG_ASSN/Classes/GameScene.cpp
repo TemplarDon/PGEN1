@@ -7,6 +7,7 @@
 #include "FSM\PatrollingFSM.h"
 #include "Puzzle\Puzzle.h"
 #include "Puzzle\Button.h"
+#include "Puzzle\ChainedPressurePlate.h"
 
 #define COCOS2D_DEBUG 1
 #define FSM_TAG 5
@@ -451,8 +452,6 @@ void GameScene::InitPuzzle()
     TMXTiledMap* map = (TMXTiledMap*)getChildByTag(99);
 
     std::vector<PuzzleElement*> tempPuzzleElements;
-    std::vector<int> tempPuzzleElementsIndex;
-
     std::map<int, Puzzle*> tempPuzzle;
 
     auto puzzleSpawnGroup = map->getObjectGroup("Puzzle");
@@ -460,7 +459,6 @@ void GameScene::InitPuzzle()
     {
         auto puzzleSpawns = puzzleSpawnGroup->getObjects();
 
-        int count = 0;
         for (auto &itr : puzzleSpawns)
         {
             auto point = itr.asValueMap();
@@ -482,9 +480,9 @@ void GameScene::InitPuzzle()
                 {
                     Button* aButton = new Button();
                     aButton->Init(this, pos);
+                    aButton->m_puzzleID = point["PuzzleID"].asInt();
 
                     tempPuzzleElements.push_back(aButton);
-                    tempPuzzleElementsIndex.push_back(point["PuzzleID"].asInt());
                 }
                 else if (temp == "PressurePlate")
                 {
@@ -492,27 +490,57 @@ void GameScene::InitPuzzle()
                 }
                 else if (temp == "ChainedPressurePlate")
                 {
+                    ChainedPressurePlate* aPlate = new ChainedPressurePlate();
+                    aPlate->Init(this, pos);
+                    aPlate->m_puzzleID = point["PuzzleID"].asInt();
+                    aPlate->m_chainNum = point["ChainNum"].asInt();
 
+                    tempPuzzleElements.push_back(aPlate);
                 }
             }
         }
 
-        // Assign puzzles
+        // Link puzzles and puzzle elements
         for (auto &itr : tempPuzzle)
         {
             for (int i = 0; i < tempPuzzleElements.size(); ++i)
             {
                 // Check index
-                if (tempPuzzleElementsIndex[i] == itr.first)
+                if (tempPuzzleElements[i]->m_puzzleID == itr.first)
                 {
                     itr.second->m_elementList.push_back(tempPuzzleElements[i]);
-                    //itr.second->addChild(tempPuzzleElements[i]);
                 }
             }
-
             addChild(itr.second);
         }
 
+        // Link any puzzle elements that need linking
+        for (int i = 0; i < tempPuzzleElements.size(); ++i)
+        {
+            if (tempPuzzleElements[i]->getName() == "ChainedPressurePlate")
+            {
+                for (int j = 0; j < tempPuzzleElements.size(); ++j)
+                {
+                    if (tempPuzzleElements[j]->getName() == "ChainedPressurePlate" && i != j && tempPuzzleElements[i]->m_puzzleID == tempPuzzleElements[j]->m_puzzleID)
+                    {
+                        if (dynamic_cast<ChainedPressurePlate*>(tempPuzzleElements[i])->m_chainNum ==
+                            dynamic_cast<ChainedPressurePlate*>(tempPuzzleElements[j])->m_chainNum - 1)
+                        {
+                            dynamic_cast<ChainedPressurePlate*>(tempPuzzleElements[j])->m_prevPlate = dynamic_cast<ChainedPressurePlate*>(tempPuzzleElements[i]);
+
+                            break;
+                        }
+                        else if (dynamic_cast<ChainedPressurePlate*>(tempPuzzleElements[j])->m_chainNum ==
+                                 dynamic_cast<ChainedPressurePlate*>(tempPuzzleElements[i])->m_chainNum - 1)
+                        {
+                            dynamic_cast<ChainedPressurePlate*>(tempPuzzleElements[i])->m_prevPlate = dynamic_cast<ChainedPressurePlate*>(tempPuzzleElements[j]);
+
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

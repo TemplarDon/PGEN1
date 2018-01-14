@@ -13,6 +13,7 @@ public:
     virtual void OnInteract();
     virtual void OnInteractLeave();
 
+    int m_puzzleID;
     bool m_IsCompleted;
 
     PuzzleElement();

@@ -46,6 +46,8 @@ void Button::OnInteract()
     {
         m_IsCompleted = true;
 
+        CCLOG("<BUTTON> status change");
+
         EventCustom event("puzzle_status_change");
         _eventDispatcher->dispatchEvent(&event);
     }

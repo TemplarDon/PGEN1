@@ -132,6 +132,9 @@
     <ClCompile Include="..\Classes\Puzzle\Button.cpp">
       <Filter>src\Puzzle</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Puzzle\ChainedPressurePlate.cpp">
+      <Filter>src\Puzzle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -234,6 +237,9 @@
       <Filter>src\Puzzle</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Puzzle\Button.h">
+      <Filter>src\Puzzle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Puzzle\ChainedPressurePlate.h">
       <Filter>src\Puzzle</Filter>
     </ClInclude>
   </ItemGroup>
