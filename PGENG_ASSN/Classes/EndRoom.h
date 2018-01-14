@@ -1,5 +1,5 @@
-#ifndef __GAMESCENE_TEST_H__
-#define __GAMESCENE_TEST_H__
+#ifndef __ENDROOM_TEST_H__
+#define __ENDROOM_TEST_H__
 
 #include "cocos2d.h"
 #include "Animation\AnimationController.h"
@@ -9,7 +9,7 @@
 
 using namespace cocos2d;
 
-class GameScene : public cocos2d::Scene
+class EndRoom : public cocos2d::Scene
 {
 public:
     static cocos2d::Scene* createScene();
@@ -20,7 +20,7 @@ public:
     void menuCloseCallback(cocos2d::Ref* pSender);
 
     // implement the "static create()" method manually
-    CREATE_FUNC(GameScene);
+    CREATE_FUNC(EndRoom);
 
     // Callback functions
     void SetListeners();
@@ -40,14 +40,11 @@ public:
     // Environment Init
     void InitEnvironment();
 
-    // Puzzle Init
-    void InitPuzzle();
-
     //Key Press
     void OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event);
     void OnMouseEvent(Event* _event);
     bool onContactBegin(PhysicsContact& contact);
-	void onContactSeperate(PhysicsContact& contact);
+    void onContactSeperate(PhysicsContact& contact);
 
     virtual void update(float _dt);
 
@@ -56,9 +53,6 @@ public:
     void Pause();
 
     void SwitchSceneTest(cocos2d::Ref* pSender);
-
-	void SpawnNPC();
-	void SpawnHeart(Vec2 pos);
 
 private:
     enum ANIMLIST
@@ -80,10 +74,10 @@ private:
     Vec2 spawnPos;
     Player* player;
 
-	Vec2 cameraOrthoScale;
+    Vec2 cameraOrthoScale;
 
-	MenuItemFont* menu_play;
-	bool m_over;
+    MenuItemFont* menu_play;
+    bool m_over;
 };
 
 #endif // __TEST_SCENE_H__

@@ -152,6 +152,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Animation\SpriteBuilder.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\Audio\AudioHandler.cpp" />
+    <ClCompile Include="..\Classes\EndRoom.cpp" />
     <ClCompile Include="..\Classes\FSM\BaseFSM.cpp" />
     <ClCompile Include="..\Classes\FSM\Pathfinder.cpp" />
     <ClCompile Include="..\Classes\FSM\PatrollingFSM.cpp" />
@@ -160,6 +161,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Grid\SpatialPartition.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\Input\InputHandler.cpp" />
+    <ClCompile Include="..\Classes\Interactables\Exit.cpp" />
     <ClCompile Include="..\Classes\Interactables\HeartDrops.cpp" />
     <ClCompile Include="..\Classes\Interactables\Interactable.cpp" />
     <ClCompile Include="..\Classes\Interactables\NPC.cpp" />
@@ -189,6 +191,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Audio\AudioHandler.h" />
     <ClInclude Include="..\Classes\BitmasksHeader.h" />
     <ClInclude Include="..\Classes\Common\SingletonNode.h" />
+    <ClInclude Include="..\Classes\EndRoom.h" />
     <ClInclude Include="..\Classes\FSM\BaseFSM.h" />
     <ClInclude Include="..\Classes\FSM\Node.h" />
     <ClInclude Include="..\Classes\FSM\Pathfinder.h" />
@@ -200,6 +203,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\Input\InputAction.h" />
     <ClInclude Include="..\Classes\Input\InputHandler.h" />
+    <ClInclude Include="..\Classes\Interactables\Exit.h" />
     <ClInclude Include="..\Classes\Interactables\HeartDrops.h" />
     <ClInclude Include="..\Classes\Interactables\Interactable.h" />
     <ClInclude Include="..\Classes\Interactables\NPC.h" />

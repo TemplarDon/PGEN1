@@ -18,7 +18,7 @@ bool Puzzle::init()
 
     //Adding a Sprite 
     auto sprite = Sprite::create("Puzzle/puzzle_door.png");
-    sprite->setName("button image");
+    sprite->setName("puzzle door image");
     sprite->setAnchorPoint(Vec2::ZERO);
     sprite->setScale(1);
 

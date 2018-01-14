@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.1" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextobjectid="57">
+<map version="1.0" tiledversion="1.1.1" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextobjectid="58">
  <tileset firstgid="1" name="roguelikeSheet_transparent" tilewidth="16" tileheight="16" spacing="1" tilecount="1767" columns="57">
   <image source="../TileSheets/roguelikeSheet_transparent.png" width="968" height="526"/>
  </tileset>
@@ -13,7 +13,7 @@
  </layer>
  <layer name="Walls" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmF0KAjEMhEtrvYrXF8ELiD6IHsmKCgpSsD8m2Z1080EfFprsDm3T2ThnaOPonTt0jJPnjeciBNp8ajwXGnS0rPO9c50TMV5iPfaRP2cNqX01NRI6Nmv+nDWkzkdvHczrbG/8kuuVRF5UHatn3rNvHzGU46/ZPrtU4lG5+fKzFkwHFq/v3r59wi7q0ZHfJ7nfyv2YlG+nglJ3qWjS8dk73/cAkm9vhfOsmg46o+hIhfOB4tupaKpXJUbRYb4dG9OBxVy+Pffdv/7LW/vtc/n2UfolS9WB2G+XzDv1+0wH1vt681q//b/5UnlRdVB9N7VfL8VIPq/0rAXTgYXpwCIB9jceQn2nQA==
+   eJztmFEKwjAMhktrvYrXF8ELiD7IPJIVGShIwK5tkjXp8kEfBk22n7bpvzhnaOPqnbtUjJunjaciBNx8bDwVGnRMBev8qlznhIxv0bEUc471ObFw6OgBh47Dvu1bMLTo2AX6OgjrbG38lusVR16pOua9d/flI4Z8/APss2khXipPn3/WgumQxfzdx49POEU9OuB9Av0W9GNcvh2LlLqLRZOO7975vQfW9O1UUJ5V04FnFB0pcz6k+HYsmupVjlF0mG+XjemQRS/fDn33v//y0n57L98+Sr9kqzp69Nt75l37faZD1vtq81q/vW0+V16pOrC+G9uv52Ikn5d71oLpkIXpkEUS2N94AzR3pp4=
   </data>
  </layer>
  <objectgroup name="Puzzle">
@@ -88,11 +88,14 @@
     <property name="isPlayerSpawn" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="55" x="240.125" y="737.042" width="15.75" height="15.25">
+  <object id="55" x="240.792" y="736.375" width="15.75" height="15.25">
    <properties>
     <property name="isPlayerSpawn" type="bool" value="true"/>
    </properties>
   </object>
+ </objectgroup>
+ <objectgroup name="Environment">
+  <object id="57" name="Exit" x="28.5" y="113.25" width="13.25" height="13.5"/>
  </objectgroup>
  <layer name="InaccessibleMap" width="50" height="50">
   <data encoding="base64" compression="zlib">
@@ -101,7 +104,7 @@
  </layer>
  <layer name="CollideMap" width="50" height="50" opacity="0.55">
   <data encoding="base64" compression="zlib">
-   eJztmMEOwCAIQ3fa/3/mPmPXZQcTpUipfckOZiBpCIhel+nGc89/SH+kjoh91B9FBx0ZeUb4o8nKMVvMDE7Oxyn1sbKv++6a/cy+6PN85j8r0XyxYB1cfGugWz0o1DlL343SSQd6rqkCGds6uGJX61CojxHWwYXKef5HaU4crbugpKNible5nyu9l0TsO+tgnEt29xPrqNl3d7xT60OpXyH9UWSc18j7Y0TXaN0F6+DCOrhQ0sH2vvECxgL9zw==
+   eJztmEEOwCAIBD31/8/sM3ptetBQFllWJunBVMQNAdExmmrcl/1D2iN1eOZ77VFU0BERZ4S9lZVNVIzRPjP2ueL0eCjkR8S6XXf/zbesiz7PLf9Z8caLhdbBxTsHquWDQp6z1F0vlXSg+5oskL5bB5fvbB0K+TGjdXChcp5/UeoTZ+MqKOnI6NtV7udK7yWe+ZV1MPYlu+tJ68hZd7e/U/NDqV4h7VFEnNfI+6NH12xchdbBRevgQkkH2/vGA31iAKg=
   </data>
  </layer>
 </map>

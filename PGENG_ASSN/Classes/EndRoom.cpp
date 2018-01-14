@@ -1,4 +1,4 @@
-#include "GameScene.h"
+#include "EndRoom.h"
 #include "Input\InputHandler.h"
 #include "SceneManagement\SceneManager.h"
 #include "SimpleAudioEngine.h"
@@ -18,12 +18,12 @@ using namespace CocosDenshion;
 
 USING_NS_CC;
 
-Scene* GameScene::createScene()
+Scene* EndRoom::createScene()
 {
     auto scene = Scene::createWithPhysics();
     scene->setName("PhysicsBase");
 
-    auto layer = GameScene::create();
+    auto layer = EndRoom::create();
 
     layer->setName("Scene");
     layer->retain();
@@ -37,11 +37,11 @@ Scene* GameScene::createScene()
 static void problemLoading(const char* filename)
 {
     printf("Error while loading: %s\n", filename);
-    printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in PathfinderGameScene.cpp\n");
+    printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in PathfinderEndRoom.cpp\n");
 }
 
 // on "init" you need to initialize your instance
-bool GameScene::init()
+bool EndRoom::init()
 {
     //////////////////////////////
     // 1. super init first
@@ -151,26 +151,19 @@ bool GameScene::init()
     //this->addChild(spriteNode, 1);
 
     // Use this function to assign functions to specific key press
-    InputHandler::GetInstance().AssignMouseAction(EventMouse::MouseButton::BUTTON_LEFT, bind(&GameScene::InputMouseTestFunction, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&GameScene::InputKeyboardTestFunction, this), true);
+    InputHandler::GetInstance().AssignMouseAction(EventMouse::MouseButton::BUTTON_LEFT, bind(&EndRoom::InputMouseTestFunction, this), true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&EndRoom::InputKeyboardTestFunction, this), true);
 
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_TAB, bind(&GameScene::Pause, this), true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_TAB, bind(&EndRoom::Pause, this), true);
 
-	//InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_L, bind(&GameScene::SpawnNPC, this), true);
+    //InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_L, bind(&EndRoom::SpawnNPC, this), true);
 
     //Init Player
     player = new Player();
     player->init();
     player->setName("player");
-	player->getPhysicsBody()->setTag(PHYSICS_TAG_PLAYER);
-	addChild(player, 99);
-
-	//Spawn some hearts
-	SpawnHeart(Vec2(100, 100));
-	SpawnHeart(Vec2(250, 120));
-	SpawnHeart(Vec2(240, 350));
-	SpawnHeart(Vec2(290, 320));
-	SpawnHeart(Vec2(260, 360));
+    player->getPhysicsBody()->setTag(PHYSICS_TAG_PLAYER);
+    addChild(player, 99);
 
     SetListeners();
     InitAnimationActions();
@@ -178,50 +171,26 @@ bool GameScene::init()
     InitTilemap();
     InitFSM();
     InitEnvironment();
-    InitPuzzle();
     scheduleUpdate();
 
-	m_over = false;
+    m_over = false;
 
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Audio/BGM.wav");
     CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
 
-	cameraOrthoScale.set(234, 160);
-	runAction(DelayTime::create(2.0f));
+    cameraOrthoScale.set(234, 160);
+    runAction(DelayTime::create(2.0f));
     return true;
 }
 
-void GameScene::update(float _dt)
+void EndRoom::update(float _dt)
 {
     auto charSprite = this->getChildByName("player");
 
-    // NOT THE BEST WAY PROBABLY, BETTER TO HAVE ENTITY CLASS WITH UPDATE
-    Vector<Node*> myVector = getChildren();
-    Vector<Node*>::iterator myIterator;
-
-	bool enemyalive = false;
-    for (myIterator = myVector.begin(); myIterator != myVector.end(); ++myIterator)
-    {
-        auto mySprite = *myIterator;
-
-        if (mySprite->getTag() == FSM_TAG)
-        {
-            dynamic_cast<BaseFSM*>(mySprite)->RunFSM();
-			enemyalive = true;
-        }
-    }
-
-	if (!enemyalive)
-	{
-		SpawnNPC();
-	}
-
-    //UpdateFSM();
-
     Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
-	mainCam->initOrthographic(cameraOrthoScale.x, cameraOrthoScale.y, 1, 800);
+    mainCam->initOrthographic(cameraOrthoScale.x, cameraOrthoScale.y, 1, 800);
     mainCam->setPosition(player->getPosition() - Vec2(cameraOrthoScale.x * 0.5, cameraOrthoScale.y * 0.5));
-	
+
     //rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
     //this->visit();
     //rendtex->end();
@@ -229,7 +198,7 @@ void GameScene::update(float _dt)
     //rendtexSprite->setGLProgram(proPostProcess);
 }
 
-void GameScene::InitShader()
+void EndRoom::InitShader()
 {
     //Vec2 mLoc(0.5f, 0.5f);
     //
@@ -276,7 +245,7 @@ void GameScene::InitShader()
     //this->addChild(rendtexSprite, 2);
 }
 
-void GameScene::InitAnimationActions()
+void EndRoom::InitAnimationActions()
 {
     //AnimateBuilder::GetInstance().LoadSpriteSheet("sprite sheet", "spritesheet_test.png", 6, 3);
     //AnimateBuilder::GetInstance().LoadAnimateFromLoadedSpriteSheet("Special1", "sprite sheet", 6, 12);	//Only half of the sprite sheet
@@ -356,9 +325,9 @@ void GameScene::InitAnimationActions()
     AnimateBuilder::GetInstance().LoadSpriteSheet("patrol", "spritesheet_patrol.png", 4, 9);
 }
 
-void GameScene::InitTilemap()
+void EndRoom::InitTilemap()
 {
-    auto map = TMXTiledMap::create("Map/Dungeon.tmx");
+    auto map = TMXTiledMap::create("Map/EndRoom.tmx");
     addChild(map, 0, 99);
     //auto layer = map->getLayer("Layer0");
 
@@ -414,7 +383,7 @@ void GameScene::InitTilemap()
 
 }
 
-void GameScene::InitFSM()
+void EndRoom::InitFSM()
 {
     TMXTiledMap* map = (TMXTiledMap*)getChildByTag(99);
 
@@ -457,7 +426,7 @@ void GameScene::InitFSM()
     }
 }
 
-void GameScene::InitEnvironment()
+void EndRoom::InitEnvironment()
 {
     TMXTiledMap* map = (TMXTiledMap*)getChildByTag(99);
 
@@ -475,143 +444,35 @@ void GameScene::InitEnvironment()
             {
                 Exit* anExit = new Exit();
                 anExit->Init(this, pos);
-                anExit->m_nextLevel = "end room";
+                anExit->m_nextLevel = "dungeon scene";
             }
         }
     }
 }
 
-void GameScene::InitPuzzle()
-{
-    TMXTiledMap* map = (TMXTiledMap*)getChildByTag(99);
-
-    std::vector<PuzzleElement*> tempPuzzleElements;
-    std::map<int, Puzzle*> tempPuzzle;
-
-    auto puzzleSpawnGroup = map->getObjectGroup("Puzzle");
-    if (puzzleSpawnGroup != nullptr)
-    {
-        auto puzzleSpawns = puzzleSpawnGroup->getObjects();
-
-        for (auto &itr : puzzleSpawns)
-        {
-            auto point = itr.asValueMap();
-            Vec2 pos = Vec2(point["x"].asInt(), point["y"].asInt());
-
-            if (point["name"].asString() == "Door")
-            {
-                Puzzle* aPuzzle = new Puzzle();
-                aPuzzle->init();
-                aPuzzle->setPosition(pos);
-
-                tempPuzzle.insert(std::pair<int, Puzzle*>(point["PuzzleID"].asInt(), aPuzzle));
-            }
-            else
-            {
-                string temp = point["name"].asString();
-               
-                if (temp == "Button")
-                {
-                    Button* aButton = new Button();
-                    aButton->Init(this, pos);
-                    aButton->m_puzzleID = point["PuzzleID"].asInt();
-
-                    tempPuzzleElements.push_back(aButton);
-                }
-                else if (temp == "PressurePlate")
-                {
-
-                }
-                else if (temp == "ChainedPressurePlate")
-                {
-                    ChainedPressurePlate* aPlate = new ChainedPressurePlate();
-                    aPlate->Init(this, pos);
-                    aPlate->m_puzzleID = point["PuzzleID"].asInt();
-                    aPlate->m_chainNum = point["ChainNum"].asInt();
-
-                    tempPuzzleElements.push_back(aPlate);
-                }
-            }
-        }
-
-        // Link puzzles and puzzle elements
-        for (auto &itr : tempPuzzle)
-        {
-            for (int i = 0; i < tempPuzzleElements.size(); ++i)
-            {
-                // Check index
-                if (tempPuzzleElements[i]->m_puzzleID == itr.first)
-                {
-                    itr.second->m_elementList.push_back(tempPuzzleElements[i]);
-                }
-            }
-            addChild(itr.second);
-        }
-
-        // Link any puzzle elements that need linking
-        for (int i = 0; i < tempPuzzleElements.size(); ++i)
-        {
-            if (tempPuzzleElements[i]->getName() == "ChainedPressurePlate")
-            {
-                for (int j = 0; j < tempPuzzleElements.size(); ++j)
-                {
-                    if (tempPuzzleElements[j]->getName() == "ChainedPressurePlate" && i != j && tempPuzzleElements[i]->m_puzzleID == tempPuzzleElements[j]->m_puzzleID)
-                    {
-                        if (dynamic_cast<ChainedPressurePlate*>(tempPuzzleElements[i])->m_chainNum ==
-                            dynamic_cast<ChainedPressurePlate*>(tempPuzzleElements[j])->m_chainNum - 1)
-                        {
-                            dynamic_cast<ChainedPressurePlate*>(tempPuzzleElements[j])->m_prevPlate = dynamic_cast<ChainedPressurePlate*>(tempPuzzleElements[i]);
-
-                            break;
-                        }
-                        else if (dynamic_cast<ChainedPressurePlate*>(tempPuzzleElements[j])->m_chainNum ==
-                                 dynamic_cast<ChainedPressurePlate*>(tempPuzzleElements[i])->m_chainNum - 1)
-                        {
-                            dynamic_cast<ChainedPressurePlate*>(tempPuzzleElements[i])->m_prevPlate = dynamic_cast<ChainedPressurePlate*>(tempPuzzleElements[j]);
-
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-void GameScene::SetListeners()
+void EndRoom::SetListeners()
 {
     // Keyboard Listener
     auto keyboardListener = EventListenerKeyboard::create();
-    keyboardListener->onKeyPressed = CC_CALLBACK_2(GameScene::OnKeyPressed, this);
+    keyboardListener->onKeyPressed = CC_CALLBACK_2(EndRoom::OnKeyPressed, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
     // Mouse Listener
     auto mouseListener = EventListenerMouse::create();
-    mouseListener->onMouseDown = CC_CALLBACK_1(GameScene::OnMouseEvent, this);
+    mouseListener->onMouseDown = CC_CALLBACK_1(EndRoom::OnMouseEvent, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
 
     // Contact Listener
     auto contactListener = EventListenerPhysicsContact::create();
-    contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBegin, this);
+    contactListener->onContactBegin = CC_CALLBACK_1(EndRoom::onContactBegin, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
-	auto contactListener_sep = EventListenerPhysicsContact::create();
-	contactListener_sep->onContactSeparate = CC_CALLBACK_1(GameScene::onContactSeperate, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener_sep, this);
-
-    // Adds enemydeath listener
-    auto enemyDeathListener = EventListenerCustom::create("enemy_death", [=](EventCustom* event)
-    {
-        CCLOG("enemy death received");
-        Vec2* pos = static_cast<Vec2*>(event->getUserData());
-        SpawnHeart(*pos);
-
-		//player->setPosition(*pos);
-    });
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(enemyDeathListener, this);
+    auto contactListener_sep = EventListenerPhysicsContact::create();
+    contactListener_sep->onContactSeparate = CC_CALLBACK_1(EndRoom::onContactSeperate, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener_sep, this);
 }
 
-void GameScene::menuCloseCallback(Ref* pSender)
+void EndRoom::menuCloseCallback(Ref* pSender)
 {
     //Close the cocos2d-x game scene and quit the application
     Director::getInstance()->end();
@@ -626,188 +487,92 @@ void GameScene::menuCloseCallback(Ref* pSender)
     //_eventDispatcher->dispatchEvent(&customEndEvent);
 }
 
-void GameScene::OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event)
+void EndRoom::OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event)
 {
-    //switch (_keycode)
-    //{
-    //	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-    //	{
-    //		auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
-    //		auto moveEvent = MoveBy::create(0.0f, Vec2(10.0f, 0));
-    //		//charSprite->stopActionByTag(1);
-    //		charSprite->runAction(moveEvent);
-    //	}
-    //	break;
 
-    //	case EventKeyboard::KeyCode::KEY_LEFT_ARROW :
-    //	{
-    //		auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
-    //		auto moveEvent = MoveBy::create(0.0f, Vec2(-10.0f, 0));
-    //           //charSprite->stopAllActions();
-    //		charSprite->runAction(moveEvent);
-    //	}
-    //	break;
-
-    //	case EventKeyboard::KeyCode::KEY_K:
-    //	{
-    //		CCDirector::getInstance()->replaceScene(
-    //			TransitionFlipAngular::create(1.5, GameScene::createScene())
-    //		);
-    //	}
-    //	break;
-    //}
 }
 
-void GameScene::OnMouseEvent(Event* _event)
+void EndRoom::OnMouseEvent(Event* _event)
 {
-    EventMouse* mouseEvent = (EventMouse*)_event;
 
-    //if (mouseEvent->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT)
-    //{
-    //	Vec2 mousePos = Vec2(mouseEvent->getCursorX(), mouseEvent->getCursorY());
-
-    //	auto charSprite = this->getChildByName("SpriteNode")->getChildByName("MainCharacter");
-    //	charSprite->stopAllActions();
-
-    //	auto moveEvent = MoveTo::create(1.0f, mousePos);
-    //	charSprite->runAction(moveEvent);
-
-    //	float mouseXChange = mousePos.x - charSprite->getPosition().x;
-    //	float mouseYChange = mousePos.y - charSprite->getPosition().y;
-
-    //	if (fabs(mouseXChange) > fabs(mouseYChange))
-    //	{
-    //		if (mouseXChange > 0)
-    //			charSprite->runAction(RepeatForever::create(v_mainCharAnimation[RIGHT]));
-    //		else
-    //			charSprite->runAction(RepeatForever::create(v_mainCharAnimation[LEFT]));
-    //	}
-    //	else
-    //	{
-    //		if (mouseYChange > 0)
-    //			charSprite->runAction(RepeatForever::create(v_mainCharAnimation[BACK]));
-    //		else
-    //			charSprite->runAction(RepeatForever::create(v_mainCharAnimation[FRONT]));
-    //	}
-    //}
 }
 
-bool GameScene::onContactBegin(PhysicsContact& contact)
+bool EndRoom::onContactBegin(PhysicsContact& contact)
 {
-	//Ran collision stuff
-	auto bodyA = contact.getShapeA()->getBody();
-	auto bodyB = contact.getShapeB()->getBody();
+    //Ran collision stuff
+    auto bodyA = contact.getShapeA()->getBody();
+    auto bodyB = contact.getShapeB()->getBody();
 
-	switch (bodyA->getTag())
-	{
-		//When player collides with...
-	case PHYSICS_TAG_PLAYER:
-	{
-		switch (bodyB->getTag())
-		{
-			//...Interactable
-		case PHYSICS_TAG_INTERACTABLE:
-        {
-            Node* bNode = bodyB->getNode();
-            static_cast<Interactable*>(bNode->getParent())->OnInteract();
+    switch (bodyA->getTag())
+    {
+        //When player collides with...
+    case PHYSICS_TAG_PLAYER:
+    {
+                               switch (bodyB->getTag())
+                               {
+                                   //...Interactable
+                               case PHYSICS_TAG_INTERACTABLE:
+                               {
+                                                                Node* bNode = bodyB->getNode();
+                                                                static_cast<Interactable*>(bNode->getParent())->OnInteract();
 
-			//(static_cast<Interactable*>(bodyB->getNode()))->OnInteract();
-			if(m_over)
-				menu_play->setVisible(true);
-			break;
-		}
-		}
-	}
-	break;
-	default:
-		break;
-	}
+                                                                //(static_cast<Interactable*>(bodyB->getNode()))->OnInteract();
+                                                                if (m_over)
+                                                                    menu_play->setVisible(true);
+                                                                break;
+                               }
+                               }
+    }
+        break;
+    default:
+        break;
+    }
     return true;
 }
 
-void GameScene::InputMouseTestFunction()
+void EndRoom::InputMouseTestFunction()
 {
     //CCLOG("Mouse Function");
 }
 
-void GameScene::InputKeyboardTestFunction()
+void EndRoom::InputKeyboardTestFunction()
 {
     //CCLOG("Keyboard Function");
 }
 
-void GameScene::Pause()
+void EndRoom::Pause()
 {
     SceneManager::GetInstance().AddSceneToStack("pause", true);
 }
 
-void GameScene::onContactSeperate(PhysicsContact & contact)
+void EndRoom::onContactSeperate(PhysicsContact & contact)
 {
-	auto bodyA = contact.getShapeA()->getBody();
-	auto bodyB = contact.getShapeB()->getBody();
+    auto bodyA = contact.getShapeA()->getBody();
+    auto bodyB = contact.getShapeB()->getBody();
 
-	switch (bodyA->getTag())
-	{
-	//When player seperates with...
-	case PHYSICS_TAG_PLAYER:
-	{
-		switch (bodyB->getTag())
-		{
-			//...Interactable
-		case PHYSICS_TAG_INTERACTABLE:
-		{
-            Node* bNode = bodyB->getNode();
-            static_cast<Interactable*>(bNode->getParent())->OnInteractLeave();
+    switch (bodyA->getTag())
+    {
+        //When player seperates with...
+    case PHYSICS_TAG_PLAYER:
+    {
+                               switch (bodyB->getTag())
+                               {
+                                   //...Interactable
+                               case PHYSICS_TAG_INTERACTABLE:
+                               {
+                                                                Node* bNode = bodyB->getNode();
+                                                                static_cast<Interactable*>(bNode->getParent())->OnInteractLeave();
 
-			//(static_cast<Interactable*>(bodyB->getNode()))->OnInteractLeave();
-			if (m_over)
-				menu_play->setVisible(false);
-			break;
-		}
-		}
-	}
-	break;
-	default:
-		break;
-	}
-
-}
-
-void GameScene::SpawnNPC()
-{
-	if (m_over)
-		return;
-
-	//Some quick and dirty menu stuff
-	menu_play = MenuItemFont::create("thingy");
-	menu_play->setString("YOU WIN GOOD JOB.");
-	menu_play->setFontSize(10000);
-	menu_play->setFontSizeObj(6);
-
-	auto *menu = Menu::create(menu_play, nullptr);
-	menu->setPosition(15, 720);
-	menu->setName("menu");
-	menu->retain();
-	menu_play->setPosition(0, 0);
-	menu_play->setVisible(false);
-
-	this->addChild(menu, 100);
-
-	//Interactables
-	auto asdasd = new Interactable();
-	asdasd->Init(this);
-	asdasd->setName("npc");
-	addChild(asdasd, 98);
-
-	m_over = true;
-}
-
-void GameScene::SpawnHeart(Vec2 pos)
-{
-    //Test heart object
-	auto hrt = new HeartDrop();
-	hrt->Init(this, pos);
-	hrt->setPosition(pos);
-	hrt->sprite->setPosition(pos);
-	this->addChild(hrt, 98);
+                                                                //(static_cast<Interactable*>(bodyB->getNode()))->OnInteractLeave();
+                                                                if (m_over)
+                                                                    menu_play->setVisible(false);
+                                                                break;
+                               }
+                               }
+    }
+        break;
+    default:
+        break;
+    }
 
 }
