@@ -380,3 +380,6 @@ PGENG_ASSN/proj.win32/Debug.win32/Puzzle/puzzle_button.png
 PGENG_ASSN/proj.win32/Debug.win32/Puzzle.obj
 PGENG_ASSN/proj.win32/Debug.win32/PressurePlate.obj
 PGENG_ASSN/proj.win32/Debug.win32/Button.obj
+PGENG_ASSN/Classes/GameScene.cpp.rej
+PGENG_ASSN/proj.win32/Debug.win32/HeartDrops.obj
+PGENG_ASSN/proj.win32/Debug.win32/ChainedPressurePlate.obj

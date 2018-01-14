@@ -16,7 +16,7 @@ public:
     virtual bool init();
     virtual void update(double dt);
     virtual void InitPhysicBody();
-    virtual void CollisionResponse(Node* _other);
+    bool OnCollisionEnter(const PhysicsContact &contact);
 
 protected:
 

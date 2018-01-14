@@ -1,4 +1,5 @@
 #include "PatrollingFSM.h"
+#include "Player\Player.h"
 
 PatrollingFSM::PatrollingFSM(TMXTiledMap* map, string sprite) 
 : BaseFSM(map, sprite)
@@ -45,6 +46,38 @@ PatrollingFSM::PatrollingFSM(TMXTiledMap* map, string sprite)
 PatrollingFSM::~PatrollingFSM()
 {
     
+}
+
+bool PatrollingFSM::init()
+{
+    if (!Node::init())
+    {
+        return false;
+    }
+
+    // PhysicsBody
+    auto physicsBody = PhysicsBody::createBox(
+        Size(16.f, 16.f), // assumes that all enemy will be same size as tile
+        PhysicsMaterial(5.f, 0, 0.0f)
+        );
+
+    //physicsBody->setDynamic(true);
+    physicsBody->setGravityEnable(false);
+    physicsBody->setRotationEnable(false);
+    physicsBody->setTag(PHYSICS_TAG_ENEMY);
+
+    physicsBody->setCategoryBitmask(ENEMY_BITMASK);
+    physicsBody->setCollisionBitmask(PLAYER_BITMASK | WALLS_BITMASK | PLAYER_PROJECTILE_BITMASK);
+    physicsBody->setContactTestBitmask(PLAYER_BITMASK | WALLS_BITMASK | PLAYER_PROJECTILE_BITMASK);
+
+    //sprite->addComponent(physicsBody);
+    this->setPhysicsBody(physicsBody);
+
+    auto collisionListener = EventListenerPhysicsContact::create();
+    collisionListener->onContactBegin = CC_CALLBACK_1(PatrollingFSM::OnCollisionEnter, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(collisionListener, this);
+
+    return true;
 }
 
 void PatrollingFSM::Sense()
@@ -120,4 +153,28 @@ void PatrollingFSM::Act(int value)
     case PATROLLING_STATES::DEAD:
         break;
     }
+}
+
+bool PatrollingFSM::OnCollisionEnter(const PhysicsContact &contact)
+{
+    //Ran collision stuff
+    auto bodyA = contact.getShapeA()->getBody();
+    auto bodyB = contact.getShapeB()->getBody();
+
+    if (bodyA->getTag() == PHYSICS_TAG_PLAYER && bodyB->getNode() == this)
+    {
+        Player* player = dynamic_cast<Player*>(bodyA->getNode());
+
+        if (player)
+            player->TakeDamage(1);
+    }
+    else if (bodyB->getTag() == PHYSICS_TAG_PLAYER && bodyA->getNode() == this)
+    {
+        Player* player = dynamic_cast<Player*>(bodyB->getNode());
+
+        if (player)
+            player->TakeDamage(1);
+    }
+
+    return true;
 }

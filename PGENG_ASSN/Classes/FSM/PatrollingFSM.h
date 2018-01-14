@@ -8,11 +8,14 @@ class PatrollingFSM : public BaseFSM
 public:
     PatrollingFSM(TMXTiledMap* map, string sprite);
     ~PatrollingFSM();
+    virtual bool init();
 
 private:
     virtual void Sense();  // get/receive updates from the world
     virtual int Think();   // process the updates
     virtual void Act(int value);     // act upon any change in behaviour
+
+    virtual bool OnCollisionEnter(const PhysicsContact &contact);
 
 public:
 

@@ -1,5 +1,6 @@
 #include "PlayerProjectileEntity.h"
 #include "BitmasksHeader.h"
+#include "FSM\BaseFSM.h"
 
 
 PlayerProjectileEntity::PlayerProjectileEntity()
@@ -25,6 +26,10 @@ bool PlayerProjectileEntity::init()
 
     InitPhysicBody();
 
+    auto collisionListener = EventListenerPhysicsContact::create();
+    collisionListener->onContactBegin = CC_CALLBACK_1(PlayerProjectileEntity::OnCollisionEnter, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(collisionListener, this);
+
     return true;
 }
 
@@ -32,9 +37,26 @@ void PlayerProjectileEntity::update(double dt)
 {
 }
 
-void PlayerProjectileEntity::CollisionResponse(Node* _other)
+bool PlayerProjectileEntity::OnCollisionEnter(const PhysicsContact &contact)
 {
-	
+    //Ran collision stuff
+    auto bodyA = contact.getShapeA()->getBody();
+    auto bodyB = contact.getShapeB()->getBody();
+
+    if (bodyA->getTag() == PHYSICS_TAG_ENEMY && bodyB->getNode() == this)
+    {
+        dynamic_cast<BaseFSM*>(bodyA->getNode())->m_isActive = false;
+        bodyA->getNode()->removeFromParentAndCleanup(true);
+
+    }
+    else if (bodyB->getTag() == PHYSICS_TAG_ENEMY && bodyA->getNode() == this)
+    {
+        dynamic_cast<BaseFSM*>(bodyB->getNode())->m_isActive = false;
+        bodyB->getNode()->removeFromParentAndCleanup(true);
+    }
+
+    removeFromParentAndCleanup(true);
+    return true;
 }
 
 void PlayerProjectileEntity::InitPhysicBody()
@@ -53,6 +75,7 @@ void PlayerProjectileEntity::InitPhysicBody()
 
     this->setPhysicsBody(physicsBody);
 
+    physicsBody->setTag(PHYSICS_TAG_PLAYER_PROJECTILE);
     physicsBody->setCategoryBitmask(PLAYER_PROJECTILE_BITMASK);
     physicsBody->setCollisionBitmask(ENEMY_BITMASK | WALLS_BITMASK);
     physicsBody->setContactTestBitmask(ENEMY_BITMASK | WALLS_BITMASK);
