@@ -40,6 +40,7 @@ public:
 
     inline Node* GetPlayerSpriteNode(){ return this->spriteNode; }
 
+    
 protected:
     void InitActions();
     void InitAnimation();
@@ -73,6 +74,9 @@ protected:
 
     void Attack();
 
+    bool OnCollisionEnter(const PhysicsContact &contact);
+    void OnCollisionStay(const PhysicsContact &contact);
+    void OnCollisionExit(const PhysicsContact &contact);
 };
 
 #endif // _PLAYER_ENTITY_BASE_H

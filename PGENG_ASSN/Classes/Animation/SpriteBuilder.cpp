@@ -1,12 +1,9 @@
 #include "SpriteBuilder.h"
 
-
-
 AnimateBuilder::AnimateBuilder()
 {
 
 }
-
 
 AnimateBuilder::~AnimateBuilder()
 {
@@ -93,9 +90,17 @@ Animate* AnimateBuilder::GetAnimate(string animate_name)
 	return animateDatabase[animate_name];
 }
 
-Sprite * AnimateBuilder::GetSpriteFromSpriteSheet(string sprite_sheet_name, unsigned row_position, unsigned coloumn_position)
+Size AnimateBuilder::GetSpriteSize(string sprite_sheet_name, unsigned row_position, unsigned coloumn_position)
 {
-	return nullptr;
+    Vector<SpriteFrame*> v_spriteFrame = spriteSheetDatabase[sprite_sheet_name];
+
+    return v_spriteFrame.at((row_position * coloumn_position) - 1)->getOriginalSize();
+}
+
+Sprite* AnimateBuilder::GetSpriteFromSpriteSheet(string sprite_sheet_name, unsigned row_position, unsigned coloumn_position)
+{
+   
+    return nullptr;
 }
 
 bool AnimateBuilder::init()

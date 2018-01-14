@@ -30,8 +30,7 @@ bool BaseFSM::init()
     // Can be moved to parent class
     // Sprite
     auto sprite = Sprite::create(m_spriteStr);
-    sprite->setAnchorPoint(Vec2::ZERO);
-    sprite->setAnchorPoint(Vec2(0.25, 0.25));
+    sprite->setAnchorPoint(Vec2(0.5f, 0.5f));
 
     sprite->setName("sprite");
     sprite->setScale(0.5);
@@ -41,7 +40,7 @@ bool BaseFSM::init()
 
     // PhysicsBody
     auto physicsBody = PhysicsBody::createBox(
-        Size(15.f, 15.f), // assumes that all enemy will be same size as tile
+        Size(16.f, 16.f), // assumes that all enemy will be same size as tile
         PhysicsMaterial(5.f, 0, 0.0f)
         );
 

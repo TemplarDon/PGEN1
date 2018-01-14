@@ -18,14 +18,19 @@ public:
 
     virtual bool init()
     {
-        health = 3;
+        maxHealth = 5;
+        currentHealth = 5;
         score = 0;
         return true;
     };
 
-	inline int GetHealth(){ return this->health; }
-	inline void SetHealth(unsigned int hp){ this->health = hp; }
-	inline void TakeDamage(int amount){ this->health -= amount; if (health < 0){ health = 0; } }
+    inline int GetCurrHealth(){ return this->currentHealth; }
+    inline void SetCurrHealth(unsigned int _newHealth){ this->currentHealth = _newHealth; }
+
+    inline int GetMaxHealth(){ return this->currentHealth; }
+    inline void SetMaxHealth(unsigned int _newHealth){ this->currentHealth = _newHealth; }
+
+    inline void TakeDamage(int amount){ this->maxHealth -= amount; if (maxHealth < 0){ maxHealth = 0; } }
 
 	inline unsigned int GetScore(){ return this->score; }
 	inline void SetScore(unsigned int _score){ this->score = _score; }
@@ -34,7 +39,9 @@ public:
 	inline void SetHighScore(unsigned int _score){ this->highscore = _score; }
 
 protected:
-	int health = 1;
+    float maxHealth = 5;
+    float currentHealth = 5;
+    
 	unsigned int score;
 	unsigned int highscore = 0;
 };

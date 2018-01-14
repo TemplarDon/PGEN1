@@ -123,6 +123,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     SceneManager::GetInstance().AddLevel("ello level", HelloWorld::createScene());
     SceneManager::GetInstance().AddLevel("pathfinder", PathfinderTest::createScene());
     SceneManager::GetInstance().AddLevel("test scene", GameScene::createScene());
+    SceneManager::GetInstance().GetLevel("test scene")->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+
     SceneManager::GetInstance().AddLevel("menu", scene);
     SceneManager::GetInstance().FinishSetup();
     return true;
