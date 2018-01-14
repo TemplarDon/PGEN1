@@ -379,11 +379,13 @@ void GameScene::InitTilemap()
                 
                 auto aNode = Node::create();
                 Size sz = map->getTileSize();
-                Vec2 pos = collideMap->tileAt(Vec2(x, y))->getPosition() + (sz *0.5f);
+                Vec2 pos = collideMap->tileAt(Vec2(x, y))->getPosition() + (sz * 0.5f);
 
                 aNode->setPosition(pos);
 
-                
+                sz.width *= 0.85;
+                sz.height *= 0.85;
+
                 auto physicsBody = PhysicsBody::createBox(
                     sz,
                     PhysicsMaterial(0.1f, 0, 0.0f)

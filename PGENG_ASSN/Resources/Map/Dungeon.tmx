@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.1" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextobjectid="55">
+<map version="1.0" tiledversion="1.1.1" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextobjectid="56">
  <tileset firstgid="1" name="roguelikeSheet_transparent" tilewidth="16" tileheight="16" spacing="1" tilecount="1767" columns="57">
   <image source="../TileSheets/roguelikeSheet_transparent.png" width="968" height="526"/>
  </tileset>
@@ -57,11 +57,6 @@
   </object>
  </objectgroup>
  <objectgroup name="Spawns">
-  <object id="1" x="239.25" y="752.167" width="15.75" height="15.25">
-   <properties>
-    <property name="isPlayerSpawn" type="bool" value="true"/>
-   </properties>
-  </object>
   <object id="2" x="184.625" y="552.375" width="15.75" height="15.25">
    <properties>
     <property name="isPlayerSpawn" type="bool" value="false"/>
@@ -87,10 +82,15 @@
     <property name="isPlayerSpawn" type="bool" value="false"/>
    </properties>
   </object>
+  <object id="55" x="240.125" y="737.042" width="15.75" height="15.25">
+   <properties>
+    <property name="isPlayerSpawn" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer name="InaccessibleMap" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt1MENwCAMBEFe6b9MyqAEUHTC62RP8tPyDQ/mM8Z0Ws2bJPd19HNQo4MVHaz89b/S0c9x412qO+nQQeq9S3VnHQxHOjp06OA50sbqzjr4jhNXdScdOpJ3d0nu69CRig4dOviO5L6ObzpOXDfu6tDRYXSwhuhYcWTPzA==
+   eJzt1DsOhDAMBNBU3P+YOQZVuiDwh3hsz0hu1grMQ8rOa4zJSTWaeJ6nI58DNRbH017q9fhe3g5ND0TH+j2TAyld/6/osDkke9TZOaI70VHDsbpnuw8V7rkm0Z2zO7xDBx104Dm8jdGduzkke9TZOaI70VHDsbqfvA+avJ2X7JEdkvN02HtYg+D46xl09HZ4BMXheZ6Omo4vrhPvpYOODEMH1iA6bnj1Gyk=
   </data>
  </layer>
  <layer name="CollideMap" width="50" height="50" opacity="0.55">
