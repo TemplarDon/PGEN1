@@ -43,7 +43,7 @@ bool Puzzle::init()
             this->removeFromParent();
         }
     });
-    _eventDispatcher->addEventListenerWithFixedPriority(puzzleListener, 1);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(puzzleListener, this);
 }
 
 bool Puzzle::CheckPuzzleComplete()
