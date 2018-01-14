@@ -42,10 +42,13 @@ bool Button::Init(Node* scene, Vec2 pos)
 
 void Button::OnInteract()
 {
-    m_IsCompleted = true;
+    if (!m_IsCompleted)
+    {
+        m_IsCompleted = true;
 
-    EventCustom event("puzzle_status_change");
-    _eventDispatcher->dispatchEvent(&event);
+        EventCustom event("puzzle_status_change");
+        _eventDispatcher->dispatchEvent(&event);
+    }
 }
 
 void Button::OnInteractLeave()
