@@ -70,7 +70,7 @@ void ChainedPressurePlate::OnInteract()
             }
             else
             {
-                textLabel->setString("*failed*");
+                textLabel->setString("*silence*");
                 textLabel->setVisible(true);
 
                 EventCustom event("puzzle_failed");
