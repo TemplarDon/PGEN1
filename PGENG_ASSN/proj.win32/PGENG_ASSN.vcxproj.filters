@@ -43,6 +43,9 @@
     <Filter Include="src\Projectile">
       <UniqueIdentifier>{c12e5e0a-ddfc-448f-ba84-a708add62d72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Puzzle">
+      <UniqueIdentifier>{7afdaf3c-8199-4614-a1d0-9e736284b362}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -116,6 +119,18 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Interactables\NPC.cpp">
       <Filter>src\Interactables</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Puzzle\Puzzle.cpp">
+      <Filter>src\Puzzle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Puzzle\PuzzleElement.cpp">
+      <Filter>src\Puzzle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Puzzle\PressurePlate.cpp">
+      <Filter>src\Puzzle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Puzzle\Button.cpp">
+      <Filter>src\Puzzle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +223,18 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Player\PlayerInfo.h">
       <Filter>src\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Puzzle\Puzzle.h">
+      <Filter>src\Puzzle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Puzzle\PuzzleElement.h">
+      <Filter>src\Puzzle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Puzzle\PressurePlate.h">
+      <Filter>src\Puzzle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Puzzle\Button.h">
+      <Filter>src\Puzzle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

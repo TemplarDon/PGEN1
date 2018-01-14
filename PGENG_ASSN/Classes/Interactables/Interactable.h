@@ -17,8 +17,8 @@ public:
 	bool remove_when_done;
 
 	bool Init(Node *scene);
-	void OnInteract();
-	void OnInteractLeave();
+	virtual void OnInteract();
+	virtual void OnInteractLeave();
 
 	Interactable();
 	~Interactable();

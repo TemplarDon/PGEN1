@@ -37,6 +37,9 @@ public:
     // FSM Init
     void InitFSM();
 
+    // Puzzle Init
+    void InitPuzzle();
+
     //Key Press
     void OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event);
     void OnMouseEvent(Event* _event);

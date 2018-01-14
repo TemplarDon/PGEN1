@@ -5,6 +5,8 @@
 #include "Animation\SpriteBuilder.h"
 
 #include "FSM\PatrollingFSM.h"
+#include "Puzzle\Puzzle.h"
+#include "Puzzle\Button.h"
 
 #define COCOS2D_DEBUG 1
 #define FSM_TAG 5
@@ -167,6 +169,7 @@ bool GameScene::init()
     InitShader();
     InitTilemap();
     InitFSM();
+    InitPuzzle();
     scheduleUpdate();
 
 	m_over = false;
@@ -442,6 +445,76 @@ void GameScene::InitFSM()
     }
 }
 
+void GameScene::InitPuzzle()
+{
+    TMXTiledMap* map = (TMXTiledMap*)getChildByTag(99);
+
+    std::vector<PuzzleElement*> tempPuzzleElements;
+    std::vector<int> tempPuzzleElementsIndex;
+
+    std::map<int, Puzzle*> tempPuzzle;
+
+    auto puzzleSpawnGroup = map->getObjectGroup("Puzzle");
+    if (puzzleSpawnGroup != nullptr)
+    {
+        auto puzzleSpawns = puzzleSpawnGroup->getObjects();
+
+        int count = 0;
+        for (auto &itr : puzzleSpawns)
+        {
+            auto point = itr.asValueMap();
+            Vec2 pos = Vec2(point["x"].asInt(), point["y"].asInt());
+
+            if (point["name"].asString() == "Door")
+            {
+                Puzzle* aPuzzle = new Puzzle();
+                aPuzzle->init();
+                aPuzzle->setPosition(pos);
+
+                tempPuzzle.insert(std::pair<int, Puzzle*>(point["PuzzleID"].asInt(), aPuzzle));
+            }
+            else
+            {
+                string temp = point["name"].asString();
+               
+                if (temp == "Button")
+                {
+                    Button* aButton = new Button();
+                    aButton->Init(this, pos);
+
+                    tempPuzzleElements.push_back(aButton);
+                    tempPuzzleElementsIndex.push_back(point["PuzzleID"].asInt());
+                }
+                else if (temp == "PressurePlate")
+                {
+
+                }
+                else if (temp == "ChainedPressurePlate")
+                {
+
+                }
+            }
+        }
+
+        // Assign puzzles
+        for (auto &itr : tempPuzzle)
+        {
+            for (int i = 0; i < tempPuzzleElements.size(); ++i)
+            {
+                // Check index
+                if (tempPuzzleElementsIndex[i] == itr.first)
+                {
+                    itr.second->m_elementList.push_back(tempPuzzleElements[i]);
+                    //itr.second->addChild(tempPuzzleElements[i]);
+                }
+            }
+
+            addChild(itr.second);
+        }
+
+    }
+}
+
 void GameScene::SetListeners()
 {
     // Keyboard Listener
@@ -562,7 +635,7 @@ bool GameScene::onContactBegin(PhysicsContact& contact)
 		case PHYSICS_TAG_INTERACTABLE:
 		{
 			(static_cast<Interactable*>(bodyB->getNode()))->OnInteract();
-			menu_play->setVisible(true);
+			//menu_play->setVisible(true);
 			break;
 		}
 		}
@@ -691,7 +764,7 @@ void GameScene::onContactSeperate(PhysicsContact & contact)
 		case PHYSICS_TAG_INTERACTABLE:
 		{
 			(static_cast<Interactable*>(bodyB->getNode()))->OnInteractLeave();
-			menu_play->setVisible(false);
+			//menu_play->setVisible(false);
 			break;
 		}
 		}

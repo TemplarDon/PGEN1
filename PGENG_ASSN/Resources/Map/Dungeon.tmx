@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.1" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextobjectid="19">
+<map version="1.0" tiledversion="1.1.1" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextobjectid="54">
  <tileset firstgid="1" name="roguelikeSheet_transparent" tilewidth="16" tileheight="16" spacing="1" tilecount="1767" columns="57">
   <image source="../TileSheets/roguelikeSheet_transparent.png" width="968" height="526"/>
  </tileset>
@@ -16,16 +16,44 @@
    eJztmGEKwjAMhUtrvYoH8OIieAHRH6JHcqKCggTs2qVZX7p8sB+FJd2jbfoW5wxtnLxzx4Ln7OvG1yIE3vvc+Fpo0JGzzo/CdR6Y8RLrcYj1c44hta/mRkLHZl0/5xhS56O0DtI6Wxq/5HolkRdVx+qV9+LznxjS8Teyz64j8ajcfXqsBdOBxfu7dx+fsI96dND7hPot6sekfDsXlLrLRZOO7975vQeQfHsuNc+q6eDTi44hcT5QfDsXTfUqRS86zLdjYzqwaOXbqe/+91+e229v5dt76ZcsVQdiv10y79zzmQ6s+UrzWr992vtSeVF1cH03t18vRU8+LzXWgunAwnRgsQ3pcQuemNykRA==
   </data>
  </layer>
- <layer name="InaccessibleMap" width="50" height="50" opacity="0.2">
-  <data encoding="base64" compression="zlib">
-   eJzt1MENwCAMBEFe6b9MyqAEUHTC62RP8tPyDQ/mM8Z0Ws2bJPd19HNQo4MVHaz89b/S0c9x412qO+nQQeq9S3VnHQxHOjp06OA50sbqzjr4jhNXdScdOpJ3d0nu69CRig4dOviO5L6ObzpOXDfu6tDRYXSwhuhYcWTPzA==
-  </data>
- </layer>
- <layer name="CollideMap" width="50" height="50" opacity="0.18">
-  <data encoding="base64" compression="zlib">
-   eJztmEEOgCAMBD35/2f6DO8cSLAL3V13Eg9GSjMhLeB1BTWee/1BxiM9KuOr8SgUPHasMyLegXhwkfrAzpu++238yrzo/XzlOyvV9WIhHlyoerjUOUvfraLkgT7XdIHMHQ+u3N0eDvUxIx5cuOznI6rnq5F4cNHl4XI/d/pfUhmv7MF4LjndT+LRM+/pfH+tD6d+hYxHsWO/Rt4fK16zdxXiwUU8uIjHPl7MO/Vx
-  </data>
- </layer>
+ <objectgroup name="Puzzle">
+  <object id="23" name="ChainedPressurePlate" x="448" y="320.5" width="16.25" height="15.75">
+   <properties>
+    <property name="PuzzleID" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="26" name="ChainedPressurePlate" x="495.875" y="384.625" width="16.25" height="15.75">
+   <properties>
+    <property name="PuzzleID" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="27" name="ChainedPressurePlate" x="543.625" y="321.125" width="16.25" height="15.75">
+   <properties>
+    <property name="PuzzleID" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="41" gid="962" x="433.432" y="353.886" width="16" height="16"/>
+  <object id="44" gid="962" x="447.5" y="367.75" width="16" height="16"/>
+  <object id="45" gid="962" x="461.75" y="354.5" width="16" height="16"/>
+  <object id="46" gid="962" x="481.5" y="421.75" width="16" height="16"/>
+  <object id="47" gid="962" x="508.625" y="421.125" width="16" height="16"/>
+  <object id="48" gid="962" x="543.955" y="357.773" width="16" height="16"/>
+  <object id="50" name="Button" x="240" y="544" width="15.6667" height="16">
+   <properties>
+    <property name="PuzzleID" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="51" name="Button" x="496.167" y="639.333" width="15.6667" height="16">
+   <properties>
+    <property name="PuzzleID" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="52" name="Door" x="496.043" y="496.13" width="16" height="15.8696">
+   <properties>
+    <property name="PuzzleID" type="int" value="0"/>
+   </properties>
+  </object>
+ </objectgroup>
  <objectgroup name="Spawns">
   <object id="1" x="239.25" y="767.5" width="15.75" height="15.25">
    <properties>
@@ -42,7 +70,7 @@
     <property name="isPlayerSpawn" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="5" x="558.792" y="305.042" width="15.75" height="15.25">
+  <object id="5" x="552.292" y="146.792" width="15.75" height="15.25">
    <properties>
     <property name="isPlayerSpawn" type="bool" value="false"/>
    </properties>
@@ -58,10 +86,14 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="Doors" visible="0">
-  <object id="15" gid="1445" x="496" y="272.5" width="16" height="16"/>
-  <object id="16" gid="1445" x="127.818" y="128.545" width="16" height="16"/>
-  <object id="17" gid="1445" x="496.182" y="512.364" width="16" height="16"/>
-  <object id="18" gid="1445" x="495.636" y="512.545" width="16" height="16"/>
- </objectgroup>
+ <layer name="InaccessibleMap" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1MENwCAMBEFe6b9MyqAEUHTC62RP8tPyDQ/mM8Z0Ws2bJPd19HNQo4MVHaz89b/S0c9x412qO+nQQeq9S3VnHQxHOjp06OA50sbqzjr4jhNXdScdOpJ3d0nu69CRig4dOviO5L6ObzpOXDfu6tDRYXSwhuhYcWTPzA==
+  </data>
+ </layer>
+ <layer name="CollideMap" width="50" height="50" opacity="0.55">
+  <data encoding="base64" compression="zlib">
+   eJztmMEOwCAIQ3fa/3/mPmPXZQcTpUipfckOZiBpCIhel+nGc89/SH+kjoh91B9FBx0ZeUb4o8nKMVvMDE7Oxyn1sbKv++6a/cy+6PN85j8r0XyxYB1cfGugWz0o1DlL343SSQd6rqkCGds6uGJX61CojxHWwYXKef5HaU4crbugpKNible5nyu9l0TsO+tgnEt29xPrqNl3d7xT60OpXyH9UWSc18j7Y0TXaN0F6+DCOriwjjxeP437BQ==
+  </data>
+ </layer>
 </map>
