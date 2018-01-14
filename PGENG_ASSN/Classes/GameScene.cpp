@@ -153,9 +153,7 @@ bool GameScene::init()
     InputHandler::GetInstance().AssignMouseAction(EventMouse::MouseButton::BUTTON_LEFT, bind(&GameScene::InputMouseTestFunction, this), true);
     InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&GameScene::InputKeyboardTestFunction, this), true);
 
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_Z, bind(&GameScene::SwitchSceneTestFunction, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_X, bind(&GameScene::AddSceneTestFunction, this), true);
-	InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_C, bind(&GameScene::PopSceneTestFunction, this), true);
+    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_TAB, bind(&GameScene::Pause, this), true);
 
 	//InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_L, bind(&GameScene::SpawnNPC, this), true);
 
@@ -165,6 +163,13 @@ bool GameScene::init()
     player->setName("player");
 	player->getPhysicsBody()->setTag(PHYSICS_TAG_PLAYER);
 	addChild(player, 99);
+
+	//Spawn some hearts
+	SpawnHeart(Vec2(100, 100));
+	SpawnHeart(Vec2(250, 120));
+	SpawnHeart(Vec2(240, 350));
+	SpawnHeart(Vec2(290, 320));
+	SpawnHeart(Vec2(260, 360));
 
     SetListeners();
     InitAnimationActions();
@@ -575,6 +580,7 @@ void GameScene::SetListeners()
         Vec2* pos = static_cast<Vec2*>(event->getUserData());
         SpawnHeart(*pos);
 
+		//player->setPosition(*pos);
     });
     _eventDispatcher->addEventListenerWithSceneGraphPriority(enemyDeathListener, this);
 }
@@ -680,7 +686,8 @@ bool GameScene::onContactBegin(PhysicsContact& contact)
             static_cast<Interactable*>(bNode->getParent())->OnInteract();
 
 			//(static_cast<Interactable*>(bodyB->getNode()))->OnInteract();
-			//menu_play->setVisible(true);
+			if(m_over)
+				menu_play->setVisible(true);
 			break;
 		}
 		}
@@ -702,24 +709,9 @@ void GameScene::InputKeyboardTestFunction()
     //CCLOG("Keyboard Function");
 }
 
-void GameScene::SwitchSceneTestFunction()
+void GameScene::Pause()
 {
-    SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
-}
-
-void GameScene::AddSceneTestFunction()
-{
-    SceneManager::GetInstance().AddSceneToStack("ello scene", true);
-}
-
-void GameScene::PopSceneTestFunction()
-{
-    SceneManager::GetInstance().PopSceneFromStack();
-}
-
-void GameScene::SwitchSceneTest(cocos2d::Ref* pSender)
-{
-    SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
+    SceneManager::GetInstance().AddSceneToStack("pause", true);
 }
 
 void GameScene::onContactSeperate(PhysicsContact & contact)
@@ -741,7 +733,8 @@ void GameScene::onContactSeperate(PhysicsContact & contact)
             static_cast<Interactable*>(bNode->getParent())->OnInteractLeave();
 
 			//(static_cast<Interactable*>(bodyB->getNode()))->OnInteractLeave();
-			//menu_play->setVisible(false);
+			if (m_over)
+				menu_play->setVisible(false);
 			break;
 		}
 		}
@@ -786,7 +779,9 @@ void GameScene::SpawnHeart(Vec2 pos)
 {
     //Test heart object
 	auto hrt = new HeartDrop();
-    hrt->Init(this);
-    hrt->setPosition(pos);
-	addChild(hrt, 98);
+	hrt->Init(this, pos);
+	hrt->setPosition(pos);
+	hrt->sprite->setPosition(pos);
+	this->addChild(hrt, 98);
+
 }

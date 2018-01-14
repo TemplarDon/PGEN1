@@ -165,6 +165,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Interactables\NPC.cpp" />
     <ClCompile Include="..\Classes\MainMenuScene.cpp" />
     <ClCompile Include="..\Classes\PathfinderTest.cpp" />
+    <ClCompile Include="..\Classes\PauseScene.cpp" />
     <ClCompile Include="..\Classes\Player\Player.cpp" />
     <ClCompile Include="..\Classes\Projectile\PlayerMeleeHitboxEntity.cpp" />
     <ClCompile Include="..\Classes\Projectile\PlayerProjectileEntity.cpp" />
@@ -204,6 +205,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Interactables\NPC.h" />
     <ClInclude Include="..\Classes\MainMenuScene.h" />
     <ClInclude Include="..\Classes\PathfinderTest.h" />
+    <ClInclude Include="..\Classes\PauseScene.h" />
     <ClInclude Include="..\Classes\Player\Player.h" />
     <ClInclude Include="..\Classes\Player\PlayerInfo.h" />
     <ClInclude Include="..\Classes\Projectile\PlayerMeleeHitboxEntity.h" />

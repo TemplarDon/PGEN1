@@ -1,20 +1,25 @@
 #include "HeartDrops.h"
 #include "Player\/PlayerInfo.h"
 
-bool HeartDrop::Init(Node *scene)
+bool HeartDrop::Init(Node *scene, Vec2 pos)
 {
 	//this->init();
-	this->setName("generic interactable object");
+	this->setName("heartdrop");
 
 	remove_when_done = false;
+
+	this->ignoreAnchorPointForPosition(false);
+	this->setIgnoreAnchorPointForPosition(false);
 
 	//Adding a Sprite 
 	sprite = Sprite::create("hearticon.png");
 	sprite->setName("heart");
 	sprite->setAnchorPoint(Vec2::ZERO);
-	sprite->setPosition(0, 0);
+	sprite->ignoreAnchorPointForPosition(false);
+	sprite->setIgnoreAnchorPointForPosition(false);
+	sprite->setPosition(150,150);
 	sprite->setScale(0.05f);
-	this->addChild(sprite, 98);
+	this->addChild(sprite, 1000);
 
 	//Addding a physics body - (this is a child of the sprite)
 	body = PhysicsBody::createBox(Size(sprite->getContentSize().width, sprite->getContentSize().height),
@@ -25,14 +30,23 @@ bool HeartDrop::Init(Node *scene)
 	body->setContactTestBitmask(PLAYER_BITMASK);
 
 	sprite->addComponent(body);
+
 	return true;
 }
 
 void HeartDrop::OnInteract()
 {
-	if (PlayerInfo::GetInstance().GetCurrHealth() < PlayerInfo::GetInstance().GetMaxHealth())
+	//if (PlayerInfo::GetInstance().GetCurrHealth() < PlayerInfo::GetInstance().GetMaxHealth())
 	{
 		PlayerInfo::GetInstance().SetCurrHealth(PlayerInfo::GetInstance().GetCurrHealth() + 1);
 		this->removeFromParentAndCleanup(true);
 	}
+}
+
+HeartDrop::HeartDrop() : Interactable()
+{
+}
+
+HeartDrop::~HeartDrop()
+{
 }
