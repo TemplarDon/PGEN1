@@ -43,9 +43,9 @@ void PlayerProjectileEntity::InitPhysicBody()
     characterSprite->setName("bullet");
     characterSprite->setAnchorPoint(Vec2::ZERO);
     characterSprite->setPosition(0, 0);
-    characterSprite->setScale(0.1);
+    characterSprite->setScale(0.05f);
 
-    auto physicsBody = PhysicsBody::createBox(Size(1, 1),
+    auto physicsBody = PhysicsBody::createCircle((characterSprite->getContentSize() * 0.05f).width,
         PhysicsMaterial(0.1f, 1.0f, 0.0f));
 
     physicsBody->setGravityEnable(false);

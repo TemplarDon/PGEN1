@@ -28,6 +28,12 @@ bool Player::init()
     weapon->SetDamage(1);
     weapon->SetFireRate(1);
     this->addChild(weapon);
+
+    auto collisionListener = EventListenerPhysicsContact::create();
+    collisionListener->onContactBegin = CC_CALLBACK_1(Player::OnCollisionEnter, this);
+    collisionListener->onContactSeparate = CC_CALLBACK_1(Player::OnCollisionExit, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(collisionListener, this);
+
     return true;
 }
 
@@ -110,11 +116,14 @@ void Player::InitActions()
 
 void Player::InitPhysicBody()
 {
-    auto physicsBody = PhysicsBody::createBox(Size(1.f, 1.f),
-        PhysicsMaterial(0.1f, 1.0f, 0.0f));
+    Size hitboxSize = AnimateBuilder::GetInstance().GetSpriteSize("player_bow", 1, 1) * 0.25f;
+
+    auto physicsBody = PhysicsBody::createBox(hitboxSize,
+        PhysicsMaterial(1.0f, 1.0f, 0.0f),
+        hitboxSize * 0.55f);
 
     physicsBody->setGravityEnable(false);
-    physicsBody->setTag(PLAYER_BITMASK);
+    physicsBody->setTag(PHYSICS_TAG_PLAYER);
     physicsBody->setRotationEnable(false);
 
     physicsBody->setCategoryBitmask(PLAYER_BITMASK);
@@ -122,8 +131,6 @@ void Player::InitPhysicBody()
     physicsBody->setContactTestBitmask(ENEMY_BITMASK | WALLS_BITMASK);
 
     this->setPhysicsBody(physicsBody);
-
-    
 }
 
 void Player::TakeDamage(int _amount)
@@ -249,18 +256,38 @@ void Player::Attack()
     switch (currentMoveDirection)
     {
     case MOVEDIR_LEFT:
+        animController->PlayAnimation("player_bow_attack_left");
         weapon->Discharge(Vec2(-1.0f, 0.0f));
         break;
     case MOVEDIR_RIGHT:
+        animController->PlayAnimation("player_bow_attack_right");
         weapon->Discharge(Vec2(1.0f, 0.0f));
         break;
     case MOVEDIR_UP:
+        animController->PlayAnimation("player_bow_attack_up");
         weapon->Discharge(Vec2(0.0f, 1.0f));
         break;
     case MOVEDIR_DOWN:
+        animController->PlayAnimation("player_bow_attack_down");
         weapon->Discharge(Vec2(0.0f, -1.0f));
         break;
     default:
         break;
     }
+}
+
+bool Player::OnCollisionEnter(const PhysicsContact &contact)
+{
+    //PlayerInfo::GetInstance().TakeDamage(1);
+    return true;
+}
+
+void Player::OnCollisionStay(const PhysicsContact &contact)
+{
+
+}
+
+void Player::OnCollisionExit(const PhysicsContact &contact)
+{
+
 }

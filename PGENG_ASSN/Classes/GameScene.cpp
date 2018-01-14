@@ -682,7 +682,7 @@ void GameScene::onContactSeperate(PhysicsContact & contact)
 
 	switch (bodyA->getTag())
 	{
-		//When player seperates with...
+	//When player seperates with...
 	case PHYSICS_TAG_PLAYER:
 	{
 		switch (bodyB->getTag())
@@ -697,8 +697,6 @@ void GameScene::onContactSeperate(PhysicsContact & contact)
 		}
 	}
 	break;
-
-
 	default:
 		break;
 	}

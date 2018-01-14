@@ -30,6 +30,9 @@ public:
 	void LoadAnimateSpriteBySprite(string animate_name, initializer_list<string> frame_names, float time_between_frames = 0.1f, bool loop = true);
 
 	Animate* GetAnimate(string animate_name);
+
+    Size GetSpriteSize(string sprite_sheet_name, unsigned row_position, unsigned coloumn_position);
+
 	Sprite* GetSpriteFromSpriteSheet(string sprite_sheet_name, unsigned row_position, unsigned coloumn_position);
 
 	bool init();
