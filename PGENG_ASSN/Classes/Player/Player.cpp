@@ -156,7 +156,8 @@ void Player::TakeDamage(int _amount)
 
         if (PlayerInfo::GetInstance().GetCurrHealth() <= 0)
         {
-            SceneManager::GetInstance().ReloadScene();
+            SceneManager::GetInstance().AddSceneToStack("game over", true);
+            PlayerInfo::GetInstance().ResetHealth();
         }
 	}
 }

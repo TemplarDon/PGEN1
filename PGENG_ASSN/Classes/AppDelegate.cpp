@@ -11,6 +11,7 @@
 #include "GameScene.h"
 #include "PauseScene.h"
 #include "EndRoom.h"
+#include "GameOver.h"
 
 // #define USE_AUDIO_ENGINE 1
  #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -120,6 +121,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // create database of shared scenes
     SceneManager::GetInstance().AddSharedScene("pause", PauseScene::createScene());
+    SceneManager::GetInstance().AddSharedScene("game over", GameOver::createScene());
 
     // add other levels
     SceneManager::GetInstance().AddLevel("menu", scene);

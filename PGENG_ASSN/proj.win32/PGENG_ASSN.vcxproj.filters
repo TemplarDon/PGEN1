@@ -156,6 +156,9 @@
     <ClCompile Include="..\Classes\Interactables\Exit.cpp">
       <Filter>src\Interactables</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\GameOver.cpp">
+      <Filter>src\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -280,6 +283,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Interactables\Exit.h">
       <Filter>src\Interactables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameOver.h">
+      <Filter>src\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
