@@ -36,6 +36,13 @@ bool ChainedPressurePlate::Init(Node* scene, Vec2 pos)
 
     sprite->addComponent(body);
 
+    // Text label
+    textLabel = Label::createWithSystemFont("generic", "Arial", 36);
+    textLabel->setVisible(false);
+    textLabel->setPosition(textLabel->getPosition() + Vec2(-sprite->getContentSize().width * 0.5, sprite->getContentSize().height * 1.25));
+    textLabel->setScale(3);
+    sprite->addChild(textLabel, 999);
+
     this->addChild(sprite, 98);
     scene->addChild(this);
     return true;
@@ -57,9 +64,15 @@ void ChainedPressurePlate::OnInteract()
                 m_IsCompleted = true;
                 EventCustom event("puzzle_status_change");
                 _eventDispatcher->dispatchEvent(&event);
+
+                textLabel->setString("*click*");
+                textLabel->setVisible(true);
             }
             else
             {
+                textLabel->setString("*failed*");
+                textLabel->setVisible(true);
+
                 EventCustom event("puzzle_failed");
                 _eventDispatcher->dispatchEvent(&event);
             }
@@ -71,6 +84,9 @@ void ChainedPressurePlate::OnInteract()
             m_IsCompleted = true;
             EventCustom event("puzzle_status_change");
             _eventDispatcher->dispatchEvent(&event);
+
+            textLabel->setString("*click*");
+            textLabel->setVisible(true);
             
         }
     }
@@ -80,4 +96,6 @@ void ChainedPressurePlate::OnInteractLeave()
 {
     CCLOG("<CHAIN PRESSURE PLATE> interact leave");
     //this->getChildByName("ChainedPressurePlate image")->getPhysicsBody()->setContactTestBitmask(PLAYER_BITMASK);
+
+    textLabel->setVisible(false);
 }

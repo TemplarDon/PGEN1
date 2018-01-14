@@ -22,6 +22,9 @@ public:
 
 	Interactable();
 	~Interactable();
+
+protected:
+    Label* textLabel;
 };
 
 #endif

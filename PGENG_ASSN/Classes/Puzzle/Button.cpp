@@ -35,6 +35,13 @@ bool Button::Init(Node* scene, Vec2 pos)
 
     sprite->addComponent(body);
 
+    // Text label
+    textLabel = Label::createWithSystemFont("generic", "Arial", 36);
+    textLabel->setVisible(false);
+    textLabel->setPosition(textLabel->getPosition() + Vec2(sprite->getContentSize().width * 1.5, sprite->getContentSize().height * 1.5));
+    textLabel->setScale(0.25);
+    sprite->addChild(textLabel, 999);
+
     this->addChild(sprite, 98);
     scene->addChild(this);
     return true;
@@ -50,10 +57,13 @@ void Button::OnInteract()
 
         EventCustom event("puzzle_status_change");
         _eventDispatcher->dispatchEvent(&event);
+
+        textLabel->setString("*click*");
+        textLabel->setVisible(true);
     }
 }
 
 void Button::OnInteractLeave()
 {
-
+    textLabel->setVisible(false);
 }
