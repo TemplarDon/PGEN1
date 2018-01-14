@@ -34,7 +34,7 @@ bool Puzzle::init()
     this->addChild(sprite, 98);
 
     // Adds puzzle listener
-    auto puzzleListener = EventListenerCustom::create("puzzle_status_change", [=](EventCustom* event){
+    auto puzzleStatusListener = EventListenerCustom::create("puzzle_status_change", [=](EventCustom* event){
 
         CCLOG("puzzle_status_change received");
 
@@ -43,7 +43,17 @@ bool Puzzle::init()
             this->removeFromParent();
         }
     });
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(puzzleListener, this);
+    _eventDispatcher->addEventListenerWithFixedPriority(puzzleStatusListener, 1);
+
+    auto puzzleFailedListener = EventListenerCustom::create("puzzle_failed", [=](EventCustom* event){
+
+        CCLOG("puzzle_failed received");
+        for each (PuzzleElement* var in m_elementList)
+        {
+            var->m_IsCompleted = false;
+        }
+    });
+    _eventDispatcher->addEventListenerWithFixedPriority(puzzleFailedListener, 1);
 }
 
 bool Puzzle::CheckPuzzleComplete()

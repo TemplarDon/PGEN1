@@ -373,3 +373,10 @@ PGENG_ASSN/proj.android-studio/app/_gitignore
 PGENG_ASSN/proj.android-studio/_gitignore
 PGENG_ASSN/Resources/res/_gitkeep(2)
 PGENG_ASSN/Resources/res/_gitkeep(1)
+PGENG_ASSN/proj.win32/Debug.win32/PuzzleElement.obj
+PGENG_ASSN/proj.win32/Debug.win32/Puzzle/puzzle_pressureplate.png
+PGENG_ASSN/proj.win32/Debug.win32/Puzzle/puzzle_door.png
+PGENG_ASSN/proj.win32/Debug.win32/Puzzle/puzzle_button.png
+PGENG_ASSN/proj.win32/Debug.win32/Puzzle.obj
+PGENG_ASSN/proj.win32/Debug.win32/PressurePlate.obj
+PGENG_ASSN/proj.win32/Debug.win32/Button.obj

@@ -169,6 +169,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Projectile\PlayerProjectileEntity.cpp" />
     <ClCompile Include="..\Classes\Projectile\ProjectileBase.cpp" />
     <ClCompile Include="..\Classes\Puzzle\Button.cpp" />
+    <ClCompile Include="..\Classes\Puzzle\ChainedPressurePlate.cpp" />
     <ClCompile Include="..\Classes\Puzzle\PressurePlate.cpp" />
     <ClCompile Include="..\Classes\Puzzle\Puzzle.cpp" />
     <ClCompile Include="..\Classes\Puzzle\PuzzleElement.cpp" />
@@ -206,6 +207,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Projectile\PlayerProjectileEntity.h" />
     <ClInclude Include="..\Classes\Projectile\ProjectileBase.h" />
     <ClInclude Include="..\Classes\Puzzle\Button.h" />
+    <ClInclude Include="..\Classes\Puzzle\ChainedPressurePlate.h" />
     <ClInclude Include="..\Classes\Puzzle\PressurePlate.h" />
     <ClInclude Include="..\Classes\Puzzle\Puzzle.h" />
     <ClInclude Include="..\Classes\Puzzle\PuzzleElement.h" />

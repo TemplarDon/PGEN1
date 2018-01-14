@@ -30,9 +30,9 @@ bool HeartDrop::Init(Node *scene)
 
 void HeartDrop::OnInteract()
 {
-	//if (PlayerInfo::GetInstance().GetCurrHealth() < PlayerInfo::GetInstance().GetMaxHealth())
+	if (PlayerInfo::GetInstance().GetCurrHealth() < PlayerInfo::GetInstance().GetMaxHealth())
 	{
 		PlayerInfo::GetInstance().SetCurrHealth(PlayerInfo::GetInstance().GetCurrHealth() + 1);
-		//this->removeFromParentAndCleanup(true);
+		this->removeFromParentAndCleanup(true);
 	}
 }
