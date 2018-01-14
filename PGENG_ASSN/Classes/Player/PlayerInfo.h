@@ -26,25 +26,26 @@ public:
     };
 
     inline int GetCurrHealth(){ return this->currentHealth; }
-    inline void SetCurrHealth(unsigned int _newHealth){ this->currentHealth = clampf(_newHealth, 0, maxHealth); }
+    inline void SetCurrHealth(int _newHealth){ this->currentHealth = clampf(_newHealth, 0, maxHealth); }
 
     inline int GetMaxHealth(){ return this->maxHealth; }
-    inline void SetMaxHealth(unsigned int _newHealth){ this->maxHealth = _newHealth; }
+    inline void SetMaxHealth(int _newHealth){ this->maxHealth = _newHealth; }
 
     inline void ResetHealth(){ this->currentHealth = this->maxHealth; }
 
     inline void TakeDamage(int amount){ this->currentHealth -= amount; if (maxHealth < 0){ maxHealth = 0; } }
 
-	inline unsigned int GetScore(){ return this->score; }
-	inline void SetScore(unsigned int _score){ this->score = _score; }
+	inline int GetScore(){ return this->score; }
+	inline void SetScore(int _score){ this->score = _score; }
+    inline void AddScore(int _score){ this->score += _score; }
 
-	inline unsigned int GetHighScore(){ return this->highscore; }
-	inline void SetHighScore(unsigned int _score){ this->highscore = _score; }
+	inline int GetHighScore(){ return this->highscore; }
+    inline void SetHighScore(int _score){ this->highscore = max(_score, highscore); }
 
-	inline unsigned int GetNumberOfHealthPotions(){ return this->healthPotions; }
-	inline void AddHealthPotions(unsigned int amount) { this->healthPotions += amount; }
+	inline int GetNumberOfHealthPotions(){ return this->healthPotions; }
+	inline void AddHealthPotions(int amount) { this->healthPotions += amount; }
 
-	inline void SetNumberOfHealthPotions(unsigned int amount) { this->healthPotions = amount; }
+	inline void SetNumberOfHealthPotions(int amount) { this->healthPotions = amount; }
 	inline bool UseHealthPotion() 
 	{ 
 		if (!healthPotions || this->currentHealth >= this->maxHealth)
@@ -58,9 +59,9 @@ protected:
     float maxHealth = 5;
     float currentHealth = 5;
     
-	unsigned int score;
-	unsigned int highscore = 0;
-	unsigned int healthPotions = 0;
+	int score = 0;
+	int highscore = 0;
+	int healthPotions = 0;
 };
 
 #endif

@@ -50,6 +50,7 @@ public:
 
     void InputMouseTestFunction();
     void InputKeyboardTestFunction();
+    void SpawnNPC();
     void Pause();
 
     void SwitchSceneTest(cocos2d::Ref* pSender);
@@ -77,7 +78,6 @@ private:
     Vec2 cameraOrthoScale;
 
     MenuItemFont* menu_play;
-    bool m_over;
 };
 
 #endif // __TEST_SCENE_H__

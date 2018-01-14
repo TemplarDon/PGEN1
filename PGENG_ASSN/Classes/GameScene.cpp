@@ -175,6 +175,8 @@ bool GameScene::init()
 	SpawnHeart(Vec2(290, 320));
 	SpawnHeart(Vec2(260, 360));
 
+    PlayerInfo::GetInstance().SetScore(10000);
+
     SetListeners();
     InitAnimationActions();
     InitShader();
@@ -189,6 +191,7 @@ bool GameScene::init()
 
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Audio/BGM.wav");
     CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
+
 
     return true;
 }
@@ -223,8 +226,9 @@ void GameScene::update(float _dt)
 	mainCam->initOrthographic(cameraOrthoScale.x, cameraOrthoScale.y, 1, 800);
     mainCam->setPosition(player->getPosition() - Vec2(cameraOrthoScale.x * 0.5, cameraOrthoScale.y * 0.5));
 	
-
     UpdateUI(_dt);
+
+    PlayerInfo::GetInstance().AddScore(-_dt * 100);
     //rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
     //this->visit();
     //rendtex->end();
@@ -589,20 +593,35 @@ void GameScene::InitUI()
     player->addChild(UILayout, INT_MAX);
 
     ui::ImageView* heartImage = ui::ImageView::create("hearticon.png");
+    heartImage->setName("heart");
     heartImage->setScale(0.1f);
     UILayout->addChild(heartImage, INT_MAX);
 
     heartImage = ui::ImageView::create("hearticon.png");
+    heartImage->setName("heart");
     heartImage->setScale(0.1f);
     UILayout->addChild(heartImage, INT_MAX);
 
     heartImage = ui::ImageView::create("hearticon.png");
+    heartImage->setName("heart");
     heartImage->setScale(0.1f);
     UILayout->addChild(heartImage, INT_MAX);
 
     heartImage = ui::ImageView::create("hearticon.png");
+    heartImage->setName("heart");
     heartImage->setScale(0.1f);
     UILayout->addChild(heartImage, INT_MAX);
+
+    string currScore = "Score : " +  std::to_string(PlayerInfo::GetInstance().GetScore());
+ 
+    MenuItemFont* score = MenuItemFont::create("score");
+    score->setName("score");
+    score->setString(currScore);
+    score->setFontSize(100);
+    score->setFontSizeObj(9);
+    score->setPosition(Vec2(cameraOrthoScale.x * 0.2f, cameraOrthoScale.y * 0.4f));
+
+    player->addChild(score);
 }
 
 void GameScene::UpdateUI(float _dt)
@@ -612,6 +631,7 @@ void GameScene::UpdateUI(float _dt)
         while (PlayerInfo::GetInstance().GetCurrHealth() > UILayout->getChildrenCount())
         {
             ui::ImageView* heartImage = ui::ImageView::create("hearticon.png");
+            heartImage->setName("heart");
             heartImage->setScale(0.1f);
             UILayout->addChild(heartImage, INT_MAX);
         }
@@ -621,9 +641,13 @@ void GameScene::UpdateUI(float _dt)
         while (PlayerInfo::GetInstance().GetCurrHealth() < UILayout->getChildrenCount())
         {
             if (!UILayout->getChildren().empty())
-                UILayout->removeChild(UILayout->getChildren().front(), true);
+                UILayout->removeChild(UILayout->getChildByName("heart"), true);
         }
     }
+
+    Node* score = player->getChildByName("score");
+    string currScore = "Score : " + std::to_string(PlayerInfo::GetInstance().GetScore());
+    dynamic_cast<MenuItemFont*>(score)->setString(currScore);
 }
 
 void GameScene::SetListeners()
@@ -653,6 +677,7 @@ void GameScene::SetListeners()
         CCLOG("enemy death received");
         Vec2* pos = static_cast<Vec2*>(event->getUserData());
         SpawnHeart(*pos);
+        PlayerInfo::GetInstance().AddScore(1000);
 
 		//player->setPosition(*pos);
     });

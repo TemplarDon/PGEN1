@@ -10,6 +10,7 @@
 #include "Puzzle\Button.h"
 #include "Puzzle\ChainedPressurePlate.h"
 #include "Interactables\Exit.h"
+#include "Player\PlayerInfo.h"
 
 #define COCOS2D_DEBUG 1
 #define FSM_TAG 5
@@ -173,7 +174,7 @@ bool EndRoom::init()
     InitEnvironment();
     scheduleUpdate();
 
-    m_over = false;
+    SpawnNPC();
 
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Audio/BGM.wav");
     CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
@@ -508,20 +509,17 @@ bool EndRoom::onContactBegin(PhysicsContact& contact)
         //When player collides with...
     case PHYSICS_TAG_PLAYER:
     {
-                               switch (bodyB->getTag())
-                               {
-                                   //...Interactable
-                               case PHYSICS_TAG_INTERACTABLE:
-                               {
-                                                                Node* bNode = bodyB->getNode();
-                                                                static_cast<Interactable*>(bNode->getParent())->OnInteract();
+        switch (bodyB->getTag())
+        {
+            //...Interactable
+        case PHYSICS_TAG_INTERACTABLE:
+        {
+            Node* bNode = bodyB->getNode();
+            static_cast<Interactable*>(bNode->getParent())->OnInteract();
 
-                                                                //(static_cast<Interactable*>(bodyB->getNode()))->OnInteract();
-                                                                if (m_over)
-                                                                    menu_play->setVisible(true);
-                                                                break;
-                               }
-                               }
+            break;
+        }
+        }
     }
         break;
     default:
@@ -545,6 +543,43 @@ void EndRoom::Pause()
     SceneManager::GetInstance().AddSceneToStack("pause", true);
 }
 
+void EndRoom::SpawnNPC()
+{
+    //Some quick and dirty menu stuff
+    MenuItemFont* winText = MenuItemFont::create("winText");
+    winText->setString("YOU WIN GOOD JOB.");
+    winText->setFontSize(INT_MAX);
+    winText->setFontSizeObj(9);
+    winText->setPosition(70, 120);
+
+    MenuItemFont* lastRunScore = MenuItemFont::create("lastRunScore");
+    string currScore = "This run's score : " + std::to_string(PlayerInfo::GetInstance().GetScore());
+    lastRunScore->setString(currScore);
+    lastRunScore->setFontSize(INT_MAX);
+    lastRunScore->setFontSizeObj(9);
+    lastRunScore->setPosition(70, 100);
+
+    MenuItemFont* highScore = MenuItemFont::create("highScore");
+    string highScoreText = "Highscore : " + std::to_string(PlayerInfo::GetInstance().GetHighScore());
+    highScore->setString(highScoreText);
+    highScore->setFontSize(INT_MAX);
+    highScore->setFontSizeObj(9);
+    highScore->setPosition(70, 80);
+
+    auto *menu = Menu::create(winText, lastRunScore, highScore, nullptr);
+    menu->setPosition(45, 50);
+    menu->setName("menu");
+
+    this->addChild(menu, 100);
+
+    //Interactables
+    auto newNPC = new Interactable();
+    newNPC->Init(this);
+    //newNPC->setPosition(40, 80);
+    newNPC->setName("npc");
+    addChild(newNPC, 98);
+}
+
 void EndRoom::onContactSeperate(PhysicsContact & contact)
 {
     auto bodyA = contact.getShapeA()->getBody();
@@ -555,20 +590,16 @@ void EndRoom::onContactSeperate(PhysicsContact & contact)
         //When player seperates with...
     case PHYSICS_TAG_PLAYER:
     {
-                               switch (bodyB->getTag())
-                               {
-                                   //...Interactable
-                               case PHYSICS_TAG_INTERACTABLE:
-                               {
-                                                                Node* bNode = bodyB->getNode();
-                                                                static_cast<Interactable*>(bNode->getParent())->OnInteractLeave();
-
-                                                                //(static_cast<Interactable*>(bodyB->getNode()))->OnInteractLeave();
-                                                                if (m_over)
-                                                                    menu_play->setVisible(false);
-                                                                break;
-                               }
-                               }
+        switch (bodyB->getTag())
+        {
+            //...Interactable
+        case PHYSICS_TAG_INTERACTABLE:
+        {
+            Node* bNode = bodyB->getNode();
+            static_cast<Interactable*>(bNode->getParent())->OnInteractLeave();
+            break;
+        }
+        }
     }
         break;
     default:

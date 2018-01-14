@@ -65,8 +65,8 @@ public:
 
 	void SpawnNPC();
 	void SpawnHeart(Vec2 pos);
-
     void UpdateUI(float _dt);
+    
 
 private:
     enum ANIMLIST
