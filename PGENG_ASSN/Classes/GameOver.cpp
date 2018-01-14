@@ -1,4 +1,4 @@
-#include "PauseScene.h"
+#include "GameOver.h"
 #include "SimpleAudioEngine.h"
 #include "Input\InputHandler.h"
 #include "SceneManagement\SceneManager.h"
@@ -7,9 +7,9 @@ USING_NS_CC;
 
 using namespace ui;
 
-Scene* PauseScene::createScene()
+Scene* GameOver::createScene()
 {
-    return PauseScene::create();
+    return GameOver::create();
 }
 
 // Print useful error message instead of segfaulting when files are not there.
@@ -20,7 +20,7 @@ static void problemLoading(const char* filename)
 }
 
 // on "init" you need to initialize your instance
-bool PauseScene::init()
+bool GameOver::init()
 {
     //////////////////////////////
     // 1. super init first
@@ -60,19 +60,17 @@ bool PauseScene::init()
     this->scheduleUpdate();
 
     // Text
-    auto text = Label::createWithSystemFont("PAUSE", "Arial", 32);
-    text->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 3.5));
+    auto text = Label::createWithSystemFont("GAME OVER", "Arial", 32);
+    text->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 3));
     addChild(text, 5);
 
     // Menu
-    MenuItemFont* menu_play = MenuItemFont::create("Resume", CC_CALLBACK_1(PauseScene::Resume, this));
-    MenuItemFont* menu_quit = MenuItemFont::create("Quit", CC_CALLBACK_1(PauseScene::Quit, this));
+    MenuItemFont* menu_quit = MenuItemFont::create("Restart", CC_CALLBACK_1(GameOver::Quit, this));
 
-    auto *menu = Menu::create(menu_play, menu_quit, nullptr);
+    auto *menu = Menu::create(menu_quit, nullptr);
     menu->setPosition(Point(0, 0));
     menu->setName("menu");
     menu->retain();
-    menu_play->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 3));
     menu_quit->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 2));
 
     this->addChild(menu, 5);
@@ -80,27 +78,27 @@ bool PauseScene::init()
     return true;
 }
 
-void PauseScene::update(float _dt)
+void GameOver::update(float _dt)
 {
     Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
     auto visibleSize = Director::getInstance()->getVisibleSize();
     mainCam->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 2)));
 }
 
-void PauseScene::SetListeners()
+void GameOver::SetListeners()
 {
     // Keyboard Listener
     auto keyboardListener = EventListenerKeyboard::create();
-    keyboardListener->onKeyPressed = CC_CALLBACK_2(PauseScene::OnKeyPressed, this);
+    keyboardListener->onKeyPressed = CC_CALLBACK_2(GameOver::OnKeyPressed, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
     // Mouse Listener
     auto mouseListener = EventListenerMouse::create();
-    mouseListener->onMouseDown = CC_CALLBACK_1(PauseScene::OnMouseEvent, this);
+    mouseListener->onMouseDown = CC_CALLBACK_1(GameOver::OnMouseEvent, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
 }
 
-void PauseScene::menuCloseCallback(Ref* pSender)
+void GameOver::menuCloseCallback(Ref* pSender)
 {
     //Close the cocos2d-x game scene and quit the application
     Director::getInstance()->end();
@@ -117,7 +115,7 @@ void PauseScene::menuCloseCallback(Ref* pSender)
 
 }
 
-void PauseScene::OnMouseEvent(Event* _event)
+void GameOver::OnMouseEvent(Event* _event)
 {
     EventMouse* mouseEvent = (EventMouse*)_event;
 
@@ -137,17 +135,17 @@ void PauseScene::OnMouseEvent(Event* _event)
     }
 }
 
-void PauseScene::OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event)
+void GameOver::OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event)
 {
 
 }
 
-void PauseScene::Resume(Ref *pSender)
+void GameOver::Resume(Ref *pSender)
 {
     SceneManager::GetInstance().PopSceneFromStack();
 }
 
-void PauseScene::Quit(Ref *pSender)
+void GameOver::Quit(Ref *pSender)
 {
     SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
 }

@@ -156,6 +156,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\FSM\BaseFSM.cpp" />
     <ClCompile Include="..\Classes\FSM\Pathfinder.cpp" />
     <ClCompile Include="..\Classes\FSM\PatrollingFSM.cpp" />
+    <ClCompile Include="..\Classes\GameOver.cpp" />
     <ClCompile Include="..\Classes\GameScene.cpp" />
     <ClCompile Include="..\Classes\Grid\Grid.cpp" />
     <ClCompile Include="..\Classes\Grid\SpatialPartition.cpp" />
@@ -197,6 +198,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\FSM\Pathfinder.h" />
     <ClInclude Include="..\Classes\FSM\PathfinderNode.h" />
     <ClInclude Include="..\Classes\FSM\PatrollingFSM.h" />
+    <ClInclude Include="..\Classes\GameOver.h" />
     <ClInclude Include="..\Classes\GameScene.h" />
     <ClInclude Include="..\Classes\Grid\Grid.h" />
     <ClInclude Include="..\Classes\Grid\SpatialPartition.h" />

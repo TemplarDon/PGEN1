@@ -63,27 +63,27 @@
   </object>
  </objectgroup>
  <objectgroup name="Spawns">
-  <object id="2" x="184.625" y="552.375" width="15.75" height="15.25">
+  <object id="2" x="224.125" y="592.375" width="15.75" height="15.25">
    <properties>
     <property name="isPlayerSpawn" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="4" x="566.625" y="647.375" width="15.75" height="15.25">
+  <object id="4" x="494.625" y="576.875" width="15.75" height="15.25">
    <properties>
     <property name="isPlayerSpawn" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="5" x="552.292" y="146.792" width="15.75" height="15.25">
+  <object id="5" x="523.292" y="125.792" width="15.75" height="15.25">
    <properties>
     <property name="isPlayerSpawn" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="6" x="432.125" y="63.0417" width="15.75" height="15.25">
+  <object id="6" x="474.125" y="94.0417" width="15.75" height="15.25">
    <properties>
     <property name="isPlayerSpawn" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="7" x="184.292" y="152.042" width="15.75" height="15.25">
+  <object id="7" x="239.292" y="110.042" width="15.75" height="15.25">
    <properties>
     <property name="isPlayerSpawn" type="bool" value="false"/>
    </properties>
@@ -99,7 +99,7 @@
  </objectgroup>
  <layer name="InaccessibleMap" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt1EEOgCAMBEBP/v+ZPMMTN0wpFLoLu0kv1mrHBMv7PEVFVSOJnJeDz4GaGcdf3+uN+F7RjpE9EB31OpMDKbf+r+SYc3j6qNVyZO8kxxmOujvbeTjhnFu7W/eiFJMjOpmOSBeLw7pXjnlHZLIc0cbsnW9zePqo1XJk7yTHGY66+87zMBJr3tNHdnjmVzusHotjZRAcq54hx92OiKA4euatHoujd14Ov2vHe+WQg6HkwCpExweFvjYf
+   eJztk0sOhDAMQ1lx/2NyjFmNhBBtfg51IJG8aWPwa5tj37ajVUqeQvqRHJH+qB/NoT3HEYfXj3wz1hxRf4RDumNtjsiZZXF4cjBynNercGi+7+3L5tCyRnKwcXj7o34kh7Ukv2WfVdH7YlFzcOk8A9Xm4Q1zLmWXellUiQNdKzmQXFU4pN7miHMgaxUHmnF15q9xWPZZdcexOlNzvIPjn/3JefCU5LfsZ72D7HeTzXF3ZqM1jX90D09zzHJo15k5Zt9pjub4+nxcc4z8s7VMDm9/1I/ksBbSn6VV/22O5qig5uASI8cPkq27/w==
   </data>
  </layer>
  <layer name="CollideMap" width="50" height="50" opacity="0.55">
