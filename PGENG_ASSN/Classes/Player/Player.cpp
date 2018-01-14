@@ -128,8 +128,8 @@ void Player::InitPhysicBody()
     physicsBody->setRotationEnable(false);
 
     physicsBody->setCategoryBitmask(PLAYER_BITMASK);
-    physicsBody->setCollisionBitmask(ENEMY_BITMASK | WALLS_BITMASK);
-    physicsBody->setContactTestBitmask(ENEMY_BITMASK | WALLS_BITMASK | PRESSURE_PLATE);
+    physicsBody->setCollisionBitmask(ENEMY_BITMASK | WALLS_BITMASK | BUTTON_BITMASK);
+    physicsBody->setContactTestBitmask(ENEMY_BITMASK | WALLS_BITMASK | PRESSURE_PLATE_BITMASK | BUTTON_BITMASK);
 
     this->setPhysicsBody(physicsBody);
 }

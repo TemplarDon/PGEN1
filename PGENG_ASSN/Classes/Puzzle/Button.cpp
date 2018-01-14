@@ -29,8 +29,8 @@ bool Button::Init(Node* scene, Vec2 pos)
     body->setDynamic(false);
 
     body->setTag(PHYSICS_TAG_INTERACTABLE);
-    body->setCategoryBitmask(WALLS_BITMASK);
-    //body->setCollisionBitmask(PLAYER_BITMASK);
+    body->setCategoryBitmask(BUTTON_BITMASK);
+    body->setCollisionBitmask(PLAYER_BITMASK);
     body->setContactTestBitmask(PLAYER_BITMASK);
 
     sprite->addComponent(body);

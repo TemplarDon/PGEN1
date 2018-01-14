@@ -26,12 +26,12 @@ public:
     };
 
     inline int GetCurrHealth(){ return this->currentHealth; }
-    inline void SetCurrHealth(unsigned int _newHealth){ this->currentHealth = _newHealth; }
+    inline void SetCurrHealth(unsigned int _newHealth){ this->currentHealth = clampf(_newHealth, 0, maxHealth); }
 
-    inline int GetMaxHealth(){ return this->currentHealth; }
-    inline void SetMaxHealth(unsigned int _newHealth){ this->currentHealth = _newHealth; }
+    inline int GetMaxHealth(){ return this->maxHealth; }
+    inline void SetMaxHealth(unsigned int _newHealth){ this->maxHealth = _newHealth; }
 
-    inline void TakeDamage(int amount){ this->maxHealth -= amount; if (maxHealth < 0){ maxHealth = 0; } }
+    inline void TakeDamage(int amount){ this->currentHealth -= amount; if (maxHealth < 0){ maxHealth = 0; } }
 
 	inline unsigned int GetScore(){ return this->score; }
 	inline void SetScore(unsigned int _score){ this->score = _score; }
@@ -41,6 +41,7 @@ public:
 
 	inline unsigned int GetNumberOfHealthPotions(){ return this->healthPotions; }
 	inline void AddHealthPotions(unsigned int amount) { this->healthPotions += amount; }
+
 	inline void SetNumberOfHealthPotions(unsigned int amount) { this->healthPotions = amount; }
 	inline bool UseHealthPotion() 
 	{ 

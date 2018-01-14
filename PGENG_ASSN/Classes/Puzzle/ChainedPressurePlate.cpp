@@ -30,7 +30,7 @@ bool ChainedPressurePlate::Init(Node* scene, Vec2 pos)
     body->setDynamic(false);
 
     body->setTag(PHYSICS_TAG_INTERACTABLE);
-    body->setCategoryBitmask(PRESSURE_PLATE);
+    body->setCategoryBitmask(PRESSURE_PLATE_BITMASK);
     //body->setCollisionBitmask(PLAYER_BITMASK);
     body->setContactTestBitmask(PLAYER_BITMASK);
 

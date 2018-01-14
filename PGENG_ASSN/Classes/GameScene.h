@@ -6,6 +6,10 @@
 #include "Player\Player.h"
 #include "Interactables\interactable.h"
 
+// UI STUFF
+#include "extensions/cocos-ext.h"
+#include "ui/CocosGUI.h"
+USING_NS_CC_EXT;
 
 using namespace cocos2d;
 
@@ -40,6 +44,8 @@ public:
     // Puzzle Init
     void InitPuzzle();
 
+    void InitUI();
+
     //Key Press
     void OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event);
     void OnMouseEvent(Event* _event);
@@ -56,6 +62,8 @@ public:
 
 	void SpawnNPC();
 	void SpawnHeart(Vec2 pos);
+
+    void UpdateUI(float _dt);
 
 private:
     enum ANIMLIST
@@ -80,7 +88,9 @@ private:
 	Vec2 cameraOrthoScale;
 
 	MenuItemFont* menu_play;
-	bool m_over;
+	bool m_over = false;
+
+    ui::Layout* UILayout;
 };
 
 #endif // __TEST_SCENE_H__

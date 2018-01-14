@@ -1,4 +1,5 @@
 #include "GameScene.h"
+#include "Player\PlayerInfo.h"
 #include "Input\InputHandler.h"
 #include "SceneManagement\SceneManager.h"
 #include "SimpleAudioEngine.h"
@@ -52,9 +53,7 @@ bool GameScene::init()
     // Reset all binded actions 
     InputHandler::GetInstance().ClearActionMaps();
 
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    Size playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
+    cameraOrthoScale.set(234, 160);
 
     // World
     //auto nodeItems = Node::create();
@@ -164,6 +163,10 @@ bool GameScene::init()
 	player->getPhysicsBody()->setTag(PHYSICS_TAG_PLAYER);
 	addChild(player, 99);
 
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    Size playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
+
 	//Spawn some hearts
 	SpawnHeart(Vec2(100, 100));
 	SpawnHeart(Vec2(250, 120));
@@ -177,6 +180,7 @@ bool GameScene::init()
     InitTilemap();
     InitFSM();
     InitPuzzle();
+    InitUI();
     scheduleUpdate();
 
 	m_over = false;
@@ -184,8 +188,6 @@ bool GameScene::init()
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Audio/BGM.wav");
     CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
 
-	cameraOrthoScale.set(234, 160);
-	runAction(DelayTime::create(2.0f));
     return true;
 }
 
@@ -215,11 +217,12 @@ void GameScene::update(float _dt)
 	}
 
     //UpdateFSM();
-
     Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
 	mainCam->initOrthographic(cameraOrthoScale.x, cameraOrthoScale.y, 1, 800);
     mainCam->setPosition(player->getPosition() - Vec2(cameraOrthoScale.x * 0.5, cameraOrthoScale.y * 0.5));
 	
+
+    UpdateUI(_dt);
     //rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
     //this->visit();
     //rendtex->end();
@@ -552,6 +555,51 @@ void GameScene::InitPuzzle()
     }
 }
 
+void GameScene::InitUI()
+{
+    UILayout = ui::Layout::create();
+    UILayout->setLayoutType(cocos2d::ui::Layout::Type::HORIZONTAL);
+    UILayout->setPosition(Vec2(-cameraOrthoScale.x * 0.3f, cameraOrthoScale.y * 0.45f));
+    player->addChild(UILayout, INT_MAX);
+
+    ui::ImageView* heartImage = ui::ImageView::create("hearticon.png");
+    heartImage->setScale(0.1f);
+    UILayout->addChild(heartImage, INT_MAX);
+
+    heartImage = ui::ImageView::create("hearticon.png");
+    heartImage->setScale(0.1f);
+    UILayout->addChild(heartImage, INT_MAX);
+
+    heartImage = ui::ImageView::create("hearticon.png");
+    heartImage->setScale(0.1f);
+    UILayout->addChild(heartImage, INT_MAX);
+
+    heartImage = ui::ImageView::create("hearticon.png");
+    heartImage->setScale(0.1f);
+    UILayout->addChild(heartImage, INT_MAX);
+}
+
+void GameScene::UpdateUI(float _dt)
+{
+    if (PlayerInfo::GetInstance().GetCurrHealth() > UILayout->getChildrenCount())
+    {
+        while (PlayerInfo::GetInstance().GetCurrHealth() > UILayout->getChildrenCount())
+        {
+            ui::ImageView* heartImage = ui::ImageView::create("hearticon.png");
+            heartImage->setScale(0.1f);
+            UILayout->addChild(heartImage, INT_MAX);
+        }
+    }
+    else if (PlayerInfo::GetInstance().GetCurrHealth() < UILayout->getChildrenCount())
+    {
+        while (PlayerInfo::GetInstance().GetCurrHealth() < UILayout->getChildrenCount())
+        {
+            if (!UILayout->getChildren().empty())
+                UILayout->removeChild(UILayout->getChildren().front(), true);
+        }
+    }
+}
+
 void GameScene::SetListeners()
 {
     // Keyboard Listener
@@ -688,11 +736,31 @@ bool GameScene::onContactBegin(PhysicsContact& contact)
 			//(static_cast<Interactable*>(bodyB->getNode()))->OnInteract();
 			if(m_over)
 				menu_play->setVisible(true);
+
 			break;
 		}
 		}
+        break;
 	}
-	break;
+    case PHYSICS_TAG_INTERACTABLE:
+    {
+        switch (bodyB->getTag())
+        {
+            //...Interactable
+        case PHYSICS_TAG_PLAYER:
+        {
+            Node* aNode = bodyA->getNode();
+            static_cast<Interactable*>(aNode->getParent())->OnInteract();
+
+            //(static_cast<Interactable*>(bodyB->getNode()))->OnInteract();
+            if (m_over)
+                menu_play->setVisible(true);
+
+            break;
+        }
+        }
+        break;
+    }
 	default:
 		break;
 	}
