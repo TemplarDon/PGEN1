@@ -56,6 +56,48 @@ void SceneManager::AddSharedScene(string name, Scene* toAdd)
     m_SharedScenesMap[name]->retain();
 }
 
+void SceneManager::ReloadScene()
+{
+    Scene* currScene = theDirector->getRunningScene();
+    Node* actualScene = currScene->getChildByName("Scene");
+
+    actualScene->removeAllChildren();
+    currScene->removeAllChildren();
+    actualScene->init();
+    currScene->init();
+
+    currScene->addChild(actualScene);
+
+    /*
+            Node* scene = nullptr;
+        if (hasPhysicsParentLayer)
+        {
+            scene = toTransition->getChildByName("Scene");
+            scene->removeAllChildren(); 
+        }
+        toTransition->removeAllChildren();
+
+        if (hasPhysicsParentLayer)
+        {
+            scene->init();
+            toTransition->addChild(scene);
+        }
+        else
+        {
+            toTransition->init();
+        }
+
+        if (transition == TRANSITION_TYPES::NIL)
+        {
+            theDirector->replaceScene(toTransition);
+        }
+        else
+        {
+            TransitionSceneWithAnimations(toTransition, transition);
+        }
+    */
+}
+
 void SceneManager::FinishSetup()
 {
     InputHandler::GetInstance().ClearActionMaps();

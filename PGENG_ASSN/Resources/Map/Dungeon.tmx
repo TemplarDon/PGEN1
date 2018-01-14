@@ -96,7 +96,7 @@
  </objectgroup>
  <layer name="InaccessibleMap" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt1DsOhDAMBNBU3P+YOQZVuiDwh3hsz0hu1grMQ8rOa4zJSTWaeJ6nI58DNRbH017q9fhe3g5ND0TH+j2TAyld/6/osDkke9TZOaI70VHDsbpnuw8V7rkm0Z2zO7xDBx104Dm8jdGduzkke9TZOaI70VHDsbqfvA+avJ2X7JEdkvN02HtYg+D46xl09HZ4BMXheZ6Omo4vrhPvpYOODEMH1iA6bnj1Gyk=
+   eJzt1EEOgCAMBEBP/v+ZPMMTN0wpFLoLu0kv1mrHBMv7PEVFVSOJnJeDz4GaGcdf3+uN+F7RjpE9EB31OpMDKbf+r+SYc3j6qNVyZO8kxxmOujvbeTjhnFu7W/eiFJMjOpmOSBeLw7pXjnlHZLIc0cbsnW9zePqo1XJk7yTHGY66+87zMBJr3tNHdnjmVzusHotjZRAcq54hx92OiKA4euatHoujd14Ov2vHe+WQg6HkwCpExweFvjYf
   </data>
  </layer>
  <layer name="CollideMap" width="50" height="50" opacity="0.55">

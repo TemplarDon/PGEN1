@@ -3,6 +3,7 @@
 #include "BitmasksHeader.h"
 #include "PlayerInfo.h"
 #include "Weapon\PlayerRangeWeapon.h"
+#include "SceneManagement\SceneManager.h"
 
 Player::Player():
 moveSpeed(1),
@@ -152,6 +153,11 @@ void Player::TakeDamage(int _amount)
             ),
             NULL
             ));
+
+        if (PlayerInfo::GetInstance().GetCurrHealth() <= 0)
+        {
+            SceneManager::GetInstance().ReloadScene();
+        }
 	}
 }
 

@@ -31,6 +31,7 @@ public:
     void Start(Scene* initialScene);
     void AddLevel(string name, Scene* toAdd);
     void AddSharedScene(string name, Scene* toAdd);
+    void ReloadScene();
     void FinishSetup();
 
     void AddSceneToStack(string name, bool leaveOldScene = false);
