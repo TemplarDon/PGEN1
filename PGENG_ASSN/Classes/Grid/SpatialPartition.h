@@ -1,6 +1,6 @@
 //#pragma once
 //#include "../Common/SingletonNode.h"
-//#include "Grid\SpatialPartition.h"
+//#include "Grid/SpatialPartition.h"
 //
 //
 //#define SPATIAL CSpatialPartition::GetInstance()

@@ -2,8 +2,8 @@
 #define _PLAYER_H
 
 #include "cocos2d.h"
-#include "Animation\SpriteBuilder.h"
-#include "Animation\AnimationController.h"
+#include "Animation/SpriteBuilder.h"
+#include "Animation/AnimationController.h"
 #include "SimpleAudioEngine.h"
 
 using namespace cocos2d;

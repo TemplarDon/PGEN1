@@ -1,7 +1,7 @@
 #ifndef __EXIT_H__
 #define __EXIT_H__
 
-#include "Interactables\Interactable.h"
+#include "Interactables/Interactable.h"
 #include <string>
 using std::string;
 

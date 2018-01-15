@@ -2,9 +2,9 @@
 #define __GAMESCENE_TEST_H__
 
 #include "cocos2d.h"
-#include "Animation\AnimationController.h"
-#include "Player\Player.h"
-#include "Interactables\interactable.h"
+#include "Animation/AnimationController.h"
+#include "Player/Player.h"
+#include "Interactables/interactable.h"
 
 // UI STUFF
 #include "extensions/cocos-ext.h"

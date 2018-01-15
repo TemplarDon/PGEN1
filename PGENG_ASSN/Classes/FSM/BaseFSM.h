@@ -4,8 +4,8 @@
 #include "cocos2d.h"
 #include "Pathfinder.h"
 #include "BitmasksHeader.h"
-#include "Animation\AnimationController.h"
-#include "Animation\SpriteBuilder.h"
+#include "Animation/AnimationController.h"
+#include "Animation/SpriteBuilder.h"
 
 using namespace cocos2d;
 using namespace std;

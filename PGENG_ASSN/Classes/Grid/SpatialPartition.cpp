@@ -1,6 +1,6 @@
 //#include "SpatialPartition.h"
 //#include "stdio.h"
-//#include "Collider\Collider.h"
+//#include "Collider/Collider.h"
 //#include "GraphicsManager.h"
 //#include "RenderHelper.h"
 //#include "KeyboardController.h"
@@ -319,8 +319,8 @@
 //void CSpatialPartition::PrintSelf() const
 //{
 //	cout << "******* Start of CSpatialPartition::PrintSelf() **********************************" << endl;
-//	cout << "xSize\t:\t" << xSize << "\tzSize\t:\t" << zSize << endl;
-//	cout << "xNumOfGrid\t:\t" << xNumOfGrid << "\tzNumOfGrid\t:\t" << zNumOfGrid << endl;
+//	cout << "xSize/t:/t" << xSize << "/tzSize/t:/t" << zSize << endl;
+//	cout << "xNumOfGrid/t:/t" << xNumOfGrid << "/tzNumOfGrid/t:/t" << zNumOfGrid << endl;
 //	if (theGrid)
 //	{
 //		cout << "theGrid : OK" << endl;

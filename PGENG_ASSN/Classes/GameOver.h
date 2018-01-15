@@ -2,7 +2,7 @@
 #define __GAME_OVER_H__
 
 #include "cocos2d.h"
-#include "ui\CocosGUI.h"
+#include "ui/CocosGUI.h"
 
 using namespace cocos2d;
 

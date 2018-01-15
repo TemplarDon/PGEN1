@@ -1,8 +1,8 @@
 #include "TestScene.h"
-#include "Input\InputHandler.h"
-#include "SceneManagement\SceneManager.h"
+#include "Input/InputHandler.h"
+#include "SceneManagement/SceneManager.h"
 #include "SimpleAudioEngine.h"
-#include "Animation\SpriteBuilder.h"
+#include "Animation/SpriteBuilder.h"
 
 #define COCOS2D_DEBUG 1
 
@@ -28,8 +28,8 @@ Scene* TestScene::createScene()
 // Print useful error message instead of segfaulting when files are not there.
 static void problemLoading(const char* filename)
 {
-    printf("Error while loading: %s\n", filename);
-    printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in TestSceneScene.cpp\n");
+    printf("Error while loading: %s/n", filename);
+    printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in TestSceneScene.cpp/n");
 }
 
 // on "init" you need to initialize your instance

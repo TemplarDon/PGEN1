@@ -2,8 +2,8 @@
 #define _PLAYER_MELEE_HITBOX_ENTITY_H
 
 #include "cocos2d.h"
-#include "Animation\AnimationController.h"
-#include "Projectile\ProjectileBase.h"
+#include "Animation/AnimationController.h"
+#include "Projectile/ProjectileBase.h"
 
 using namespace cocos2d;
 

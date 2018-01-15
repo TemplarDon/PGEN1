@@ -1,16 +1,16 @@
 #include "EndRoom.h"
-#include "Input\InputHandler.h"
-#include "SceneManagement\SceneManager.h"
+#include "Input/InputHandler.h"
+#include "SceneManagement/SceneManager.h"
 #include "SimpleAudioEngine.h"
-#include "Animation\SpriteBuilder.h"
-#include "Interactables\HeartDrops.h"
+#include "Animation/SpriteBuilder.h"
+#include "Interactables/HeartDrops.h"
 
-#include "FSM\PatrollingFSM.h"
-#include "Puzzle\Puzzle.h"
-#include "Puzzle\Button.h"
-#include "Puzzle\ChainedPressurePlate.h"
-#include "Interactables\Exit.h"
-#include "Player\PlayerInfo.h"
+#include "FSM/PatrollingFSM.h"
+#include "Puzzle/Puzzle.h"
+#include "Puzzle/Button.h"
+#include "Puzzle/ChainedPressurePlate.h"
+#include "Interactables/Exit.h"
+#include "Player/PlayerInfo.h"
 
 #define COCOS2D_DEBUG 1
 #define FSM_TAG 5
@@ -37,8 +37,8 @@ Scene* EndRoom::createScene()
 // Print useful error message instead of segfaulting when files are not there.
 static void problemLoading(const char* filename)
 {
-    printf("Error while loading: %s\n", filename);
-    printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in PathfinderEndRoom.cpp\n");
+    printf("Error while loading: %s/n", filename);
+    printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in PathfinderEndRoom.cpp/n");
 }
 
 // on "init" you need to initialize your instance

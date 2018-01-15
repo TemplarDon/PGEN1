@@ -2,7 +2,7 @@
 #define __PATHFINDER_TEST_H__
 
 #include "cocos2d.h"
-#include "Animation\AnimationController.h"
+#include "Animation/AnimationController.h"
 
 using namespace cocos2d;
 

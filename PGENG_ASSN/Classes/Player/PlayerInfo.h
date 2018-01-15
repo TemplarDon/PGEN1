@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 
-#include "Classes\Common\SingletonNode.h"
+#include "Classes/Common/SingletonNode.h"
 
 using namespace cocos2d;
 using namespace std;

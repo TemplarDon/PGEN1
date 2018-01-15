@@ -2,7 +2,7 @@
 #define _PROJECTILE_BASE_H
 
 #include "cocos2d.h"
-#include "Animation\AnimationController.h"
+#include "Animation/AnimationController.h"
 
 using namespace cocos2d;
 

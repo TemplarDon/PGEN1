@@ -1,5 +1,5 @@
 #include "PatrollingFSM.h"
-#include "Player\Player.h"
+#include "Player/Player.h"
 
 PatrollingFSM::PatrollingFSM(TMXTiledMap* map, string sprite) 
 : BaseFSM(map, sprite)

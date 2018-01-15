@@ -2,8 +2,8 @@
 #define __TEST_SCENE_H__
 
 #include "cocos2d.h"
-#include "Player\Player.h"
-#include "Animation\AnimationController.h"
+#include "Player/Player.h"
+#include "Animation/AnimationController.h"
 
 using namespace cocos2d;
 

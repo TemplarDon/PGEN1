@@ -1,5 +1,5 @@
 #include "HeartDrops.h"
-#include "Player\/PlayerInfo.h"
+#include "Player//PlayerInfo.h"
 #include "BitmasksHeader.h"
 
 bool HeartDrop::Init(Node *scene, Vec2 pos)

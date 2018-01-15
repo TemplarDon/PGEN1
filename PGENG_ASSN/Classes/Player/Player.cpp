@@ -1,9 +1,9 @@
 #include "Player.h"
-#include "Input\InputHandler.h"
+#include "Input/InputHandler.h"
 #include "BitmasksHeader.h"
 #include "PlayerInfo.h"
-#include "Weapon\PlayerRangeWeapon.h"
-#include "SceneManagement\SceneManager.h"
+#include "Weapon/PlayerRangeWeapon.h"
+#include "SceneManagement/SceneManager.h"
 
 Player::Player():
 moveSpeed(1),
