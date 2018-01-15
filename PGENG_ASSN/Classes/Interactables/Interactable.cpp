@@ -11,8 +11,8 @@ bool Interactable::Init(Node *scene)
 	sprite = Sprite::create("Blue_Front1.png");
 	sprite->setName("generic interactable object image");
 	sprite->setAnchorPoint(Vec2::ZERO);
-	sprite->setPosition(13, 675);
-	sprite->setScale(0.3);
+	sprite->setPosition(50, 680);
+	sprite->setScale(0.15);
 	this->addChild(sprite, 98);
 
 	//Addding a physics body - (this is a child of the sprite)

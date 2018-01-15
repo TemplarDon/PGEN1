@@ -126,7 +126,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // add other levels
     SceneManager::GetInstance().AddLevel("menu", scene);
     SceneManager::GetInstance().AddLevel("dungeon scene", GameScene::createScene());
-    SceneManager::GetInstance().GetLevel("dungeon scene")->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    //SceneManager::GetInstance().GetLevel("dungeon scene")->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     SceneManager::GetInstance().AddLevel("end room", EndRoom::createScene());
 
     SceneManager::GetInstance().FinishSetup();

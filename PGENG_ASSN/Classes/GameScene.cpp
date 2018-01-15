@@ -225,6 +225,7 @@ void GameScene::update(float _dt)
     Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
 	mainCam->initOrthographic(cameraOrthoScale.x, cameraOrthoScale.y, 1, 800);
     mainCam->setPosition(player->getPosition() - Vec2(cameraOrthoScale.x * 0.5, cameraOrthoScale.y * 0.5));
+	mainCam->setViewport(cocos2d::experimental::Viewport(cameraOrthoScale.x * 0.2f, cameraOrthoScale.y * 0.2f, cameraOrthoScale.x * 0.2f, cameraOrthoScale.y * 0.2f));
 	
     UpdateUI(_dt);
 
@@ -874,13 +875,12 @@ void GameScene::SpawnNPC()
 	menu_play = MenuItemFont::create("thingy");
 	menu_play->setString("YOU WIN GOOD JOB.");
 	menu_play->setFontSize(10000);
-	menu_play->setFontSizeObj(6);
+	menu_play->setFontSizeObj(12);
 
 	auto *menu = Menu::create(menu_play, nullptr);
 	menu->setPosition(15, 720);
 	menu->setName("menu");
-	menu->retain();
-	menu_play->setPosition(0, 0);
+	menu_play->setPosition(40, -20);
 	menu_play->setVisible(false);
 
 	this->addChild(menu, 100);

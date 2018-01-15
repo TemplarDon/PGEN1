@@ -68,13 +68,20 @@ bool MainMenuScene::init()
     MenuItemFont* menu_play = MenuItemFont::create("Play", CC_CALLBACK_1(MainMenuScene::Play, this));
     MenuItemFont* menu_quit = MenuItemFont::create("Quit", CC_CALLBACK_1(MainMenuScene::menuCloseCallback, this));
 
-    auto *menu = Menu::create(menu_play, menu_quit, nullptr);
+    auto* menu = Menu::create(menu_play, menu_quit, nullptr);
     menu->setPosition(Point(0, 0));
     menu->setName("menu");
     menu->retain();
-    menu_play->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 3));
-    menu_quit->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 2));
 
+    menu_play->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 3));
+	menu_play->setFontSize(10000);
+	menu_play->setFontSizeObj(64);
+
+    menu_quit->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 2));
+	menu_quit->setFontSize(10000);
+	menu_quit->setFontSizeObj(64);
+
+	menu->setVisible(true);
     this->addChild(menu, 5);
 
     return true;
@@ -113,8 +120,6 @@ void MainMenuScene::menuCloseCallback(Ref* pSender)
 
     //EventCustom customEndEvent("game_scene_close_event");
     //_eventDispatcher->dispatchEvent(&customEndEvent);
-
-
 }
 
 void MainMenuScene::OnMouseEvent(Event* _event)

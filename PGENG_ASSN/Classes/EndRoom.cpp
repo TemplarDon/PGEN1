@@ -154,10 +154,11 @@ bool EndRoom::init()
     // Use this function to assign functions to specific key press
     InputHandler::GetInstance().AssignMouseAction(EventMouse::MouseButton::BUTTON_LEFT, bind(&EndRoom::InputMouseTestFunction, this), true);
     InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&EndRoom::InputKeyboardTestFunction, this), true);
-
     InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_TAB, bind(&EndRoom::Pause, this), true);
 
     //InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_L, bind(&EndRoom::SpawnNPC, this), true);
+
+	PlayerInfo::GetInstance().SetHighScore(PlayerInfo::GetInstance().GetScore());
 
     //Init Player
     player = new Player();
@@ -182,8 +183,6 @@ bool EndRoom::init()
     cameraOrthoScale.set(234, 160);
     runAction(DelayTime::create(2.0f));
 
-    PlayerInfo::GetInstance().SetHighScore(PlayerInfo::GetInstance().GetScore());
-
     return true;
 }
 
@@ -194,7 +193,6 @@ void EndRoom::update(float _dt)
     Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
     mainCam->initOrthographic(cameraOrthoScale.x, cameraOrthoScale.y, 1, 800);
     mainCam->setPosition(player->getPosition() - Vec2(cameraOrthoScale.x * 0.5, cameraOrthoScale.y * 0.5));
-
     //rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
     //this->visit();
     //rendtex->end();

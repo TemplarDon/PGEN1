@@ -26,6 +26,8 @@ public:
     void OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event);
     void OnMouseEvent(Event* _event);
 
+	MenuItemFont* menu_play;
+
     virtual void update(float _dt);
 
     void Resume(cocos2d::Ref* pSender);

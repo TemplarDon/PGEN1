@@ -67,13 +67,37 @@ bool GameOver::init()
     // Menu
     MenuItemFont* menu_quit = MenuItemFont::create("Restart", CC_CALLBACK_1(GameOver::Quit, this));
 
-    auto *menu = Menu::create(menu_quit, nullptr);
+    auto menu = Menu::create(menu_quit, nullptr);
     menu->setPosition(Point(0, 0));
     menu->setName("menu");
-    menu->retain();
     menu_quit->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 2));
 
+	menu_quit->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 2));
+	menu_quit->setFontSize(10000);
+	menu_quit->setFontSizeObj(64);
+
     this->addChild(menu, 5);
+
+	//Some quick and dirty menu stuff
+	menu_play = MenuItemFont::create("thingy");
+	menu_play->setString("YOU WIN GOOD JOB.");
+	menu_play->setFontSize(10000);
+	menu_play->setFontSizeObj(6);
+
+	//auto *menu = Menu::create(menu_play, nullptr);
+	//menu->setPosition(15, 720);
+	//menu->setName("menu");
+	//menu->retain();
+	//menu_play->setPosition(0, 0);
+	//menu_play->setVisible(false);
+
+	//this->addChild(menu, 100);
+
+	////Interactables
+	//auto asdasd = new Interactable();
+	//asdasd->Init(this);
+	//asdasd->setName("npc");
+	//addChild(asdasd, 98);
 
     return true;
 }
@@ -137,15 +161,15 @@ void GameOver::OnMouseEvent(Event* _event)
 
 void GameOver::OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event)
 {
-
 }
 
 void GameOver::Resume(Ref *pSender)
 {
-    SceneManager::GetInstance().PopSceneFromStack();
+	SceneManager::GetInstance().PopSceneFromStack();
 }
 
 void GameOver::Quit(Ref *pSender)
 {
-    SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
+	SceneManager::GetInstance().PopSceneFromStack(); 
+	SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
 }

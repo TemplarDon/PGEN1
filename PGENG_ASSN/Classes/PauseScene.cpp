@@ -71,9 +71,13 @@ bool PauseScene::init()
     auto *menu = Menu::create(menu_play, menu_quit, nullptr);
     menu->setPosition(Point(0, 0));
     menu->setName("menu");
-    menu->retain();
-    menu_play->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 3));
-    menu_quit->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 2));
+	menu_play->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 3));
+	menu_play->setFontSize(10000);
+	menu_play->setFontSizeObj(64);
+
+	menu_quit->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 2));
+	menu_quit->setFontSize(10000);
+	menu_quit->setFontSizeObj(64);
 
     this->addChild(menu, 5);
 
@@ -149,5 +153,6 @@ void PauseScene::Resume(Ref *pSender)
 
 void PauseScene::Quit(Ref *pSender)
 {
+	SceneManager::GetInstance().PopSceneFromStack();
     SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
 }
