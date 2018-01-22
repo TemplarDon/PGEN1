@@ -613,6 +613,47 @@ void GameScene::InitUI()
     heartImage->setScale(0.1f);
     UILayout->addChild(heartImage, INT_MAX);
 
+	//auto ControlsLayout = ui::Layout::create();
+	//ControlsLayout->setLayoutType(cocos2d::ui::Layout::Type::ABSOLUTE);
+	//ControlsLayout->setPosition(Vec2(cameraOrthoScale.x * 0.3f, -cameraOrthoScale.y * 0.25f));
+	//player->addChild(ControlsLayout, INT_MAX);
+
+	//auto moveButton = ui::Button::create("button_up.png");
+	//moveButton->addTouchEventListener(CC_CALLBACK_0(InputHandler::DoKeyboardOnPress, player));
+	////moveButton->onTouchEnded = (CC_CALLBACK_2(Player::StopPlayerMovementUpTouch, player), );
+
+	//moveButton->setName("button_up");
+	//moveButton->setPosition(Vec2(0, 10.f));
+	//moveButton->setScale(0.05f);
+	//ControlsLayout->addChild(moveButton, INT_MAX);
+
+	//moveButton = ui::Button::create("button_down.png");
+	//moveButton->addTouchEventListener(CC_CALLBACK_0(Player::MovePlayerDown, player));
+	////moveButton->onTouchEnded = (CC_CALLBACK_0(Player::StopPlayerMovementDown, player));
+
+	//moveButton->setName("button_down");
+	//moveButton->setPosition(Vec2(0, -10.f));
+	//moveButton->setScale(0.05f);
+	//ControlsLayout->addChild(moveButton, INT_MAX);
+
+	//moveButton = ui::Button::create("button_left.png");
+	//moveButton->addTouchEventListener(CC_CALLBACK_0(Player::MovePlayerLeft, player));
+	////moveButton->onTouchEnded = (CC_CALLBACK_0(Player::StopPlayerMovementLeft, player));
+
+	//moveButton->setName("button_left");
+	//moveButton->setPosition(Vec2(-10.f, 0));
+	//moveButton->setScale(0.05f);
+	//ControlsLayout->addChild(moveButton, INT_MAX);
+
+	//moveButton = ui::Button::create("button_right.png");
+	//moveButton->addTouchEventListener(CC_CALLBACK_0(Player::MovePlayerRight, player));
+	////moveButton->onTouchEnded = (CC_CALLBACK_0(Player::StopPlayerMovementRight, player));
+
+	//moveButton->setName("button_right");
+	//moveButton->setPosition(Vec2(10.f, 0));
+	//moveButton->setScale(0.05f);
+	//ControlsLayout->addChild(moveButton, INT_MAX);
+
     string currScore = "Score : " +  std::to_string(PlayerInfo::GetInstance().GetScore());
  
     MenuItemFont* score = MenuItemFont::create("score");

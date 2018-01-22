@@ -57,6 +57,7 @@ protected:
     // Player Movement Variables
     PlayerMoveDir currentMoveDirection;
 
+public:
     //Player Movement Functions
     void MovePlayer();
     void MoveIdle();
@@ -67,7 +68,8 @@ protected:
 
     void StopAnimation();
 
-    void StopPlayerMovementUp();
+	void StopPlayerMovementUp();
+	void StopPlayerMovementUpTouch(Touch* touch, Event* event);
     void StopPlayerMovementDown();
     void StopPlayerMovementLeft();
     void StopPlayerMovementRight();

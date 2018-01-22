@@ -89,6 +89,7 @@ private:
 
 #pragma region Keyboard
 
+public:
     void DoKeyboardOnPress(EventKeyboard::KeyCode _keyPressed, Event* _event);
     void DoKeyboardOnRelease(EventKeyboard::KeyCode _keyPressed, Event* _event);
 
