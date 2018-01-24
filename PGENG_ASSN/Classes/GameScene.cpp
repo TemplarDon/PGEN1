@@ -619,8 +619,12 @@ void GameScene::InitUI()
 	//player->addChild(ControlsLayout, INT_MAX);
 
 	//auto moveButton = ui::Button::create("button_up.png");
-	//moveButton->addTouchEventListener(CC_CALLBACK_0(InputHandler::DoKeyboardOnPress, player));
-	////moveButton->onTouchEnded = (CC_CALLBACK_2(Player::StopPlayerMovementUpTouch, player), );
+	//moveButton->addTouchEventListener([](Ref* pSender, Widget::TouchEventType type) {
+	//	if (type == Widget::TouchEventType::ENDED)
+	//	{
+	//		// do something
+	//	}
+	//});
 
 	//moveButton->setName("button_up");
 	//moveButton->setPosition(Vec2(0, 10.f));
