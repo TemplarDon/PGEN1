@@ -690,6 +690,20 @@ void GameScene::InitUI()
 	moveButton->setScale(0.05f);
 	ControlsLayout->addChild(moveButton, INT_MAX);
 
+    moveButton = ui::Button::create("ZigzagForest_Square.png");
+    moveButton->addTouchEventListener([=](Ref* pSender, ui::Widget::TouchEventType type) {
+        if (type == ui::Widget::TouchEventType::BEGAN)
+        {
+            player->Attack();
+        }
+    });
+
+    moveButton->setName("button_attack");
+    moveButton->setPosition(Vec2(-cameraOrthoScale.x * 0.6f, 0));
+    moveButton->setScale(0.1f);
+    ControlsLayout->addChild(moveButton, INT_MAX);
+
+
     string currScore = "Score : " +  std::to_string(PlayerInfo::GetInstance().GetScore());
  
     MenuItemFont* score = MenuItemFont::create("score");
