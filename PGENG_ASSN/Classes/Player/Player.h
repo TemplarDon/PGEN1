@@ -69,7 +69,6 @@ public:
     void StopAnimation();
 
 	void StopPlayerMovementUp();
-	void StopPlayerMovementUpTouch(Touch* touch, Event* event);
     void StopPlayerMovementDown();
     void StopPlayerMovementLeft();
     void StopPlayerMovementRight();

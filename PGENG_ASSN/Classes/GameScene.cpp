@@ -613,50 +613,82 @@ void GameScene::InitUI()
     heartImage->setScale(0.1f);
     UILayout->addChild(heartImage, INT_MAX);
 
-	//auto ControlsLayout = ui::Layout::create();
-	//ControlsLayout->setLayoutType(cocos2d::ui::Layout::Type::ABSOLUTE);
-	//ControlsLayout->setPosition(Vec2(cameraOrthoScale.x * 0.3f, -cameraOrthoScale.y * 0.25f));
-	//player->addChild(ControlsLayout, INT_MAX);
+	auto ControlsLayout = ui::Layout::create();
+	ControlsLayout->setLayoutType(cocos2d::ui::Layout::Type::ABSOLUTE);
+	ControlsLayout->setPosition(Vec2(cameraOrthoScale.x * 0.3f, -cameraOrthoScale.y * 0.25f));
+	player->addChild(ControlsLayout, INT_MAX);
 
-	//auto moveButton = ui::Button::create("button_up.png");
-	//moveButton->addTouchEventListener([](Ref* pSender, Widget::TouchEventType type) {
-	//	if (type == Widget::TouchEventType::ENDED)
-	//	{
-	//		// do something
-	//	}
-	//});
+	auto moveButton = ui::Button::create("button_up.png");
+	moveButton->addTouchEventListener([=](Ref* pSender, ui::Widget::TouchEventType type) {
+        if (type == ui::Widget::TouchEventType::BEGAN)
+        {
+            player->MovePlayerUp();
+        }
+        
+        if (type == ui::Widget::TouchEventType::ENDED)
+		{
+            player->StopPlayerMovementUp();
+		}
+	});
 
-	//moveButton->setName("button_up");
-	//moveButton->setPosition(Vec2(0, 10.f));
-	//moveButton->setScale(0.05f);
-	//ControlsLayout->addChild(moveButton, INT_MAX);
+	moveButton->setName("button_up");
+	moveButton->setPosition(Vec2(0, 10.f));
+	moveButton->setScale(0.05f);
+	ControlsLayout->addChild(moveButton, INT_MAX);
 
-	//moveButton = ui::Button::create("button_down.png");
-	//moveButton->addTouchEventListener(CC_CALLBACK_0(Player::MovePlayerDown, player));
-	////moveButton->onTouchEnded = (CC_CALLBACK_0(Player::StopPlayerMovementDown, player));
+	moveButton = ui::Button::create("button_down.png");
+    moveButton->addTouchEventListener([=](Ref* pSender, ui::Widget::TouchEventType type) {
+        if (type == ui::Widget::TouchEventType::BEGAN)
+        {
+            player->MovePlayerDown();
+        }
 
-	//moveButton->setName("button_down");
-	//moveButton->setPosition(Vec2(0, -10.f));
-	//moveButton->setScale(0.05f);
-	//ControlsLayout->addChild(moveButton, INT_MAX);
+        if (type == ui::Widget::TouchEventType::ENDED)
+        {
+            player->StopPlayerMovementDown();
+        }
+    });
 
-	//moveButton = ui::Button::create("button_left.png");
-	//moveButton->addTouchEventListener(CC_CALLBACK_0(Player::MovePlayerLeft, player));
-	////moveButton->onTouchEnded = (CC_CALLBACK_0(Player::StopPlayerMovementLeft, player));
+	moveButton->setName("button_down");
+	moveButton->setPosition(Vec2(0, -10.f));
+	moveButton->setScale(0.05f);
+	ControlsLayout->addChild(moveButton, INT_MAX);
 
-	//moveButton->setName("button_left");
-	//moveButton->setPosition(Vec2(-10.f, 0));
-	//moveButton->setScale(0.05f);
-	//ControlsLayout->addChild(moveButton, INT_MAX);
+	moveButton = ui::Button::create("button_left.png");
+    moveButton->addTouchEventListener([=](Ref* pSender, ui::Widget::TouchEventType type) {
+        if (type == ui::Widget::TouchEventType::BEGAN)
+        {
+            player->MovePlayerLeft();
+        }
 
-	//moveButton = ui::Button::create("button_right.png");
-	//moveButton->addTouchEventListener(CC_CALLBACK_0(Player::MovePlayerRight, player));
-	////moveButton->onTouchEnded = (CC_CALLBACK_0(Player::StopPlayerMovementRight, player));
+        if (type == ui::Widget::TouchEventType::ENDED)
+        {
+            player->StopPlayerMovementLeft();
+        }
+    });
 
-	//moveButton->setName("button_right");
-	//moveButton->setPosition(Vec2(10.f, 0));
-	//moveButton->setScale(0.05f);
-	//ControlsLayout->addChild(moveButton, INT_MAX);
+	moveButton->setName("button_left");
+	moveButton->setPosition(Vec2(-10.f, 0));
+	moveButton->setScale(0.05f);
+	ControlsLayout->addChild(moveButton, INT_MAX);
+
+	moveButton = ui::Button::create("button_right.png");
+    moveButton->addTouchEventListener([=](Ref* pSender, ui::Widget::TouchEventType type) {
+        if (type == ui::Widget::TouchEventType::BEGAN)
+        {
+            player->MovePlayerRight();
+        }
+
+        if (type == ui::Widget::TouchEventType::ENDED)
+        {
+            player->StopPlayerMovementRight();
+        }
+    });
+
+	moveButton->setName("button_right");
+	moveButton->setPosition(Vec2(10.f, 0));
+	moveButton->setScale(0.05f);
+	ControlsLayout->addChild(moveButton, INT_MAX);
 
     string currScore = "Score : " +  std::to_string(PlayerInfo::GetInstance().GetScore());
  

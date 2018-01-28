@@ -168,12 +168,6 @@ void Player::StopPlayerMovementUp()
         StopAnimation();
 }
 
-void Player::StopPlayerMovementUpTouch(Touch* touch, Event* event)
-{
-	if (currentMoveDirection == PlayerMoveDir::MOVEDIR_UP)
-		StopAnimation();
-}
-
 void Player::StopPlayerMovementDown()
 {
     if (currentMoveDirection == PlayerMoveDir::MOVEDIR_DOWN)
