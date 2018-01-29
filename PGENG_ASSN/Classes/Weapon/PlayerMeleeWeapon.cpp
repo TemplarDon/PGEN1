@@ -23,6 +23,6 @@ void PlayerMeleeWeapon::Discharge(Vec2 Direction)
 
     WeaponBase::Discharge(Direction);
 
-    Vec2 offSet = AnimateBuilder::GetInstance().GetSpriteSize("player_bow", 1, 1) * 0.25f * 0.5f;
+    Vec2 offSet = AnimateBuilder::GetInstance()->GetSpriteSize("player_bow", 1, 1) * 0.25f * 0.5f;
     player->getParent()->addChild(Create::playerProjectileEntity(player->getPosition() + offSet, 900 * Direction, 1, 3), 99);
 }

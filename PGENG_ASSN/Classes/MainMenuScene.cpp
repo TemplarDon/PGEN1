@@ -133,11 +133,11 @@ void MainMenuScene::OnMouseEvent(Event* _event)
 
         if (name == "play_btn")
         {
-            SceneManager::GetInstance().TransitionLevel("test scene", SceneManager::TRANSITION_TYPES::FADE, true);
+            SceneManager::GetInstance()->TransitionLevel("test scene", SceneManager::TRANSITION_TYPES::FADE, true);
         }
         else if (name == "quit_btn")
         {
-            SceneManager::GetInstance().Shutdown();
+            SceneManager::GetInstance()->Shutdown();
         }
     }
 }
@@ -149,5 +149,5 @@ void MainMenuScene::OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event)
 
 void MainMenuScene::Play(Ref *pSender)
 {
-    SceneManager::GetInstance().TransitionLevel("dungeon scene", SceneManager::TRANSITION_TYPES::FADE, true);
+    SceneManager::GetInstance()->TransitionLevel("dungeon scene", SceneManager::TRANSITION_TYPES::FADE, true);
 }

@@ -150,11 +150,11 @@ void GameOver::OnMouseEvent(Event* _event)
 
         if (name == "play_btn")
         {
-            SceneManager::GetInstance().TransitionLevel("test scene", SceneManager::TRANSITION_TYPES::FADE, true);
+            SceneManager::GetInstance()->TransitionLevel("test scene", SceneManager::TRANSITION_TYPES::FADE, true);
         }
         else if (name == "quit_btn")
         {
-            SceneManager::GetInstance().Shutdown();
+            SceneManager::GetInstance()->Shutdown();
         }
     }
 }
@@ -165,11 +165,11 @@ void GameOver::OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event)
 
 void GameOver::Resume(Ref *pSender)
 {
-	SceneManager::GetInstance().PopSceneFromStack();
+	SceneManager::GetInstance()->PopSceneFromStack();
 }
 
 void GameOver::Quit(Ref *pSender)
 {
-	SceneManager::GetInstance().PopSceneFromStack(); 
-	SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
+	SceneManager::GetInstance()->PopSceneFromStack(); 
+	SceneManager::GetInstance()->TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
 }

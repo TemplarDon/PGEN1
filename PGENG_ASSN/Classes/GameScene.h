@@ -94,6 +94,8 @@ private:
 	bool m_over = false;
 
     ui::Layout* UILayout;
+
+	Node* gameUINode = nullptr;
 };
 
 #endif // __TEST_SCENE_H__

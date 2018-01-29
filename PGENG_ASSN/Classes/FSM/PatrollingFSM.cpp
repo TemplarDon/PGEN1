@@ -32,15 +32,15 @@ PatrollingFSM::PatrollingFSM(TMXTiledMap* map, string sprite)
     animController = new AnimationController();
     animController->Init(m_sprite);
 
-    AnimateBuilder::GetInstance().LoadAnimateFromLoadedSpriteSheet("Patrol_Back", "patrol", 0, 8);
-    AnimateBuilder::GetInstance().LoadAnimateFromLoadedSpriteSheet("Patrol_Left", "patrol", 9, 17);
-    AnimateBuilder::GetInstance().LoadAnimateFromLoadedSpriteSheet("Patrol_Front", "patrol", 18, 26);
-    AnimateBuilder::GetInstance().LoadAnimateFromLoadedSpriteSheet("Patrol_Right", "patrol", 27, 35);
+    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("Patrol_Back", "patrol", 0, 8);
+    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("Patrol_Left", "patrol", 9, 17);
+    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("Patrol_Front", "patrol", 18, 26);
+    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("Patrol_Right", "patrol", 27, 35);
 
-    animController->AddAnimate("Back", AnimateBuilder::GetInstance().GetAnimate("Patrol_Back"));
-    animController->AddAnimate("Left", AnimateBuilder::GetInstance().GetAnimate("Patrol_Left"));
-    animController->AddAnimate("Front", AnimateBuilder::GetInstance().GetAnimate("Patrol_Front"));
-    animController->AddAnimate("Right", AnimateBuilder::GetInstance().GetAnimate("Patrol_Right"));
+    animController->AddAnimate("Back", AnimateBuilder::GetInstance()->GetAnimate("Patrol_Back"));
+    animController->AddAnimate("Left", AnimateBuilder::GetInstance()->GetAnimate("Patrol_Left"));
+    animController->AddAnimate("Front", AnimateBuilder::GetInstance()->GetAnimate("Patrol_Front"));
+    animController->AddAnimate("Right", AnimateBuilder::GetInstance()->GetAnimate("Patrol_Right"));
 }
 
 PatrollingFSM::~PatrollingFSM()

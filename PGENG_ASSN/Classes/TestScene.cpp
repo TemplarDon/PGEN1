@@ -43,7 +43,7 @@ bool TestScene::init()
     }
 
     // Reset all binded actions 
-    InputHandler::GetInstance().ClearActionMaps();
+    InputHandler::GetInstance()->ClearActionMaps();
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -104,12 +104,12 @@ bool TestScene::init()
     */
 
     // Use this function to assign functions to specific key press
-    InputHandler::GetInstance().AssignMouseAction(EventMouse::MouseButton::BUTTON_LEFT, bind(&TestScene::InputMouseTestFunction, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&TestScene::InputKeyboardTestFunction, this), true);
+    InputHandler::GetInstance()->AssignMouseAction(EventMouse::MouseButton::BUTTON_LEFT, bind(&TestScene::InputMouseTestFunction, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&TestScene::InputKeyboardTestFunction, this), true);
 
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_Z, bind(&TestScene::SwitchSceneTestFunction, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_X, bind(&TestScene::AddSceneTestFunction, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_C, bind(&TestScene::PopSceneTestFunction, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_Z, bind(&TestScene::SwitchSceneTestFunction, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_X, bind(&TestScene::AddSceneTestFunction, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_C, bind(&TestScene::PopSceneTestFunction, this), true);
 
     //Init Player
     player = new Player();
@@ -190,21 +190,21 @@ void TestScene::InitShader()
 
 void TestScene::InitAnimationActions()
 {
-    AnimateBuilder::GetInstance().LoadSpriteSheet("sprite sheet", "spritesheet_test.png", 6, 3);
-    AnimateBuilder::GetInstance().LoadAnimateFromLoadedSpriteSheet("Special1", "sprite sheet", 6, 12);	//Only half of the sprite sheet
-    AnimateBuilder::GetInstance().LoadAnimateFromWholeSpriteSheet("Special2", "spritesheet_test.png", 6, 3);	//Whole sprite sheet
+    AnimateBuilder::GetInstance()->LoadSpriteSheet("sprite sheet", "spritesheet_test.png", 6, 3);
+    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("Special1", "sprite sheet", 6, 12);	//Only half of the sprite sheet
+    AnimateBuilder::GetInstance()->LoadAnimateFromWholeSpriteSheet("Special2", "spritesheet_test.png", 6, 3);	//Whole sprite sheet
 
-    AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Front", { "Blue_Front2.png", "Blue_Front1.png", "Blue_Front3.png", "Blue_Front1.png" });
-    AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Back", { "Blue_Back2.png", "Blue_Back1.png", "Blue_Back3.png", "Blue_Back1.png" });
-    AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Left", { "Blue_Left2.png", "Blue_Left1.png", "Blue_Left3.png", "Blue_Left1.png" });
-    AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Right", { "Blue_Right2.png", "Blue_Right1.png", "Blue_Right3.png", "Blue_Right1.png" });
+    AnimateBuilder::GetInstance()->LoadAnimateSpriteBySprite("Front", { "Blue_Front2.png", "Blue_Front1.png", "Blue_Front3.png", "Blue_Front1.png" });
+    AnimateBuilder::GetInstance()->LoadAnimateSpriteBySprite("Back", { "Blue_Back2.png", "Blue_Back1.png", "Blue_Back3.png", "Blue_Back1.png" });
+    AnimateBuilder::GetInstance()->LoadAnimateSpriteBySprite("Left", { "Blue_Left2.png", "Blue_Left1.png", "Blue_Left3.png", "Blue_Left1.png" });
+    AnimateBuilder::GetInstance()->LoadAnimateSpriteBySprite("Right", { "Blue_Right2.png", "Blue_Right1.png", "Blue_Right3.png", "Blue_Right1.png" });
 
-    animController->AddAnimate("Special1", AnimateBuilder::GetInstance().GetAnimate("Special1"));
-    animController->AddAnimate("Special2", AnimateBuilder::GetInstance().GetAnimate("Special2"));
-    animController->AddAnimate("Front", AnimateBuilder::GetInstance().GetAnimate("Front"));
-    animController->AddAnimate("Back", AnimateBuilder::GetInstance().GetAnimate("Back"));
-    animController->AddAnimate("Left", AnimateBuilder::GetInstance().GetAnimate("Left"));
-    animController->AddAnimate("Right", AnimateBuilder::GetInstance().GetAnimate("Right"));
+    animController->AddAnimate("Special1", AnimateBuilder::GetInstance()->GetAnimate("Special1"));
+    animController->AddAnimate("Special2", AnimateBuilder::GetInstance()->GetAnimate("Special2"));
+    animController->AddAnimate("Front", AnimateBuilder::GetInstance()->GetAnimate("Front"));
+    animController->AddAnimate("Back", AnimateBuilder::GetInstance()->GetAnimate("Back"));
+    animController->AddAnimate("Left", AnimateBuilder::GetInstance()->GetAnimate("Left"));
+    animController->AddAnimate("Right", AnimateBuilder::GetInstance()->GetAnimate("Right"));
 
     /*Vector<SpriteFrame*> frontFrames;
     frontFrames.reserve(4);
@@ -377,20 +377,20 @@ void TestScene::InputKeyboardTestFunction()
 
 void TestScene::SwitchSceneTestFunction()
 {
-    SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
+    SceneManager::GetInstance()->TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
 }
 
 void TestScene::AddSceneTestFunction()
 {
-    SceneManager::GetInstance().AddSceneToStack("ello scene", true);
+    SceneManager::GetInstance()->AddSceneToStack("ello scene", true);
 }
 
 void TestScene::PopSceneTestFunction()
 {
-    SceneManager::GetInstance().PopSceneFromStack();
+    SceneManager::GetInstance()->PopSceneFromStack();
 }
 
 void TestScene::SwitchSceneTest(cocos2d::Ref* pSender)
 {
-    SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
+    SceneManager::GetInstance()->TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
 }

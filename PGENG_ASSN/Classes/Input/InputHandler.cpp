@@ -58,10 +58,10 @@ void InputHandler::DoKeyboardOnPress(EventKeyboard::KeyCode _keyPressed, Event* 
     
     vector<InputAction> assignedAction = actionMap[key];
 
-    for (auto it : assignedAction)
-    {
-        if (it.doOnPress)
-            it.DoAction();
+	for (vector<InputAction>::iterator itr = assignedAction.begin(); itr != assignedAction.end(); ++itr)
+	{
+        if (itr->doOnPress)
+            itr->DoAction();
     }
 
 }
@@ -78,10 +78,10 @@ void InputHandler::DoKeyboardOnRelease(EventKeyboard::KeyCode _keyPressed, Event
 
     vector<InputAction> assignedAction = actionMap[key];
 
-    for (auto it : assignedAction)
-    {
-        if (it.doOnRelease)
-            it.DoAction();
+	for (vector<InputAction>::iterator itr = assignedAction.begin(); itr != assignedAction.end(); ++itr)
+	{
+        if (itr->doOnRelease)
+            itr->DoAction();
     }
 }
 

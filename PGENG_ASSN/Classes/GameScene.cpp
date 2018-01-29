@@ -52,10 +52,10 @@ bool GameScene::init()
     }
 
     // Reset all binded actions 
-    InputHandler::GetInstance().ClearActionMaps();
+    InputHandler::GetInstance()->ClearActionMaps();
 
     cameraOrthoScale.set(234, 160);
-
+	//cameraOrthoScale.set(1024, 800);
     // World
     //auto nodeItems = Node::create();
     //nodeItems->setName("nodeItems");
@@ -150,12 +150,12 @@ bool GameScene::init()
     //this->addChild(spriteNode, 1);
 
     // Use this function to assign functions to specific key press
-    InputHandler::GetInstance().AssignMouseAction(EventMouse::MouseButton::BUTTON_LEFT, bind(&GameScene::InputMouseTestFunction, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&GameScene::InputKeyboardTestFunction, this), true);
+    InputHandler::GetInstance()->AssignMouseAction(EventMouse::MouseButton::BUTTON_LEFT, bind(&GameScene::InputMouseTestFunction, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&GameScene::InputKeyboardTestFunction, this), true);
 
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_TAB, bind(&GameScene::Pause, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_TAB, bind(&GameScene::Pause, this), true);
 
-	//InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_L, bind(&GameScene::SpawnNPC, this), true);
+	//InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_L, bind(&GameScene::SpawnNPC, this), true);
 
     //Init Player
     player = new Player();
@@ -163,7 +163,7 @@ bool GameScene::init()
     player->setName("player");
 	player->getPhysicsBody()->setTag(PHYSICS_TAG_PLAYER);
 	addChild(player, 99);
-
+ 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     Size playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
@@ -175,7 +175,7 @@ bool GameScene::init()
 	SpawnHeart(Vec2(290, 320));
 	SpawnHeart(Vec2(260, 360));
 
-    PlayerInfo::GetInstance().SetScore(10000);
+    PlayerInfo::GetInstance()->SetScore(10000);
 
     SetListeners();
     InitAnimationActions();
@@ -224,12 +224,15 @@ void GameScene::update(float _dt)
     //UpdateFSM();
     Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
 	mainCam->initOrthographic(cameraOrthoScale.x, cameraOrthoScale.y, 1, 800);
-    mainCam->setPosition(player->getPosition() - Vec2(cameraOrthoScale.x * 0.5, cameraOrthoScale.y * 0.5));
+	auto lerpedPosition = ccpLerp(mainCam->getPosition(), player->getPosition() - Vec2(cameraOrthoScale.x * 0.5, cameraOrthoScale.y * 0.5), 0.1);
+    mainCam->setPosition(lerpedPosition);
 	mainCam->setViewport(cocos2d::experimental::Viewport(cameraOrthoScale.x * 0.2f, cameraOrthoScale.y * 0.2f, cameraOrthoScale.x * 0.2f, cameraOrthoScale.y * 0.2f));
+	//gameUINode->ignoreAnchorPointForPosition(false);
+    gameUINode->setPosition(mainCam->getPosition() + Vec2(cameraOrthoScale.x * 0.5, cameraOrthoScale.y * 0.5));
 	
     UpdateUI(_dt);
 
-    PlayerInfo::GetInstance().AddScore(-_dt * 100);
+    PlayerInfo::GetInstance()->AddScore(-_dt * 100);
     //rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
     //this->visit();
     //rendtex->end();
@@ -286,22 +289,22 @@ void GameScene::InitShader()
 
 void GameScene::InitAnimationActions()
 {
-    //AnimateBuilder::GetInstance().LoadSpriteSheet("sprite sheet", "spritesheet_test.png", 6, 3);
-    //AnimateBuilder::GetInstance().LoadAnimateFromLoadedSpriteSheet("Special1", "sprite sheet", 6, 12);	//Only half of the sprite sheet
+    //AnimateBuilder::GetInstance()->LoadSpriteSheet("sprite sheet", "spritesheet_test.png", 6, 3);
+    //AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("Special1", "sprite sheet", 6, 12);	//Only half of the sprite sheet
 
-    //AnimateBuilder::GetInstance().LoadAnimateFromWholeSpriteSheet("Special2", "spritesheet_test.png", 6, 3);	//Whole sprite sheet
+    //AnimateBuilder::GetInstance()->LoadAnimateFromWholeSpriteSheet("Special2", "spritesheet_test.png", 6, 3);	//Whole sprite sheet
 
-    //AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Front", { "Blue_Front2.png", "Blue_Front1.png", "Blue_Front3.png", "Blue_Front1.png" });
-    //AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Back", { "Blue_Back2.png", "Blue_Back1.png", "Blue_Back3.png", "Blue_Back1.png" });
-    //AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Left", { "Blue_Left2.png", "Blue_Left1.png", "Blue_Left3.png", "Blue_Left1.png" });
-    //AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Right", { "Blue_Right2.png", "Blue_Right1.png", "Blue_Right3.png", "Blue_Right1.png" });
+    //AnimateBuilder::GetInstance()->LoadAnimateSpriteBySprite("Front", { "Blue_Front2.png", "Blue_Front1.png", "Blue_Front3.png", "Blue_Front1.png" });
+    //AnimateBuilder::GetInstance()->LoadAnimateSpriteBySprite("Back", { "Blue_Back2.png", "Blue_Back1.png", "Blue_Back3.png", "Blue_Back1.png" });
+    //AnimateBuilder::GetInstance()->LoadAnimateSpriteBySprite("Left", { "Blue_Left2.png", "Blue_Left1.png", "Blue_Left3.png", "Blue_Left1.png" });
+    //AnimateBuilder::GetInstance()->LoadAnimateSpriteBySprite("Right", { "Blue_Right2.png", "Blue_Right1.png", "Blue_Right3.png", "Blue_Right1.png" });
 
-    //animController->AddAnimate("Special1", AnimateBuilder::GetInstance().GetAnimate("Special1"));
-    //animController->AddAnimate("Special2", AnimateBuilder::GetInstance().GetAnimate("Special2"));
-    //animController->AddAnimate("Front", AnimateBuilder::GetInstance().GetAnimate("Front"));
-    //animController->AddAnimate("Back", AnimateBuilder::GetInstance().GetAnimate("Back"));
-    //animController->AddAnimate("Left", AnimateBuilder::GetInstance().GetAnimate("Left"));
-    //animController->AddAnimate("Right", AnimateBuilder::GetInstance().GetAnimate("Right"));
+    //animController->AddAnimate("Special1", AnimateBuilder::GetInstance()->GetAnimate("Special1"));
+    //animController->AddAnimate("Special2", AnimateBuilder::GetInstance()->GetAnimate("Special2"));
+    //animController->AddAnimate("Front", AnimateBuilder::GetInstance()->GetAnimate("Front"));
+    //animController->AddAnimate("Back", AnimateBuilder::GetInstance()->GetAnimate("Back"));
+    //animController->AddAnimate("Left", AnimateBuilder::GetInstance()->GetAnimate("Left"));
+    //animController->AddAnimate("Right", AnimateBuilder::GetInstance()->GetAnimate("Right"));
     /*Vector<SpriteFrame*> frontFrames;
     frontFrames.reserve(4);
 
@@ -361,7 +364,7 @@ void GameScene::InitAnimationActions()
 
 
     // FSM animations
-    AnimateBuilder::GetInstance().LoadSpriteSheet("patrol", "spritesheet_patrol.png", 4, 9);
+    AnimateBuilder::GetInstance()->LoadSpriteSheet("patrol", "spritesheet_patrol.png", 4, 9);
 }
 
 void GameScene::InitTilemap()
@@ -433,9 +436,13 @@ void GameScene::InitFSM()
         auto enemySpawns = enemySpawnGroup->getObjects();
 
         int count = 0;
-        for (auto &itr : enemySpawns)
+
+		
+
+
+        for (ValueVector::iterator itr = enemySpawns.begin(); itr != enemySpawns.end(); ++itr)
         {
-            auto point = itr.asValueMap();
+            auto point = itr->asValueMap();
             Vec2 pos = Vec2(point["x"].asInt(), point["y"].asInt());
 
             if (!point["isPlayerSpawn"].asBool())
@@ -473,10 +480,9 @@ void GameScene::InitEnvironment()
     if (environmentSpawnGroup != nullptr)
     {
         auto environmentSpawns = environmentSpawnGroup->getObjects();
-
-        for (auto &itr : environmentSpawns)
-        {
-            auto point = itr.asValueMap();
+		for (ValueVector::iterator itr = environmentSpawns.begin(); itr != environmentSpawns.end(); ++itr)
+		{
+            auto point = itr->asValueMap();
             Vec2 pos = Vec2(point["x"].asInt(), point["y"].asInt());
 
             if (point["name"].asString() == "Exit")
@@ -501,9 +507,9 @@ void GameScene::InitPuzzle()
     {
         auto puzzleSpawns = puzzleSpawnGroup->getObjects();
 
-        for (auto &itr : puzzleSpawns)
-        {
-            auto point = itr.asValueMap();
+		for (ValueVector::iterator itr = puzzleSpawns.begin(); itr != puzzleSpawns.end(); ++itr)
+		{
+            auto point = itr->asValueMap();
             Vec2 pos = Vec2(point["x"].asInt(), point["y"].asInt());
 
             if (point["name"].asString() == "Door")
@@ -543,17 +549,17 @@ void GameScene::InitPuzzle()
         }
 
         // Link puzzles and puzzle elements
-        for (auto &itr : tempPuzzle)
-        {
+		for (std::map<int, Puzzle*>::iterator itr = tempPuzzle.begin(); itr != tempPuzzle.end(); ++itr)
+		{
             for (int i = 0; i < tempPuzzleElements.size(); ++i)
             {
                 // Check index
-                if (tempPuzzleElements[i]->m_puzzleID == itr.first)
+                if (tempPuzzleElements[i]->m_puzzleID == itr->first)
                 {
-                    itr.second->m_elementList.push_back(tempPuzzleElements[i]);
+                    itr->second->m_elementList.push_back(tempPuzzleElements[i]);
                 }
             }
-            addChild(itr.second);
+            addChild(itr->second);
         }
 
         // Link any puzzle elements that need linking
@@ -588,10 +594,12 @@ void GameScene::InitPuzzle()
 
 void GameScene::InitUI()
 {
+	gameUINode = Node::create();
+	
     UILayout = ui::Layout::create();
     UILayout->setLayoutType(cocos2d::ui::Layout::Type::HORIZONTAL);
     UILayout->setPosition(Vec2(-cameraOrthoScale.x * 0.3f, cameraOrthoScale.y * 0.45f));
-    player->addChild(UILayout, INT_MAX);
+	gameUINode->addChild(UILayout, INT_MAX);
 
     ui::ImageView* heartImage = ui::ImageView::create("hearticon.png");
     heartImage->setName("heart");
@@ -616,16 +624,18 @@ void GameScene::InitUI()
 	auto ControlsLayout = ui::Layout::create();
 	ControlsLayout->setLayoutType(cocos2d::ui::Layout::Type::ABSOLUTE);
 	ControlsLayout->setPosition(Vec2(cameraOrthoScale.x * 0.3f, -cameraOrthoScale.y * 0.25f));
-	player->addChild(ControlsLayout, INT_MAX);
+	gameUINode->addChild(ControlsLayout, INT_MAX);
 
-	auto moveButton = ui::Button::create("button_up.png");
+	addChild(gameUINode, INT_MAX);
+
+	auto moveButton = ui::Button::create("button_up_normal.png", "button_up_pressed.png");
 	moveButton->addTouchEventListener([=](Ref* pSender, ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::BEGAN)
         {
             player->MovePlayerUp();
         }
         
-        if (type == ui::Widget::TouchEventType::ENDED)
+        if (type == ui::Widget::TouchEventType::ENDED || type == ui::Widget::TouchEventType::CANCELED)
 		{
             player->StopPlayerMovementUp();
 		}
@@ -636,14 +646,14 @@ void GameScene::InitUI()
 	moveButton->setScale(0.05f);
 	ControlsLayout->addChild(moveButton, INT_MAX);
 
-	moveButton = ui::Button::create("button_down.png");
+	moveButton = ui::Button::create("button_down_normal.png", "button_down_pressed.png");
     moveButton->addTouchEventListener([=](Ref* pSender, ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::BEGAN)
         {
             player->MovePlayerDown();
         }
 
-        if (type == ui::Widget::TouchEventType::ENDED)
+        if (type == ui::Widget::TouchEventType::ENDED || type == ui::Widget::TouchEventType::CANCELED)
         {
             player->StopPlayerMovementDown();
         }
@@ -654,14 +664,14 @@ void GameScene::InitUI()
 	moveButton->setScale(0.05f);
 	ControlsLayout->addChild(moveButton, INT_MAX);
 
-	moveButton = ui::Button::create("button_left.png");
+	moveButton = ui::Button::create("button_left_normal.png", "button_left_pressed.png");
     moveButton->addTouchEventListener([=](Ref* pSender, ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::BEGAN)
         {
             player->MovePlayerLeft();
         }
 
-        if (type == ui::Widget::TouchEventType::ENDED)
+        if (type == ui::Widget::TouchEventType::ENDED || type == ui::Widget::TouchEventType::CANCELED)
         {
             player->StopPlayerMovementLeft();
         }
@@ -672,14 +682,14 @@ void GameScene::InitUI()
 	moveButton->setScale(0.05f);
 	ControlsLayout->addChild(moveButton, INT_MAX);
 
-	moveButton = ui::Button::create("button_right.png");
+	moveButton = ui::Button::create("button_right_normal.png", "button_right_pressed.png");
     moveButton->addTouchEventListener([=](Ref* pSender, ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::BEGAN)
         {
             player->MovePlayerRight();
         }
 
-        if (type == ui::Widget::TouchEventType::ENDED)
+        if (type == ui::Widget::TouchEventType::ENDED || type == ui::Widget::TouchEventType::CANCELED)
         {
             player->StopPlayerMovementRight();
         }
@@ -690,7 +700,7 @@ void GameScene::InitUI()
 	moveButton->setScale(0.05f);
 	ControlsLayout->addChild(moveButton, INT_MAX);
 
-    moveButton = ui::Button::create("ZigzagForest_Square.png");
+    moveButton = ui::Button::create("button_attack_normal.png", "button_attack_pressed.png");
     moveButton->addTouchEventListener([=](Ref* pSender, ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::BEGAN)
         {
@@ -704,7 +714,7 @@ void GameScene::InitUI()
     ControlsLayout->addChild(moveButton, INT_MAX);
 
 
-    string currScore = "Score : " +  std::to_string(PlayerInfo::GetInstance().GetScore());
+    string currScore = "Score : " +  std::to_string(PlayerInfo::GetInstance()->GetScore());
  
     MenuItemFont* score = MenuItemFont::create("score");
     score->setName("score");
@@ -713,14 +723,14 @@ void GameScene::InitUI()
     score->setFontSizeObj(9);
     score->setPosition(Vec2(cameraOrthoScale.x * 0.2f, cameraOrthoScale.y * 0.4f));
 
-    player->addChild(score);
+    player->addChild(score, INT_MAX);
 }
 
 void GameScene::UpdateUI(float _dt)
 {
-    if (PlayerInfo::GetInstance().GetCurrHealth() > UILayout->getChildrenCount())
+    if (PlayerInfo::GetInstance()->GetCurrHealth() > UILayout->getChildrenCount())
     {
-        while (PlayerInfo::GetInstance().GetCurrHealth() > UILayout->getChildrenCount())
+        while (PlayerInfo::GetInstance()->GetCurrHealth() > UILayout->getChildrenCount())
         {
             ui::ImageView* heartImage = ui::ImageView::create("hearticon.png");
             heartImage->setName("heart");
@@ -728,9 +738,9 @@ void GameScene::UpdateUI(float _dt)
             UILayout->addChild(heartImage, INT_MAX);
         }
     }
-    else if (PlayerInfo::GetInstance().GetCurrHealth() < UILayout->getChildrenCount())
+    else if (PlayerInfo::GetInstance()->GetCurrHealth() < UILayout->getChildrenCount())
     {
-        while (PlayerInfo::GetInstance().GetCurrHealth() < UILayout->getChildrenCount())
+        while (PlayerInfo::GetInstance()->GetCurrHealth() < UILayout->getChildrenCount())
         {
             if (!UILayout->getChildren().empty())
                 UILayout->removeChild(UILayout->getChildByName("heart"), true);
@@ -738,8 +748,8 @@ void GameScene::UpdateUI(float _dt)
     }
 
     Node* score = player->getChildByName("score");
-    string currScore = "Score : " + std::to_string(PlayerInfo::GetInstance().GetScore());
-    dynamic_cast<MenuItemFont*>(score)->setString(currScore);
+	String currScore = "Score : " + std::to_string(PlayerInfo::GetInstance()->GetScore());
+    dynamic_cast<MenuItemFont*>(score)->setString(currScore.getCString());
 }
 
 void GameScene::SetListeners()
@@ -769,7 +779,7 @@ void GameScene::SetListeners()
         CCLOG("enemy death received");
         Vec2* pos = static_cast<Vec2*>(event->getUserData());
         SpawnHeart(*pos);
-        PlayerInfo::GetInstance().AddScore(1000);
+        PlayerInfo::GetInstance()->AddScore(1000);
 
 		//player->setPosition(*pos);
     });
@@ -922,7 +932,7 @@ void GameScene::InputKeyboardTestFunction()
 
 void GameScene::Pause()
 {
-    SceneManager::GetInstance().AddSceneToStack("pause", true);
+    SceneManager::GetInstance()->AddSceneToStack("pause", true);
 }
 
 void GameScene::onContactSeperate(PhysicsContact & contact)

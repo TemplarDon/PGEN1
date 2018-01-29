@@ -21,7 +21,7 @@ using namespace cocos2d;
     *Use this function to assign functions to specific key press
 
     // Example of how to add new actions
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&TestScene::InputTestFunction, this), true, true, true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&TestScene::InputTestFunction, this), true, true, true);
 
 */
 

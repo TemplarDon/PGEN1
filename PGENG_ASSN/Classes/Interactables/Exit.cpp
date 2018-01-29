@@ -44,7 +44,7 @@ bool Exit::Init(Node * scene, Vec2 pos)
 
 void Exit::OnInteract()
 {
-    SceneManager::GetInstance().TransitionLevel(m_nextLevel, SceneManager::TRANSITION_TYPES::FADE, true);
+    SceneManager::GetInstance()->TransitionLevel(m_nextLevel, SceneManager::TRANSITION_TYPES::FADE, true);
 }
 
 void Exit::OnInteractLeave()

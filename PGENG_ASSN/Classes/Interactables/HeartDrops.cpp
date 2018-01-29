@@ -38,9 +38,9 @@ bool HeartDrop::Init(Node *scene, Vec2 pos)
 
 void HeartDrop::OnInteract()
 {
-	//if (PlayerInfo::GetInstance().GetCurrHealth() < PlayerInfo::GetInstance().GetMaxHealth())
+	//if (PlayerInfo::GetInstance()->GetCurrHealth() < PlayerInfo::GetInstance()->GetMaxHealth())
 	{
-		PlayerInfo::GetInstance().SetCurrHealth(PlayerInfo::GetInstance().GetCurrHealth() + 1);
+		PlayerInfo::GetInstance()->SetCurrHealth(PlayerInfo::GetInstance()->GetCurrHealth() + 1);
 		this->removeFromParentAndCleanup(true);
 	}
 }

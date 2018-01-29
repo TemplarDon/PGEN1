@@ -100,7 +100,7 @@ void SceneManager::ReloadScene()
 
 void SceneManager::FinishSetup()
 {
-    InputHandler::GetInstance().ClearActionMaps();
+    InputHandler::GetInstance()->ClearActionMaps();
 }
 
 void SceneManager::AddSceneToStack(string name, bool leaveOldScene)
@@ -260,14 +260,14 @@ Scene* SceneManager::GetLevel(string sceneName)
 void SceneManager::Shutdown()
 {
     // release
-    for (auto it : m_LevelMap)
+	for (std::map<string, Scene*> ::iterator itr = m_LevelMap.begin(); itr != m_LevelMap.end(); ++itr)
     {
-        it.second->release();
+        itr->second->release();
     }
 
-    for (auto it : m_SharedScenesMap)
+    for (std::map<string, Scene*> ::iterator itr = m_SharedScenesMap.begin(); itr != m_SharedScenesMap.end(); ++itr)
     {
-        it.second->release();
+        itr->second->release();
     }
 
     // pop all scenes away

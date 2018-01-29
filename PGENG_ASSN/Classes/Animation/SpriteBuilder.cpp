@@ -72,10 +72,10 @@ void AnimateBuilder::LoadAnimateSpriteBySprite(string animate_name, initializer_
 	Vector<SpriteFrame*> sprite_frames;
 	sprite_frames.reserve(frame_names.size());
 
-	for (auto name : frame_names)
+	for (initializer_list<string>::iterator itr = frame_names.begin(); itr != frame_names.end(); ++itr)
 	{
-		Sprite* resc = Sprite::create(name);
-		sprite_frames.pushBack(SpriteFrame::create(name, Rect(0, 0, resc->getContentSize().width, resc->getContentSize().height)));
+		Sprite* resc = Sprite::create(*itr);
+		sprite_frames.pushBack(SpriteFrame::create(*itr, Rect(0, 0, resc->getContentSize().width, resc->getContentSize().height)));
 	}
 
 	Animation* anim = Animation::createWithSpriteFrames(sprite_frames, time_between_frames);

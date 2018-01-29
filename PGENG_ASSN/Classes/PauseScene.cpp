@@ -65,10 +65,11 @@ bool PauseScene::init()
     addChild(text, 5);
 
     // Menu
-    MenuItemFont* menu_play = MenuItemFont::create("Resume", CC_CALLBACK_1(PauseScene::Resume, this));
-    MenuItemFont* menu_quit = MenuItemFont::create("Quit", CC_CALLBACK_1(PauseScene::Quit, this));
+	MenuItemFont* menu_play = MenuItemFont::create("Resume", CC_CALLBACK_1(PauseScene::Resume, this));
+	MenuItemFont* menu_quit = MenuItemFont::create("Exit Game", CC_CALLBACK_1(PauseScene::Quit, this));
+    //MenuItemFont* menu_quit = MenuItemFont::create("Quit", CC_CALLBACK_1(PauseScene::Quit, this));
 
-    auto *menu = Menu::create(menu_play, menu_quit, nullptr);
+    auto menu = Menu::create(menu_play, menu_quit, nullptr);
     menu->setPosition(Point(0, 0));
     menu->setName("menu");
 	menu_play->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 3));
@@ -132,11 +133,11 @@ void PauseScene::OnMouseEvent(Event* _event)
 
         if (name == "play_btn")
         {
-            SceneManager::GetInstance().TransitionLevel("test scene", SceneManager::TRANSITION_TYPES::FADE, true);
+            SceneManager::GetInstance()->TransitionLevel("test scene", SceneManager::TRANSITION_TYPES::FADE, true);
         }
         else if (name == "quit_btn")
         {
-            SceneManager::GetInstance().Shutdown();
+            SceneManager::GetInstance()->Shutdown();
         }
     }
 }
@@ -148,11 +149,11 @@ void PauseScene::OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event)
 
 void PauseScene::Resume(Ref *pSender)
 {
-    SceneManager::GetInstance().PopSceneFromStack();
+    SceneManager::GetInstance()->PopSceneFromStack();
 }
 
 void PauseScene::Quit(Ref *pSender)
 {
-	SceneManager::GetInstance().PopSceneFromStack();
-    SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
+	SceneManager::GetInstance()->PopSceneFromStack();
+    SceneManager::GetInstance()->TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
 }

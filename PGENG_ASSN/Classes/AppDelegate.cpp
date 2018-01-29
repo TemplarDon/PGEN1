@@ -117,19 +117,19 @@ bool AppDelegate::applicationDidFinishLaunching() {
     //director->runWithScene(scene);
 
     // init with first scene
-    SceneManager::GetInstance().Start(scene);
+    SceneManager::GetInstance()->Start(scene);
 
     // create database of shared scenes
-    SceneManager::GetInstance().AddSharedScene("pause", PauseScene::createScene());
-    SceneManager::GetInstance().AddSharedScene("game over", GameOver::createScene());
+	SceneManager::GetInstance()->AddSharedScene("pause", PauseScene::createScene());
+    SceneManager::GetInstance()->AddSharedScene("game over", GameOver::createScene());
 
     // add other levels
-    SceneManager::GetInstance().AddLevel("menu", scene);
-    SceneManager::GetInstance().AddLevel("dungeon scene", GameScene::createScene());
-    //SceneManager::GetInstance().GetLevel("dungeon scene")->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-    SceneManager::GetInstance().AddLevel("end room", EndRoom::createScene());
+    SceneManager::GetInstance()->AddLevel("menu", scene);
+    SceneManager::GetInstance()->AddLevel("dungeon scene", GameScene::createScene());
+    //SceneManager::GetInstance()->GetLevel("dungeon scene")->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    SceneManager::GetInstance()->AddLevel("end room", EndRoom::createScene());
 
-    SceneManager::GetInstance().FinishSetup();
+    SceneManager::GetInstance()->FinishSetup();
     return true;
 }
 

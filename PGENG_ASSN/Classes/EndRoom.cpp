@@ -52,7 +52,7 @@ bool EndRoom::init()
     }
 
     // Reset all binded actions 
-    InputHandler::GetInstance().ClearActionMaps();
+    InputHandler::GetInstance()->ClearActionMaps();
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -152,13 +152,13 @@ bool EndRoom::init()
     //this->addChild(spriteNode, 1);
 
     // Use this function to assign functions to specific key press
-    InputHandler::GetInstance().AssignMouseAction(EventMouse::MouseButton::BUTTON_LEFT, bind(&EndRoom::InputMouseTestFunction, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&EndRoom::InputKeyboardTestFunction, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_TAB, bind(&EndRoom::Pause, this), true);
+    InputHandler::GetInstance()->AssignMouseAction(EventMouse::MouseButton::BUTTON_LEFT, bind(&EndRoom::InputMouseTestFunction, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&EndRoom::InputKeyboardTestFunction, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_TAB, bind(&EndRoom::Pause, this), true);
 
-    //InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_L, bind(&EndRoom::SpawnNPC, this), true);
+    //InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_L, bind(&EndRoom::SpawnNPC, this), true);
 
-	PlayerInfo::GetInstance().SetHighScore(PlayerInfo::GetInstance().GetScore());
+	PlayerInfo::GetInstance()->SetHighScore(PlayerInfo::GetInstance()->GetScore());
 
     //Init Player
     player = new Player();
@@ -249,22 +249,22 @@ void EndRoom::InitShader()
 
 void EndRoom::InitAnimationActions()
 {
-    //AnimateBuilder::GetInstance().LoadSpriteSheet("sprite sheet", "spritesheet_test.png", 6, 3);
-    //AnimateBuilder::GetInstance().LoadAnimateFromLoadedSpriteSheet("Special1", "sprite sheet", 6, 12);	//Only half of the sprite sheet
+    //AnimateBuilder::GetInstance()->LoadSpriteSheet("sprite sheet", "spritesheet_test.png", 6, 3);
+    //AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("Special1", "sprite sheet", 6, 12);	//Only half of the sprite sheet
 
-    //AnimateBuilder::GetInstance().LoadAnimateFromWholeSpriteSheet("Special2", "spritesheet_test.png", 6, 3);	//Whole sprite sheet
+    //AnimateBuilder::GetInstance()->LoadAnimateFromWholeSpriteSheet("Special2", "spritesheet_test.png", 6, 3);	//Whole sprite sheet
 
-    //AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Front", { "Blue_Front2.png", "Blue_Front1.png", "Blue_Front3.png", "Blue_Front1.png" });
-    //AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Back", { "Blue_Back2.png", "Blue_Back1.png", "Blue_Back3.png", "Blue_Back1.png" });
-    //AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Left", { "Blue_Left2.png", "Blue_Left1.png", "Blue_Left3.png", "Blue_Left1.png" });
-    //AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Right", { "Blue_Right2.png", "Blue_Right1.png", "Blue_Right3.png", "Blue_Right1.png" });
+    //AnimateBuilder::GetInstance()->LoadAnimateSpriteBySprite("Front", { "Blue_Front2.png", "Blue_Front1.png", "Blue_Front3.png", "Blue_Front1.png" });
+    //AnimateBuilder::GetInstance()->LoadAnimateSpriteBySprite("Back", { "Blue_Back2.png", "Blue_Back1.png", "Blue_Back3.png", "Blue_Back1.png" });
+    //AnimateBuilder::GetInstance()->LoadAnimateSpriteBySprite("Left", { "Blue_Left2.png", "Blue_Left1.png", "Blue_Left3.png", "Blue_Left1.png" });
+    //AnimateBuilder::GetInstance()->LoadAnimateSpriteBySprite("Right", { "Blue_Right2.png", "Blue_Right1.png", "Blue_Right3.png", "Blue_Right1.png" });
 
-    //animController->AddAnimate("Special1", AnimateBuilder::GetInstance().GetAnimate("Special1"));
-    //animController->AddAnimate("Special2", AnimateBuilder::GetInstance().GetAnimate("Special2"));
-    //animController->AddAnimate("Front", AnimateBuilder::GetInstance().GetAnimate("Front"));
-    //animController->AddAnimate("Back", AnimateBuilder::GetInstance().GetAnimate("Back"));
-    //animController->AddAnimate("Left", AnimateBuilder::GetInstance().GetAnimate("Left"));
-    //animController->AddAnimate("Right", AnimateBuilder::GetInstance().GetAnimate("Right"));
+    //animController->AddAnimate("Special1", AnimateBuilder::GetInstance()->GetAnimate("Special1"));
+    //animController->AddAnimate("Special2", AnimateBuilder::GetInstance()->GetAnimate("Special2"));
+    //animController->AddAnimate("Front", AnimateBuilder::GetInstance()->GetAnimate("Front"));
+    //animController->AddAnimate("Back", AnimateBuilder::GetInstance()->GetAnimate("Back"));
+    //animController->AddAnimate("Left", AnimateBuilder::GetInstance()->GetAnimate("Left"));
+    //animController->AddAnimate("Right", AnimateBuilder::GetInstance()->GetAnimate("Right"));
     /*Vector<SpriteFrame*> frontFrames;
     frontFrames.reserve(4);
 
@@ -324,7 +324,7 @@ void EndRoom::InitAnimationActions()
 
 
     // FSM animations
-    AnimateBuilder::GetInstance().LoadSpriteSheet("patrol", "spritesheet_patrol.png", 4, 9);
+    AnimateBuilder::GetInstance()->LoadSpriteSheet("patrol", "spritesheet_patrol.png", 4, 9);
 }
 
 void EndRoom::InitTilemap()
@@ -541,7 +541,7 @@ void EndRoom::InputKeyboardTestFunction()
 
 void EndRoom::Pause()
 {
-    SceneManager::GetInstance().AddSceneToStack("pause", true);
+    SceneManager::GetInstance()->AddSceneToStack("pause", true);
 }
 
 void EndRoom::SpawnNPC()
@@ -554,14 +554,14 @@ void EndRoom::SpawnNPC()
     winText->setPosition(70, 120);
 
     MenuItemFont* lastRunScore = MenuItemFont::create("lastRunScore");
-    string currScore = "This run's score : " + std::to_string(PlayerInfo::GetInstance().GetScore());
+    string currScore = "This run's score : " + std::to_string(PlayerInfo::GetInstance()->GetScore());
     lastRunScore->setString(currScore);
     lastRunScore->setFontSize(INT_MAX);
     lastRunScore->setFontSizeObj(9);
     lastRunScore->setPosition(70, 100);
 
     MenuItemFont* highScore = MenuItemFont::create("highScore");
-    string highScoreText = "Highscore : " + std::to_string(PlayerInfo::GetInstance().GetHighScore());
+    string highScoreText = "Highscore : " + std::to_string(PlayerInfo::GetInstance()->GetHighScore());
     highScore->setString(highScoreText);
     highScore->setFontSize(INT_MAX);
     highScore->setFontSizeObj(9);

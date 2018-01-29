@@ -46,7 +46,7 @@ bool PathfinderTest::init()
     }
 
     // Reset all binded actions 
-    InputHandler::GetInstance().ClearActionMaps();
+    InputHandler::GetInstance()->ClearActionMaps();
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -146,36 +146,36 @@ bool PathfinderTest::init()
     this->addChild(spriteNode, 1);
 
     // Use this function to assign functions to specific key press
-    InputHandler::GetInstance().AssignMouseAction(EventMouse::MouseButton::BUTTON_LEFT, bind(&PathfinderTest::InputMouseTestFunction, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&PathfinderTest::InputKeyboardTestFunction, this), true);
+    InputHandler::GetInstance()->AssignMouseAction(EventMouse::MouseButton::BUTTON_LEFT, bind(&PathfinderTest::InputMouseTestFunction, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&PathfinderTest::InputKeyboardTestFunction, this), true);
 
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_Z, bind(&PathfinderTest::SwitchSceneTestFunction, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_X, bind(&PathfinderTest::AddSceneTestFunction, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_C, bind(&PathfinderTest::PopSceneTestFunction, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_Z, bind(&PathfinderTest::SwitchSceneTestFunction, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_X, bind(&PathfinderTest::AddSceneTestFunction, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_C, bind(&PathfinderTest::PopSceneTestFunction, this), true);
 
     //Stops animation when movement buttons are released
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&PathfinderTest::StopAnimation, this), false, false, true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&PathfinderTest::StopAnimation, this), false, false, true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&PathfinderTest::StopAnimation, this), false, false, true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&PathfinderTest::StopAnimation, this), false, false, true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&PathfinderTest::StopAnimation, this), false, false, true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&PathfinderTest::StopAnimation, this), false, false, true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&PathfinderTest::StopAnimation, this), false, false, true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&PathfinderTest::StopAnimation, this), false, false, true);
 
     //Add Moveplayer when button is press and held
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&PathfinderTest::MovePlayerUp, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&PathfinderTest::MovePlayerDown, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&PathfinderTest::MovePlayerLeft, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&PathfinderTest::MovePlayerRight, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&PathfinderTest::MovePlayerUp, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&PathfinderTest::MovePlayerDown, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&PathfinderTest::MovePlayerLeft, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&PathfinderTest::MovePlayerRight, this), true);
 
     //Add Moveplayer when button is released
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&PathfinderTest::StopPlayerUp, this), false, false, true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&PathfinderTest::StopPlayerDown, this), false, false, true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&PathfinderTest::StopPlayerLeft, this), false, false, true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&PathfinderTest::StopPlayerRight, this), false, false, true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&PathfinderTest::StopPlayerUp, this), false, false, true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&PathfinderTest::StopPlayerDown, this), false, false, true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&PathfinderTest::StopPlayerLeft, this), false, false, true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&PathfinderTest::StopPlayerRight, this), false, false, true);
 
     //Play walking sound effect when movement buttons are pressed
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&PathfinderTest::PlayWalkingSoundEffect, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&PathfinderTest::PlayWalkingSoundEffect, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&PathfinderTest::PlayWalkingSoundEffect, this), true);
-    InputHandler::GetInstance().AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&PathfinderTest::PlayWalkingSoundEffect, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_UP_ARROW, bind(&PathfinderTest::PlayWalkingSoundEffect, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_DOWN_ARROW, bind(&PathfinderTest::PlayWalkingSoundEffect, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_LEFT_ARROW, bind(&PathfinderTest::PlayWalkingSoundEffect, this), true);
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_RIGHT_ARROW, bind(&PathfinderTest::PlayWalkingSoundEffect, this), true);
 
     SetListeners();
     InitAnimationActions();
@@ -270,22 +270,22 @@ void PathfinderTest::InitShader()
 
 void PathfinderTest::InitAnimationActions()
 {
-    AnimateBuilder::GetInstance().LoadSpriteSheet("sprite sheet", "spritesheet_test.png", 6, 3);
-    AnimateBuilder::GetInstance().LoadAnimateFromLoadedSpriteSheet("Special1", "sprite sheet", 6, 12);	//Only half of the sprite sheet
+    AnimateBuilder::GetInstance()->LoadSpriteSheet("sprite sheet", "spritesheet_test.png", 6, 3);
+    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("Special1", "sprite sheet", 6, 12);	//Only half of the sprite sheet
 
-    AnimateBuilder::GetInstance().LoadAnimateFromWholeSpriteSheet("Special2", "spritesheet_test.png", 6, 3);	//Whole sprite sheet
+    AnimateBuilder::GetInstance()->LoadAnimateFromWholeSpriteSheet("Special2", "spritesheet_test.png", 6, 3);	//Whole sprite sheet
 
-    AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Front", { "Blue_Front2.png", "Blue_Front1.png", "Blue_Front3.png", "Blue_Front1.png" });
-    AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Back", { "Blue_Back2.png", "Blue_Back1.png", "Blue_Back3.png", "Blue_Back1.png" });
-    AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Left", { "Blue_Left2.png", "Blue_Left1.png", "Blue_Left3.png", "Blue_Left1.png" });
-    AnimateBuilder::GetInstance().LoadAnimateSpriteBySprite("Right", { "Blue_Right2.png", "Blue_Right1.png", "Blue_Right3.png", "Blue_Right1.png" });
+    AnimateBuilder::GetInstance()->LoadAnimateSpriteBySprite("Front", { "Blue_Front2.png", "Blue_Front1.png", "Blue_Front3.png", "Blue_Front1.png" });
+    AnimateBuilder::GetInstance()->LoadAnimateSpriteBySprite("Back", { "Blue_Back2.png", "Blue_Back1.png", "Blue_Back3.png", "Blue_Back1.png" });
+    AnimateBuilder::GetInstance()->LoadAnimateSpriteBySprite("Left", { "Blue_Left2.png", "Blue_Left1.png", "Blue_Left3.png", "Blue_Left1.png" });
+    AnimateBuilder::GetInstance()->LoadAnimateSpriteBySprite("Right", { "Blue_Right2.png", "Blue_Right1.png", "Blue_Right3.png", "Blue_Right1.png" });
 
-    animController->AddAnimate("Special1", AnimateBuilder::GetInstance().GetAnimate("Special1"));
-    animController->AddAnimate("Special2", AnimateBuilder::GetInstance().GetAnimate("Special2"));
-    animController->AddAnimate("Front", AnimateBuilder::GetInstance().GetAnimate("Front"));
-    animController->AddAnimate("Back", AnimateBuilder::GetInstance().GetAnimate("Back"));
-    animController->AddAnimate("Left", AnimateBuilder::GetInstance().GetAnimate("Left"));
-    animController->AddAnimate("Right", AnimateBuilder::GetInstance().GetAnimate("Right"));
+    animController->AddAnimate("Special1", AnimateBuilder::GetInstance()->GetAnimate("Special1"));
+    animController->AddAnimate("Special2", AnimateBuilder::GetInstance()->GetAnimate("Special2"));
+    animController->AddAnimate("Front", AnimateBuilder::GetInstance()->GetAnimate("Front"));
+    animController->AddAnimate("Back", AnimateBuilder::GetInstance()->GetAnimate("Back"));
+    animController->AddAnimate("Left", AnimateBuilder::GetInstance()->GetAnimate("Left"));
+    animController->AddAnimate("Right", AnimateBuilder::GetInstance()->GetAnimate("Right"));
     /*Vector<SpriteFrame*> frontFrames;
     frontFrames.reserve(4);
 
@@ -345,7 +345,7 @@ void PathfinderTest::InitAnimationActions()
 
 
     // FSM animations
-    AnimateBuilder::GetInstance().LoadSpriteSheet("patrol", "spritesheet_patrol.png", 4, 9);
+    AnimateBuilder::GetInstance()->LoadSpriteSheet("patrol", "spritesheet_patrol.png", 4, 9);
 }
 
 void PathfinderTest::InitTilemap()
@@ -622,22 +622,22 @@ void PathfinderTest::InputKeyboardTestFunction()
 
 void PathfinderTest::SwitchSceneTestFunction()
 {
-    SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
+    SceneManager::GetInstance()->TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
 }
 
 void PathfinderTest::AddSceneTestFunction()
 {
-    SceneManager::GetInstance().AddSceneToStack("ello scene", true);
+    SceneManager::GetInstance()->AddSceneToStack("ello scene", true);
 }
 
 void PathfinderTest::PopSceneTestFunction()
 {
-    SceneManager::GetInstance().PopSceneFromStack();
+    SceneManager::GetInstance()->PopSceneFromStack();
 }
 
 void PathfinderTest::SwitchSceneTest(cocos2d::Ref* pSender)
 {
-    SceneManager::GetInstance().TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
+    SceneManager::GetInstance()->TransitionLevel("menu", SceneManager::TRANSITION_TYPES::FADE);
 }
 
 void PathfinderTest::MovePlayerUp()
@@ -782,10 +782,10 @@ void PathfinderTest::UpdatePlayer()
     MovePlayer();
 
 
-    if (InputHandler::GetInstance().GetKeyDown(EventKeyboard::KeyCode::KEY_1))
+    if (InputHandler::GetInstance()->GetKeyDown(EventKeyboard::KeyCode::KEY_1))
         animController->PlayAnimation("Special1", false);
 
-    if (InputHandler::GetInstance().GetKeyDown(EventKeyboard::KeyCode::KEY_2))
+    if (InputHandler::GetInstance()->GetKeyDown(EventKeyboard::KeyCode::KEY_2))
         animController->PlayAnimation("Special2", false);
 
 }

@@ -175,16 +175,16 @@ void Pathfinder::FindPath(Vec2 dest)
 
         // Get neighbour with lowest F value ()
         PathfinderNode* lowest = GetLowestF(m_openList);
-        
-        for (auto it = m_openList.begin(); it != m_openList.end();) 
-        {
-            if (*it == lowest)
+      
+		for (vector<PathfinderNode*>::iterator itr = m_openList.begin(); itr != m_openList.end();)
+		{
+            if (*itr == lowest)
             {
-                it = m_openList.erase(it);
+				itr = m_openList.erase(itr);
             }
             else 
             {
-                ++it;
+                ++itr;
             }
         }
         m_currentNode = lowest;
