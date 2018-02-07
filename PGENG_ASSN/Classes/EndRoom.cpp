@@ -12,6 +12,10 @@
 #include "Interactables/Exit.h"
 #include "Player/PlayerInfo.h"
 
+// Facebook
+#include "proj.ios_mac/PluginFacebook.framework/Versions/A/Headers/PluginFacebook.h"
+//#define SDKBOX_ENABLED
+
 #define COCOS2D_DEBUG 1
 #define FSM_TAG 5
 
@@ -198,6 +202,13 @@ void EndRoom::update(float _dt)
     //rendtex->end();
     //rendtexSprite->setTexture(rendtex->getSprite()->getTexture());
     //rendtexSprite->setGLProgram(proPostProcess);
+
+
+#ifdef SDKBOX_ENABLED
+    if (!sdkbox::PluginFacebook::isLoggedIn()) {
+        sdkbox::PluginFacebook::login();
+    }
+#endif
 }
 
 void EndRoom::InitShader()

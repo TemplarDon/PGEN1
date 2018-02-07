@@ -12,6 +12,10 @@
 #include "Puzzle/ChainedPressurePlate.h"
 #include "Interactables/Exit.h"
 
+// Facebook
+#include "proj.ios_mac/PluginFacebook.framework/Versions/A/Headers/PluginFacebook.h"
+#define SDKBOX_ENABLED
+
 #define COCOS2D_DEBUG 1
 #define FSM_TAG 5
 

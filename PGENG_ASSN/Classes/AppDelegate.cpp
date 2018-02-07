@@ -13,6 +13,10 @@
 #include "EndRoom.h"
 #include "GameOver.h"
 
+// Facebook
+#include "proj.ios_mac/PluginFacebook.framework/Versions/A/Headers/PluginFacebook.h"
+//#define SDKBOX_ENABLED
+
 // #define USE_AUDIO_ENGINE 1
  #define USE_SIMPLE_AUDIO_ENGINE 1
 
@@ -67,6 +71,9 @@ static int register_all_packages()
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
+#ifdef SDKBOX_ENABLED
+    sdkbox::PluginFacebook::init();
+#endif
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
