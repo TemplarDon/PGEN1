@@ -13,9 +13,9 @@
 #include "Player/PlayerInfo.h"
 
 // Facebook
-#include "proj.ios_mac/PluginFacebook.framework/Versions/A/Headers/PluginFacebook.h"
 //#define SDKBOX_ENABLED
 #ifdef SDKBOX_ENABLED
+#include "proj.ios_mac/PluginFacebook.framework/Versions/A/Headers/PluginFacebook.h"
 using namespace sdkbox;
 #endif // SDKBOX_ENABLED
 
@@ -612,6 +612,7 @@ void EndRoom::SpawnNPC()
 
 void EndRoom::FacebookShare()
 {
+#ifdef SDKBOX_ENABLED
 	if (!PluginFacebook::isLoggedIn()) {
 		PluginFacebook::login();
 	}
@@ -628,6 +629,7 @@ void EndRoom::FacebookShare()
 		info.image = "http://cocos2d-x.org/images/logo.png";
 		sdkbox::PluginFacebook::share(info);
 	}
+#endif
 }
 
 void EndRoom::onContactSeperate(PhysicsContact & contact)
