@@ -15,6 +15,10 @@
 // Facebook
 #include "proj.ios_mac/PluginFacebook.framework/Versions/A/Headers/PluginFacebook.h"
 //#define SDKBOX_ENABLED
+#ifdef SDKBOX_ENABLED
+using namespace sdkbox;
+#endif // SDKBOX_ENABLED
+
 
 #define COCOS2D_DEBUG 1
 #define FSM_TAG 5
@@ -187,28 +191,42 @@ bool EndRoom::init()
     cameraOrthoScale.set(234, 160);
     runAction(DelayTime::create(2.0f));
 
+	// Facebook
+	//PluginFacebook::setListener(this);
+	//PluginFacebook::init();
+
+	// Facebook listener
+	auto facebookListener = EventListenerCustom::create("facebook_share", [=](EventCustom* event) {
+
+		CCLOG("facebook_share received");
+#ifdef SDKBOX_ENABLED
+		CCLOG("sdkbox enabled");
+		FacebookShare();
+#else
+		CCLOG("sdkbox not enabled");
+#endif
+
+	});
+	_eventDispatcher->addEventListenerWithFixedPriority(facebookListener, 1);
+
     return true;
 }
 
 void EndRoom::update(float _dt)
 {
-    auto charSprite = this->getChildByName("player");
+	auto charSprite = this->getChildByName("player");
 
-    Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
-    mainCam->initOrthographic(cameraOrthoScale.x, cameraOrthoScale.y, 1, 800);
-    mainCam->setPosition(player->getPosition() - Vec2(cameraOrthoScale.x * 0.5, cameraOrthoScale.y * 0.5));
-    //rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
-    //this->visit();
-    //rendtex->end();
-    //rendtexSprite->setTexture(rendtex->getSprite()->getTexture());
-    //rendtexSprite->setGLProgram(proPostProcess);
+	Camera* mainCam = Director::getInstance()->getRunningScene()->getDefaultCamera();
+	mainCam->initOrthographic(cameraOrthoScale.x, cameraOrthoScale.y, 1, 800);
+	mainCam->setPosition(player->getPosition() - Vec2(cameraOrthoScale.x * 0.5, cameraOrthoScale.y * 0.5));
+	//rendtex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
+	//this->visit();
+	//rendtex->end();
+	//rendtexSprite->setTexture(rendtex->getSprite()->getTexture());
+	//rendtexSprite->setGLProgram(proPostProcess);
 
 
-#ifdef SDKBOX_ENABLED
-    if (!sdkbox::PluginFacebook::isLoggedIn()) {
-        sdkbox::PluginFacebook::login();
-    }
-#endif
+
 }
 
 void EndRoom::InitShader()
@@ -590,6 +608,26 @@ void EndRoom::SpawnNPC()
     //newNPC->setPosition(40, 80);
     newNPC->setName("npc");
     addChild(newNPC, 98);
+}
+
+void EndRoom::FacebookShare()
+{
+	if (!PluginFacebook::isLoggedIn()) {
+		PluginFacebook::login();
+	}
+	else
+	{
+		PluginFacebook::requestReadPermissions({ FB_PERM_READ_PUBLIC_PROFILE, FB_PERM_READ_USER_FRIENDS });
+		PluginFacebook::requestPublishPermissions({ FB_PERM_PUBLISH_POST });
+
+		sdkbox::FBShareInfo info;
+		info.type = sdkbox::FB_LINK;
+		info.link = "http://www.cocos2d-x.org";
+		info.title = "cocos2d-x";
+		info.text = "Best Game Engine";
+		info.image = "http://cocos2d-x.org/images/logo.png";
+		sdkbox::PluginFacebook::share(info);
+	}
 }
 
 void EndRoom::onContactSeperate(PhysicsContact & contact)

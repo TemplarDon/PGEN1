@@ -55,6 +55,8 @@ public:
 
     void SwitchSceneTest(cocos2d::Ref* pSender);
 
+	void FacebookShare();
+
 private:
     enum ANIMLIST
     {

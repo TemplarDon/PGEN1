@@ -166,6 +166,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Interactables\HeartDrops.cpp" />
     <ClCompile Include="..\Classes\Interactables\Interactable.cpp" />
     <ClCompile Include="..\Classes\Interactables\NPC.cpp" />
+    <ClCompile Include="..\Classes\Interactables\ShareButton.cpp" />
     <ClCompile Include="..\Classes\MainMenuScene.cpp" />
     <ClCompile Include="..\Classes\PathfinderTest.cpp" />
     <ClCompile Include="..\Classes\PauseScene.cpp" />
@@ -209,6 +210,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Interactables\HeartDrops.h" />
     <ClInclude Include="..\Classes\Interactables\Interactable.h" />
     <ClInclude Include="..\Classes\Interactables\NPC.h" />
+    <ClInclude Include="..\Classes\Interactables\ShareButton.h" />
     <ClInclude Include="..\Classes\MainMenuScene.h" />
     <ClInclude Include="..\Classes\PathfinderTest.h" />
     <ClInclude Include="..\Classes\PauseScene.h" />

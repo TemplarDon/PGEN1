@@ -159,6 +159,9 @@
     <ClCompile Include="..\Classes\GameOver.cpp">
       <Filter>src\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Interactables\ShareButton.cpp">
+      <Filter>src\Interactables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -286,6 +289,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\GameOver.h">
       <Filter>src\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Interactables\ShareButton.h">
+      <Filter>src\Interactables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
