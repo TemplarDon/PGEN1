@@ -12,14 +12,6 @@
 #include "Interactables/Exit.h"
 #include "Player/PlayerInfo.h"
 
-// Facebook
-//#define SDKBOX_ENABLED
-#ifdef SDKBOX_ENABLED
-#include "proj.ios_mac/PluginFacebook.framework/Versions/A/Headers/PluginFacebook.h"
-using namespace sdkbox;
-#endif // SDKBOX_ENABLED
-
-
 #define COCOS2D_DEBUG 1
 #define FSM_TAG 5
 
@@ -164,6 +156,9 @@ bool EndRoom::init()
     InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_SPACE, bind(&EndRoom::InputKeyboardTestFunction, this), true);
     InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_TAB, bind(&EndRoom::Pause, this), true);
 
+    // Facebook test
+    InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_9, bind(&EndRoom::FacebookShare , this), true);
+
     //InputHandler::GetInstance()->AssignKeyboardAction(EventKeyboard::KeyCode::KEY_L, bind(&EndRoom::SpawnNPC, this), true);
 
 	PlayerInfo::GetInstance()->SetHighScore(PlayerInfo::GetInstance()->GetScore());
@@ -192,9 +187,10 @@ bool EndRoom::init()
     runAction(DelayTime::create(2.0f));
 
 	// Facebook
-	//PluginFacebook::setListener(this);
-	//PluginFacebook::init();
-
+#ifdef SDKBOX_ENABLED
+	PluginFacebook::setListener(this);
+	PluginFacebook::init();
+#endif
 	// Facebook listener
 	auto facebookListener = EventListenerCustom::create("facebook_share", [=](EventCustom* event) {
 
@@ -613,8 +609,11 @@ void EndRoom::SpawnNPC()
 void EndRoom::FacebookShare()
 {
 #ifdef SDKBOX_ENABLED
+
 	if (!PluginFacebook::isLoggedIn()) {
 		PluginFacebook::login();
+
+        FacebookShare();
 	}
 	else
 	{
@@ -658,4 +657,60 @@ void EndRoom::onContactSeperate(PhysicsContact & contact)
         break;
     }
 
+}
+
+//Facebook callback
+void EndRoom::onLogin(bool isLogin, const std::string& msg)
+{
+    CCLOG("onLogin");
+}
+
+void EndRoom::onSharedSuccess(const std::string& message)
+{
+    CCLOG("onSharedSuccess");
+}
+
+void EndRoom::onSharedFailed(const std::string& message)
+{
+    CCLOG("onSharedFailed");
+}
+
+void EndRoom::onSharedCancel()
+{
+    CCLOG("onSharedCancel");
+}
+
+void EndRoom::onAPI(const std::string& key, const std::string& jsonData)
+{
+    CCLOG("onAPI");
+}
+
+void EndRoom::onPermission(bool isLogin, const std::string& msg)
+{
+    CCLOG("onPermission");
+}
+
+void EndRoom::onFetchFriends(bool ok, const std::string& msg)
+{
+    CCLOG("onFetchFriends");
+}
+
+void EndRoom::onRequestInvitableFriends(const sdkbox::FBInvitableFriendsInfo& friends)
+{
+    CCLOG("onRequestInvitableFriends");
+}
+
+void EndRoom::onInviteFriendsWithInviteIdsResult(bool result, const std::string& msg)
+{
+    CCLOG("onInviteFriendsWithInviteIdsResult");
+}
+
+void EndRoom::onInviteFriendsResult(bool result, const std::string& msg)
+{
+    CCLOG("onInviteFriendsResult");
+}
+
+void EndRoom::onGetUserInfo(const sdkbox::FBGraphUser& userInfo)
+{
+    CCLOG("onGetUserInfo");
 }

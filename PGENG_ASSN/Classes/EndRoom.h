@@ -6,10 +6,14 @@
 #include "Player/Player.h"
 #include "Interactables/interactable.h"
 
+// Facebook
+//#define SDKBOX_ENABLED
+#include "proj.ios_mac/PluginFacebook.framework/Versions/A/Headers/PluginFacebook.h"
+using namespace sdkbox;
 
 using namespace cocos2d;
 
-class EndRoom : public cocos2d::Scene
+class EndRoom : public cocos2d::Scene, sdkbox::FacebookListener
 {
 public:
     static cocos2d::Scene* createScene();
@@ -80,6 +84,19 @@ private:
     Vec2 cameraOrthoScale;
 
     MenuItemFont* menu_play;
+
+    //Facebook callback
+    void onLogin(bool isLogin, const std::string& msg);
+    void onSharedSuccess(const std::string& message);
+    void onSharedFailed(const std::string& message);
+    void onSharedCancel();
+    void onAPI(const std::string& key, const std::string& jsonData);
+    void onPermission(bool isLogin, const std::string& msg);
+    void onFetchFriends(bool ok, const std::string& msg);
+    void onRequestInvitableFriends(const sdkbox::FBInvitableFriendsInfo& friends);
+    void onInviteFriendsWithInviteIdsResult(bool result, const std::string& msg);
+    void onInviteFriendsResult(bool result, const std::string& msg);
+    void onGetUserInfo(const sdkbox::FBGraphUser& userInfo);
 };
 
 #endif // __TEST_SCENE_H__
