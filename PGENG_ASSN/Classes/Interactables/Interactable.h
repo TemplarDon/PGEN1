@@ -2,7 +2,7 @@
 #define INTERACTABLE_H
 
 #include "cocos2d.h"
-#include "BitmasksHeader.h"
+#include "../BitmasksHeader.h"
 
 using namespace cocos2d;
 

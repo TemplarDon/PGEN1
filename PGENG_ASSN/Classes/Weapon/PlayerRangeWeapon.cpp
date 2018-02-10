@@ -1,5 +1,5 @@
 #include "PlayerRangeWeapon.h"
-#include "Projectile/PlayerProjectileEntity.h"
+#include "../Projectile/PlayerProjectileEntity.h"
 
 PlayerRangeWeapon::PlayerRangeWeapon(Player* _player)
 {

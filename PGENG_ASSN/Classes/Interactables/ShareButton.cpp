@@ -1,5 +1,5 @@
 #include "ShareButton.h"
-#include "SceneManagement/SceneManager.h"
+#include "../SceneManagement/SceneManager.h"
 
 ShareButton::ShareButton() : Interactable(), isSharing(false)
 {

@@ -1,5 +1,5 @@
 #include "AppDelegate.h"
-#include "Classes/SceneManagement/SceneManager.h"
+#include "SceneManagement/SceneManager.h"
 
 #include "HelloWorldScene.h"
 
