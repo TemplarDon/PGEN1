@@ -1,5 +1,5 @@
 #include "Exit.h"
-#include "SceneManagement/SceneManager.h"
+#include "../SceneManagement/SceneManager.h"
 
 Exit::Exit() : Interactable()
 {

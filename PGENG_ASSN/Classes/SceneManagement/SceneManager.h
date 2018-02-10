@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-#include "Classes/Common/SingletonNode.h"
+#include "../Common/SingletonNode.h"
 
 using namespace cocos2d;
 using namespace std;

@@ -1,5 +1,5 @@
 #include "BaseFSM.h"
-#include "Player/Player.h"
+#include "../Player/Player.h"
 
 BaseFSM::BaseFSM(TMXTiledMap* map, string sprite) 
 : m_map(map)

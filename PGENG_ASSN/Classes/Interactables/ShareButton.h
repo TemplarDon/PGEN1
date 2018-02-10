@@ -1,7 +1,7 @@
 #ifndef __SHARE_BUTTON_H__
 #define __SHARE_BUTTON_H__
 
-#include "Interactables/Interactable.h"
+#include "Interactable.h"
 
 class ShareButton : public Interactable
 {
