@@ -196,7 +196,11 @@ bool GameScene::init()
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Audio/BGM.wav");
     CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
 
-
+    // Particles
+    auto particleSystem = ParticleSystem::create("particle_enemydeath.plist");
+    particleSystem->setDuration(0.5f);
+    particleSystem->setName("particle_enemydeath");
+    addChild(particleSystem, INT_MAX);
     return true;
 }
 
@@ -786,6 +790,8 @@ void GameScene::SetListeners()
         PlayerInfo::GetInstance()->AddScore(1000);
 
 		//player->setPosition(*pos);
+
+        (static_cast<ParticleSystem*>(getChildByName("particle_enemydeath")))->start();
     });
     _eventDispatcher->addEventListenerWithSceneGraphPriority(enemyDeathListener, this);
 }

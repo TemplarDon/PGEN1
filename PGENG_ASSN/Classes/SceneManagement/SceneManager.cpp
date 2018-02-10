@@ -198,7 +198,7 @@ void SceneManager::TransitionLevel(string newScene, TRANSITION_TYPES transition,
         }
         toTransition->removeAllChildren();
 
-        if (hasPhysicsParentLayer)
+        if (hasPhysicsParentLayer && scene != nullptr)
         {
             scene->init();
             toTransition->addChild(scene);

@@ -53,7 +53,7 @@ bool Puzzle::init()
         //    var->m_IsCompleted = false;
         //}
 
-        for (int i = 0; i < m_elementList.size; ++i)
+        for (int i = 0; i < m_elementList.size(); ++i)
         {
             m_elementList[i]->m_IsCompleted = false;
         }
@@ -69,7 +69,7 @@ bool Puzzle::CheckPuzzleComplete()
     //        return false;
     //}
 
-    for (int i = 0; i < m_elementList.size; ++i)
+    for (int i = 0; i < m_elementList.size(); ++i)
     {
         if (!m_elementList[i]->m_IsCompleted)
             return false;

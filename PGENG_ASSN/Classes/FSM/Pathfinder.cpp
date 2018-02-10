@@ -172,7 +172,7 @@ void Pathfinder::FindPath(Vec2 dest)
         //    if (var->m_parentNode == nullptr)
         //        var->m_parentNode = m_currentNode;
         //}
-        for (int i = 0; i < neighbours.size; ++i)
+        for (int i = 0; i < neighbours.size(); ++i)
         {
             PathfinderNode* var = neighbours[i];
 
