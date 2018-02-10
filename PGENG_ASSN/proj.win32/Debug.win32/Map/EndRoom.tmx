@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.1" orientation="orthogonal" renderorder="left-up" width="15" height="15" tilewidth="16" tileheight="16" infinite="0" nextobjectid="3">
+<map version="1.0" tiledversion="1.1.1" orientation="orthogonal" renderorder="left-up" width="15" height="15" tilewidth="16" tileheight="16" infinite="0" nextobjectid="4">
  <tileset firstgid="1" name="roguelikeSheet_transparent" tilewidth="16" tileheight="16" spacing="1" tilecount="1767" columns="57">
   <image source="../TileSheets/roguelikeSheet_transparent.png" width="968" height="526"/>
  </tileset>
@@ -18,6 +18,7 @@
  </layer>
  <objectgroup name="Environment">
   <object id="1" name="Exit" x="33" y="176.5" width="14" height="15.5"/>
+  <object id="3" name="ShareButton" x="112.333" y="64.25" width="14" height="15.5"/>
  </objectgroup>
  <objectgroup name="Spawns">
   <object id="2" x="112.5" y="112.5" width="16" height="15.5">

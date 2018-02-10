@@ -10,6 +10,7 @@
 #include "Puzzle/Button.h"
 #include "Puzzle/ChainedPressurePlate.h"
 #include "Interactables/Exit.h"
+#include "Interactables/ShareButton.h"
 #include "Player/PlayerInfo.h"
 
 #define COCOS2D_DEBUG 1
@@ -472,6 +473,12 @@ void EndRoom::InitEnvironment()
                 Exit* anExit = new Exit();
                 anExit->Init(this, pos);
                 anExit->m_nextLevel = "dungeon scene";
+            }
+
+            if (point["name"].asString() == "ShareButton")
+            {
+                ShareButton* aShareButton = new ShareButton();
+                aShareButton->Init(this, pos);
             }
         }
     }
