@@ -167,8 +167,15 @@ void Pathfinder::FindPath(Vec2 dest)
         }
 
         // Set all neghbours parent to current node
-        for each (PathfinderNode* var in neighbours)
+        //for each (PathfinderNode* var in neighbours)
+        //{
+        //    if (var->m_parentNode == nullptr)
+        //        var->m_parentNode = m_currentNode;
+        //}
+        for (int i = 0; i < neighbours.size; ++i)
         {
+            PathfinderNode* var = neighbours[i];
+
             if (var->m_parentNode == nullptr)
                 var->m_parentNode = m_currentNode;
         }

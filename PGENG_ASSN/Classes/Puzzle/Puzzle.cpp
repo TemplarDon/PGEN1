@@ -48,9 +48,14 @@ bool Puzzle::init()
     auto puzzleFailedListener = EventListenerCustom::create("puzzle_failed", [=](EventCustom* event){
 
         CCLOG("puzzle_failed received");
-        for each (PuzzleElement* var in m_elementList)
+        //for each (PuzzleElement* var in m_elementList)
+        //{
+        //    var->m_IsCompleted = false;
+        //}
+
+        for (int i = 0; i < m_elementList.size; ++i)
         {
-            var->m_IsCompleted = false;
+            m_elementList[i]->m_IsCompleted = false;
         }
     });
     _eventDispatcher->addEventListenerWithFixedPriority(puzzleFailedListener, 1);
@@ -58,9 +63,15 @@ bool Puzzle::init()
 
 bool Puzzle::CheckPuzzleComplete()
 {
-    for each (PuzzleElement* var in m_elementList)
+    //for each (PuzzleElement* var in m_elementList)
+    //{
+    //    if (!var->m_IsCompleted)
+    //        return false;
+    //}
+
+    for (int i = 0; i < m_elementList.size; ++i)
     {
-        if (!var->m_IsCompleted)
+        if (!m_elementList[i]->m_IsCompleted)
             return false;
     }
     
