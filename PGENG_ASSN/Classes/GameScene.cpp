@@ -201,6 +201,7 @@ bool GameScene::init()
     particleSystem->setName("particle_enemydeath");
     particleSystem->setScale(0.15);
     addChild(particleSystem, 99);
+
     return true;
 }
 
