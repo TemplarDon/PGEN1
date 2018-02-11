@@ -179,6 +179,7 @@ bool GameScene::init()
 	SpawnHeart(Vec2(290, 320));
 	SpawnHeart(Vec2(260, 360));
 
+	PlayerInfo::GetInstance()->OnLevelStart();
     PlayerInfo::GetInstance()->SetScore(10000);
 
     SetListeners();
@@ -606,7 +607,7 @@ void GameScene::InitUI()
 	
     UILayout = ui::Layout::create();
     UILayout->setLayoutType(cocos2d::ui::Layout::Type::HORIZONTAL);
-    UILayout->setPosition(Vec2(-cameraOrthoScale.x * 0.3f, cameraOrthoScale.y * 0.45f));
+    UILayout->setPosition(Vec2(-cameraOrthoScale.x * 0.35f, cameraOrthoScale.y * -0.375f));
 	gameUINode->addChild(UILayout, INT_MAX);
 
     ui::ImageView* heartImage = ui::ImageView::create("hearticon.png");

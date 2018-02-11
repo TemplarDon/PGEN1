@@ -58,45 +58,92 @@ void Player::InitAnimation()
     spriteNode->addChild(characterBaseSprite);
     this->addChild(spriteNode, 1);
 
-    AnimateBuilder::GetInstance()->LoadSpriteSheet("player_bow", "Player/PlayerBowTilesheet.png", 21, 13);
-    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_walk_up", "player_bow", 105, 112);
-    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_walk_left", "player_bow", 117, 124);
-    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_walk_down", "player_bow", 130, 137);
-    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_walk_right", "player_bow", 143, 150);
+	//Original Skin
+	if (!PlayerInfo::GetInstance()->usingSkin)
+	{
+		AnimateBuilder::GetInstance()->LoadSpriteSheet("player_bow", "Player/PlayerBowTilesheet.png", 21, 13);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_walk_up", "player_bow", 105, 112);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_walk_left", "player_bow", 117, 124);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_walk_down", "player_bow", 130, 137);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_walk_right", "player_bow", 143, 150);
 
-    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_attack_up", "player_bow", 208, 220);
-    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_attack_left", "player_bow", 221, 233);
-    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_attack_down", "player_bow", 234, 247);
-    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_attack_right", "player_bow", 248, 261);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_attack_up", "player_bow", 208, 220);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_attack_left", "player_bow", 221, 233);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_attack_down", "player_bow", 234, 247);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_attack_right", "player_bow", 248, 261);
 
-    AnimateBuilder::GetInstance()->LoadSpriteSheet("player_spear", "Player/PlayerSpearTilesheet.png", 21, 13);
-    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_walk_up", "player_spear", 103, 111);
-    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_walk_left", "player_spear", 116, 124);
-    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_walk_down", "player_spear", 129, 137);
-    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_walk_right", "player_spear", 142, 150);
+		AnimateBuilder::GetInstance()->LoadSpriteSheet("player_spear", "Player/PlayerSpearTilesheet.png", 21, 13);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_walk_up", "player_spear", 103, 111);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_walk_left", "player_spear", 116, 124);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_walk_down", "player_spear", 129, 137);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_walk_right", "player_spear", 142, 150);
 
-    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_attack_up", "player_spear", 208, 220);
-    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_attack_left", "player_spear", 221, 233);
-    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_attack_down", "player_spear", 234, 247);
-    AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_attack_right", "player_spear", 248, 261);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_attack_up", "player_spear", 208, 220);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_attack_left", "player_spear", 221, 233);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_attack_down", "player_spear", 234, 247);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_attack_right", "player_spear", 248, 261);
 
-    animController->AddAnimate("player_bow_walk_up", AnimateBuilder::GetInstance()->GetAnimate("player_bow_walk_up"));
-    animController->AddAnimate("player_bow_walk_down", AnimateBuilder::GetInstance()->GetAnimate("player_bow_walk_down"));
-    animController->AddAnimate("player_bow_walk_left", AnimateBuilder::GetInstance()->GetAnimate("player_bow_walk_left"));
-    animController->AddAnimate("player_bow_walk_right", AnimateBuilder::GetInstance()->GetAnimate("player_bow_walk_right"));
-    animController->AddAnimate("player_bow_attack_up", AnimateBuilder::GetInstance()->GetAnimate("player_bow_attack_up"));
-    animController->AddAnimate("player_bow_attack_down", AnimateBuilder::GetInstance()->GetAnimate("player_bow_attack_down"));
-    animController->AddAnimate("player_bow_attack_left", AnimateBuilder::GetInstance()->GetAnimate("player_bow_attack_left"));
-    animController->AddAnimate("player_bow_attack_right", AnimateBuilder::GetInstance()->GetAnimate("player_bow_attack_right"));
+		animController->AddAnimate("player_bow_walk_up", AnimateBuilder::GetInstance()->GetAnimate("player_bow_walk_up"));
+		animController->AddAnimate("player_bow_walk_down", AnimateBuilder::GetInstance()->GetAnimate("player_bow_walk_down"));
+		animController->AddAnimate("player_bow_walk_left", AnimateBuilder::GetInstance()->GetAnimate("player_bow_walk_left"));
+		animController->AddAnimate("player_bow_walk_right", AnimateBuilder::GetInstance()->GetAnimate("player_bow_walk_right"));
+		animController->AddAnimate("player_bow_attack_up", AnimateBuilder::GetInstance()->GetAnimate("player_bow_attack_up"));
+		animController->AddAnimate("player_bow_attack_down", AnimateBuilder::GetInstance()->GetAnimate("player_bow_attack_down"));
+		animController->AddAnimate("player_bow_attack_left", AnimateBuilder::GetInstance()->GetAnimate("player_bow_attack_left"));
+		animController->AddAnimate("player_bow_attack_right", AnimateBuilder::GetInstance()->GetAnimate("player_bow_attack_right"));
 
-    animController->AddAnimate("player_spear_walk_up", AnimateBuilder::GetInstance()->GetAnimate("player_spear_walk_up"));
-    animController->AddAnimate("player_spear_walk_down", AnimateBuilder::GetInstance()->GetAnimate("player_spear_walk_down"));
-    animController->AddAnimate("player_spear_walk_left", AnimateBuilder::GetInstance()->GetAnimate("player_spear_walk_left"));
-    animController->AddAnimate("player_spear_walk_right", AnimateBuilder::GetInstance()->GetAnimate("player_spear_walk_right"));
-    animController->AddAnimate("player_spear_attack_up", AnimateBuilder::GetInstance()->GetAnimate("player_spear_attack_up"));
-    animController->AddAnimate("player_spear_attack_down", AnimateBuilder::GetInstance()->GetAnimate("player_spear_attack_down"));
-    animController->AddAnimate("player_spear_attack_left", AnimateBuilder::GetInstance()->GetAnimate("player_spear_attack_left"));
-    animController->AddAnimate("player_spear_attack_right", AnimateBuilder::GetInstance()->GetAnimate("player_spear_attack_right"));
+		animController->AddAnimate("player_spear_walk_up", AnimateBuilder::GetInstance()->GetAnimate("player_spear_walk_up"));
+		animController->AddAnimate("player_spear_walk_down", AnimateBuilder::GetInstance()->GetAnimate("player_spear_walk_down"));
+		animController->AddAnimate("player_spear_walk_left", AnimateBuilder::GetInstance()->GetAnimate("player_spear_walk_left"));
+		animController->AddAnimate("player_spear_walk_right", AnimateBuilder::GetInstance()->GetAnimate("player_spear_walk_right"));
+		animController->AddAnimate("player_spear_attack_up", AnimateBuilder::GetInstance()->GetAnimate("player_spear_attack_up"));
+		animController->AddAnimate("player_spear_attack_down", AnimateBuilder::GetInstance()->GetAnimate("player_spear_attack_down"));
+		animController->AddAnimate("player_spear_attack_left", AnimateBuilder::GetInstance()->GetAnimate("player_spear_attack_left"));
+		animController->AddAnimate("player_spear_attack_right", AnimateBuilder::GetInstance()->GetAnimate("player_spear_attack_right"));
+	}
+	//Cash skin
+	else
+	{
+		AnimateBuilder::GetInstance()->LoadSpriteSheet("player_bow", "Player/Cash_PlayerBowTilesheet.png", 21, 13);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_walk_up", "player_bow", 105, 112);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_walk_left", "player_bow", 117, 124);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_walk_down", "player_bow", 130, 137);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_walk_right", "player_bow", 143, 150);
+
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_attack_up", "player_bow", 208, 220);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_attack_left", "player_bow", 221, 233);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_attack_down", "player_bow", 234, 247);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_bow_attack_right", "player_bow", 248, 259);
+
+		AnimateBuilder::GetInstance()->LoadSpriteSheet("player_spear", "Player/Cash_PlayerSpearTilesheet.png", 21, 13);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_walk_up", "player_spear", 103, 111);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_walk_left", "player_spear", 116, 124);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_walk_down", "player_spear", 129, 137);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_walk_right", "player_spear", 142, 150);
+
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_attack_up", "player_spear", 208, 220);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_attack_left", "player_spear", 221, 233);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_attack_down", "player_spear", 234, 247);
+		AnimateBuilder::GetInstance()->LoadAnimateFromLoadedSpriteSheet("player_spear_attack_right", "player_spear", 248, 261);
+
+		animController->AddAnimate("player_bow_walk_up", AnimateBuilder::GetInstance()->GetAnimate("player_bow_walk_up"));
+		animController->AddAnimate("player_bow_walk_down", AnimateBuilder::GetInstance()->GetAnimate("player_bow_walk_down"));
+		animController->AddAnimate("player_bow_walk_left", AnimateBuilder::GetInstance()->GetAnimate("player_bow_walk_left"));
+		animController->AddAnimate("player_bow_walk_right", AnimateBuilder::GetInstance()->GetAnimate("player_bow_walk_right"));
+		animController->AddAnimate("player_bow_attack_up", AnimateBuilder::GetInstance()->GetAnimate("player_bow_attack_up"));
+		animController->AddAnimate("player_bow_attack_down", AnimateBuilder::GetInstance()->GetAnimate("player_bow_attack_down"));
+		animController->AddAnimate("player_bow_attack_left", AnimateBuilder::GetInstance()->GetAnimate("player_bow_attack_left"));
+		animController->AddAnimate("player_bow_attack_right", AnimateBuilder::GetInstance()->GetAnimate("player_bow_attack_right"));
+
+		animController->AddAnimate("player_spear_walk_up", AnimateBuilder::GetInstance()->GetAnimate("player_spear_walk_up"));
+		animController->AddAnimate("player_spear_walk_down", AnimateBuilder::GetInstance()->GetAnimate("player_spear_walk_down"));
+		animController->AddAnimate("player_spear_walk_left", AnimateBuilder::GetInstance()->GetAnimate("player_spear_walk_left"));
+		animController->AddAnimate("player_spear_walk_right", AnimateBuilder::GetInstance()->GetAnimate("player_spear_walk_right"));
+		animController->AddAnimate("player_spear_attack_up", AnimateBuilder::GetInstance()->GetAnimate("player_spear_attack_up"));
+		animController->AddAnimate("player_spear_attack_down", AnimateBuilder::GetInstance()->GetAnimate("player_spear_attack_down"));
+		animController->AddAnimate("player_spear_attack_left", AnimateBuilder::GetInstance()->GetAnimate("player_spear_attack_left"));
+		animController->AddAnimate("player_spear_attack_right", AnimateBuilder::GetInstance()->GetAnimate("player_spear_attack_right"));
+	}
 }
 
 void Player::InitActions()

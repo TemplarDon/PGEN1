@@ -180,6 +180,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Puzzle\Puzzle.cpp" />
     <ClCompile Include="..\Classes\Puzzle\PuzzleElement.cpp" />
     <ClCompile Include="..\Classes\SceneManagement\SceneManager.cpp" />
+    <ClCompile Include="..\Classes\ShopScene.cpp" />
     <ClCompile Include="..\Classes\TestScene.cpp" />
     <ClCompile Include="..\Classes\Weapon\PlayerMeleeWeapon.cpp" />
     <ClCompile Include="..\Classes\Weapon\PlayerRangeWeapon.cpp" />
@@ -225,6 +226,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Puzzle\Puzzle.h" />
     <ClInclude Include="..\Classes\Puzzle\PuzzleElement.h" />
     <ClInclude Include="..\Classes\SceneManagement\SceneManager.h" />
+    <ClInclude Include="..\Classes\ShopScene.h" />
     <ClInclude Include="..\Classes\TestScene.h" />
     <ClInclude Include="..\Classes\Weapon\PlayerMeleeWeapon.h" />
     <ClInclude Include="..\Classes\Weapon\PlayerRangeWeapon.h" />

@@ -12,6 +12,7 @@
 #include "PauseScene.h"
 #include "EndRoom.h"
 #include "GameOver.h"
+#include "ShopScene.h"
 
 // Facebook
 #include "proj.ios_mac/PluginFacebook.framework/Versions/A/Headers/PluginFacebook.h"
@@ -135,6 +136,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     SceneManager::GetInstance()->AddLevel("dungeon scene", GameScene::createScene());
     //SceneManager::GetInstance()->GetLevel("dungeon scene")->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     SceneManager::GetInstance()->AddLevel("end room", EndRoom::createScene());
+	SceneManager::GetInstance()->AddLevel("cash shop", ShopScene::createScene());
 
     SceneManager::GetInstance()->FinishSetup();
     return true;

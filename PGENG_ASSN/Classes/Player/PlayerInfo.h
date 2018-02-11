@@ -22,8 +22,16 @@ public:
         currentHealth = 5;
         score = 0;
 		healthPotions = 0;
+		cash = 9999;
+
         return true;
     };
+
+	inline void OnLevelStart()
+	{
+		currentHealth = maxHealth;
+		score = 0;
+	}
 
     inline int GetCurrHealth(){ return this->currentHealth; }
     inline void SetCurrHealth(int _newHealth){ this->currentHealth = clampf(_newHealth, 0, maxHealth); }
@@ -54,6 +62,9 @@ public:
 		this->currentHealth++;
 		return true;
 	}
+
+	int cash = 9999;
+	bool usingSkin = false;
 
 protected:
     float maxHealth = 5;

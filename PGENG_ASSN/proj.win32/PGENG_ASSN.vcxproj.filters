@@ -162,6 +162,9 @@
     <ClCompile Include="..\Classes\Interactables\ShareButton.cpp">
       <Filter>src\Interactables</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ShopScene.cpp">
+      <Filter>src\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -292,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Interactables\ShareButton.h">
       <Filter>src\Interactables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ShopScene.h">
+      <Filter>src\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

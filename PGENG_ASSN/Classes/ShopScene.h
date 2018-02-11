@@ -1,12 +1,12 @@
-#ifndef __MAINEMENU_SCENE_H__
-#define __MAINEMENU_SCENE_H__
+#ifndef __SHOPSCENE_SCENE_H__
+#define __SHOPSCENE_SCENE_H__
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 
 using namespace cocos2d;
 
-class MainMenuScene : public cocos2d::Scene
+class ShopScene : public cocos2d::Scene
 {
 public:
     static cocos2d::Scene* createScene();
@@ -17,7 +17,7 @@ public:
     void menuCloseCallback(cocos2d::Ref* pSender);
 
     // implement the "static create()" method manually
-    CREATE_FUNC(MainMenuScene);
+    CREATE_FUNC(ShopScene);
 
     // Callback functions
     void SetListeners();
@@ -28,9 +28,18 @@ public:
 
     virtual void update(float _dt);
 
-    void Play(cocos2d::Ref* pSender);
-	void OpenCashShop(cocos2d::Ref* pSender);
+    void BackToMainMenu(cocos2d::Ref* pSender);
 
+	void BuyHeart(cocos2d::Ref* pSender);
+	void BuyPotion(cocos2d::Ref* pSender);
+	void BuySkin(cocos2d::Ref* pSender);
+
+	void UpdateCashAmount();
+
+	Label* cash_amount;
+	Label* not_enough_cash;
+	Label* cannot_buy_more;
+	Label* successful_buy;
 };
 
 #endif // __MAINEMENU_SCENE_H__

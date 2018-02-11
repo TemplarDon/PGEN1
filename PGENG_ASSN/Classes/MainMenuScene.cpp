@@ -66,18 +66,23 @@ bool MainMenuScene::init()
 
     // Menu
     MenuItemFont* menu_play = MenuItemFont::create("Play", CC_CALLBACK_1(MainMenuScene::Play, this));
+	MenuItemFont* menu_cash = MenuItemFont::create("Cash Shop", CC_CALLBACK_1(MainMenuScene::OpenCashShop, this));
     MenuItemFont* menu_quit = MenuItemFont::create("Quit", CC_CALLBACK_1(MainMenuScene::menuCloseCallback, this));
 
-    auto* menu = Menu::create(menu_play, menu_quit, nullptr);
+    auto* menu = Menu::create(menu_play, menu_cash, menu_quit, nullptr);
     menu->setPosition(Point(0, 0));
     menu->setName("menu");
     menu->retain();
 
-    menu_play->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 3));
+    menu_play->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 2.75));
 	menu_play->setFontSize(10000);
 	menu_play->setFontSizeObj(64);
 
-    menu_quit->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 2));
+	menu_cash->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 2));
+	menu_cash->setFontSize(10000);
+	menu_cash->setFontSizeObj(64);
+
+    menu_quit->setPosition(Point(visibleSize.width / 2, (visibleSize.height / 4) * 1.25));
 	menu_quit->setFontSize(10000);
 	menu_quit->setFontSizeObj(64);
 
@@ -150,4 +155,9 @@ void MainMenuScene::OnKeyPressed(EventKeyboard::KeyCode _keycode, Event* _event)
 void MainMenuScene::Play(Ref *pSender)
 {
     SceneManager::GetInstance()->TransitionLevel("dungeon scene", SceneManager::TRANSITION_TYPES::FADE, true);
+}
+
+void MainMenuScene::OpenCashShop(Ref *pSender)
+{
+	SceneManager::GetInstance()->TransitionLevel("cash shop", SceneManager::TRANSITION_TYPES::FADE);
 }
