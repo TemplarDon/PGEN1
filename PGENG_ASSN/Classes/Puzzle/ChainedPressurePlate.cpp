@@ -45,6 +45,15 @@ bool ChainedPressurePlate::Init(Node* scene, Vec2 pos)
 
     this->addChild(sprite, 98);
     scene->addChild(this);
+
+    auto particleSystem = ParticleSystemQuad::create("particle_puzzleclick.plist");
+    particleSystem->setName("particle_puzzleclick");
+    sprite->setAnchorPoint(Vec2::ZERO);
+    particleSystem->setPosition(pos);
+    particleSystem->setScale(0.1);
+    particleSystem->stop();
+    addChild(particleSystem, 99);
+
     return true;
 }
 
@@ -67,6 +76,8 @@ void ChainedPressurePlate::OnInteract()
 
                 textLabel->setString("*click*");
                 textLabel->setVisible(true);
+
+                (static_cast<ParticleSystemQuad*>(getChildByName("particle_puzzleclick")))->start();
             }
             else
             {

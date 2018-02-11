@@ -56,6 +56,11 @@ bool Puzzle::init()
         for (int i = 0; i < m_elementList.size(); ++i)
         {
             m_elementList[i]->m_IsCompleted = false;
+
+            auto particleSystem = m_elementList[i]->getChildByName("particle_puzzleclick");
+
+            if (particleSystem)
+                (static_cast<ParticleSystemQuad*>(particleSystem))->stop();
         }
     });
     _eventDispatcher->addEventListenerWithFixedPriority(puzzleFailedListener, 1);
